@@ -1,9 +1,9 @@
-#DeDx-DisappTrks-Ntupler
-=======================
+# DeDx-DisappTrks-Ntupler
+# =======================
 
-#Can be used to get ntuples out of RECO and AODSIM files
-
-
+# Can be used to get ntuples out of RECO and AODSIM files
+	
+	
 	cmsrel CMSSW_5_3_8_patch1
 	cd CMSSW_5_3_8_patch1/src
 	cmsenv
@@ -55,6 +55,6 @@
 	
 	git clone https://github.com/telenz/DeDx-DisappTrks-Ntupler.git
 	mv DeDx-DisappTrks-Ntupler/* .
-	rm -r DeDx-DisappTrks-Ntupler
+	rm -rf DeDx-DisappTrks-Ntupler
 
 	scram b -j24
