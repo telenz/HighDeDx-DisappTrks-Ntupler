@@ -11,11 +11,17 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <string>
 #include "PhysicsTools/TheNtupleMaker/interface/HelperFor.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackBase.h"
 #include "DataFormats/CaloTowers/interface/CaloTowerCollection.h"
 #include "DataFormats/CaloTowers/interface/CaloTower.h"
+#include "DataFormats/Common/interface/ValueMap.h"
+#include "DataFormats/TrackReco/interface/DeDxData.h"
+#include "DataFormats/TrackCandidate/interface/TrackCandidateCollection.h"
+#include "AnalysisDataFormats/SUSYBSMObjects/interface/HSCPCaloInfo.h"
+#include "AnalysisDataFormats/SUSYBSMObjects/interface/HSCPDeDxInfo.h" 
 //-----------------------------------------------------------------------------
 // Definitions:
 //   helper:        object of class TrackHelper
@@ -107,6 +113,75 @@ namespace reco
 	double caloEMDeltaRp5W();
 	double caloHadDeltaRp5W();
 
+	std::string test(){
+	  return "hello world";
+	}
+
+	int testINT(){
+	  return 10;
+	}
+
+	// ------------------------- For DeDx ----------------------
+	//For DeDxNPHarm2
+	reco::DeDxData dEdxNPHarm2Track;
+	edm::ValueMap<reco::DeDxData> dEdxTrackMap;
+	//For DeDxNPTru40
+	reco::DeDxData dEdxNPTru40Track;
+	edm::ValueMap<reco::DeDxData> dEdxTrackMapTru40;
+	//For DeDxHitsNPHarm2
+	susybsm::HSCPDeDxInfo dEdxHitsNPHarm2Track;
+	edm::ValueMap<susybsm::HSCPDeDxInfo> dEdxHitsTrackMap;
+
+	double dEdxHits(unsigned int nHits, std::string method){
+
+	  std::vector<double> vect_charge;
+	  for(unsigned int i=0; i<dEdxHitsNPHarm2Track.charge.size(); i++){
+	    
+	    if(dEdxHitsNPHarm2Track.detIds[i]<3)  continue;   // skip pixels
+	    if(!dEdxHitsNPHarm2Track.shapetest[i]) continue;  // shape test ???
+	    double Norm =3.61e-06*265;                        // unit change
+	    Norm *=10.0;                                      // mm --> cm
+	    vect_charge.push_back(Norm*dEdxHitsNPHarm2Track.charge[i]/dEdxHitsNPHarm2Track.pathlength[i]);
+	    if(vect_charge.size()==nHits) break;
+	  }
+
+	  int size = vect_charge.size();
+
+	  // -- different estimators
+	  if(method.compare("harm2")==0){
+	    double expo = -2;
+	    double aux = 0;
+	    for(int i = 0; i< size; i ++){
+	      aux+=pow(vect_charge[i],expo);
+	    }
+	    return (size>0)?pow(aux/size,1./expo):0.;
+	  }
+	  else if(method.compare("trun40")==0){
+
+	    int nTrunc = int( vect_charge.size()*0.4);
+	    double sumdedx = 0;
+	    for(size_t i=0;i + nTrunc < vect_charge.size() ; i++){
+	      sumdedx+=vect_charge[i];
+	    }
+	    double avrdedx = (vect_charge.size()) ? sumdedx/(vect_charge.size()-nTrunc) :0.0;
+	    return avrdedx;
+
+	    int T = (int) floor(0.6*size);
+	    double aux=0;
+	    for(int i = 0; i< T; i ++){
+	      aux+=vect_charge[i];
+	    }
+	    return (T>0)?(aux/T):0.;
+	  }
+	  else if(method.compare("median")==0){
+	    int m = (int) floor(0.5*size+0.5);
+	    double aux=0;
+	    if(size>0) aux=vect_charge[m];	    
+	    return (size>0)?aux:0.;
+	  }
+	  else return 10000;
+	};
+	// ------------------------- For DeDx ----------------------
 	
 	
   private:
@@ -123,16 +198,32 @@ namespace reco
 	double _caloEMDeltaRp4W,_caloHadDeltaRp4W;
 	double _caloEMDeltaRp5W,_caloHadDeltaRp5W;
 
-	
+	// ------------------------- For DeDx ----------------------
+	edm::Handle<std::vector<reco::Track> > trackCollectionHandle;
+	// ------------------------- For DeDx ----------------------
 
   public:
     // ---------------------------------------------------------
     // -- Access Methods
     // ---------------------------------------------------------
     	
+	double dEdxNPHarm2() {return dEdxNPHarm2Track.dEdx();};
+	double dEdxNPTru40() {return dEdxNPTru40Track.dEdx();};
+	unsigned int dEdxNPNoM() {return dEdxNPHarm2Track.numberOfSaturatedMeasurements();};
+	
+	double dEdxHitsNPHarm2(int nHits) {
+	  return dEdxHits(nHits, "harm2");
+	};
 
+	double dEdxHitsNPTrun40(int nHits) {
+	  return dEdxHits(nHits, "trun40");
+	};
 
+	double dEdxHitsNPMedian(int nHits) {
+	  return dEdxHits(nHits, "median");
+	};
 
+	
 	// WARNING: some methods may fail to compile because of coding
 	//          problems in one of the CMSSW base classes. If so,
 	//          just comment out the offending method and try again.
@@ -140,7 +231,7 @@ namespace reco
 
 	
     // from reco::TrackBase
-    reco::TrackBase::TrackAlgorithm algo() const { return object->algo(); }
+	reco::TrackBase::TrackAlgorithm algo() const { return object->algo(); }
 
     // from reco::TrackBase
     reco::TrackBase::TrackAlgorithm algoByName(std::string name) const
