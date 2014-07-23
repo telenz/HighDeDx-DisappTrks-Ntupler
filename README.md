@@ -5,9 +5,15 @@
 	
 	
 	cmsrel CMSSW_5_3_8_patch1
-	cd CMSSW_5_3_8_patch1/src
+	cd CMSSW_5_3_8_patch1
+	rm -r src
+	git clone https://github.com/telenz/HighDeDx-DisappTrks-Ntupler.git src	
+	cd src
 	cmsenv
-
+	git cms-cvs-history import CMSSW_5_3_1 Configuration/Skimming	
+	git cms-cvs-history import CMSSW_6_2_0_pre7 AnalysisDataFormats/SUSYBSMObjects
+	git mv -f classes_def_for_AnalysisDataFormats_SUSYBSMObjects_src.xml AnalysisDataFormats/SUSYBSMObjects/src/classes_def.xml 	
+	
 	git cms-cvs-history import V07-00-01 TopQuarkAnalysis/Configuration
 	git cms-cvs-history import V06-07-11-01 TopQuarkAnalysis/TopTools
 	git cms-cvs-history import  V06-05-06-07 DataFormats/PatCandidates
@@ -34,7 +40,7 @@
 	cd data
 	cat download.url | xargs wget
 	popd
-	
+
 	git cms-cvs-history import V01-04-23 RecoTauTag/RecoTau
 	git cms-cvs-history import V01-04-10 RecoTauTag/Configuration
 	git cms-cvs-history import V00-04-00 CondFormats/EgammaObjects
@@ -43,7 +49,7 @@
 	git checkout tags/V00-02-10
 	cd -
 	git clone https://github.com/cms-ttH/BEAN.git
-		
+
 	cd PhysicsTools
 	git clone https://github.com/hbprosper/TheNtupleMaker.git
 	cd TheNtupleMaker
@@ -52,9 +58,5 @@
 	scram b clean
 	scram b -j24
 	cd ../..
-	
-	git clone https://github.com/telenz/DeDx-DisappTrks-Ntupler.git
-	mv DeDx-DisappTrks-Ntupler/* .
-	rm -rf DeDx-DisappTrks-Ntupler
 
 	scram b -j24
