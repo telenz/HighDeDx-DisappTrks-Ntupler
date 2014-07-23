@@ -34,6 +34,26 @@ void TrackHelper::analyzeEvent()
   // 1b.) Calo Isolation (Wells version)
   event -> getManyByType(prods);
 
+  // 2.) For DeDx calculation
+  edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
+  event->getByLabel("dedxNPHarm2", dEdxNPHarm2TrackHandle);
+  dEdxTrackMap = *dEdxNPHarm2TrackHandle.product();
+
+  // For DeDxNPTru40
+  edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
+  event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
+  dEdxTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
+
+  //event->getByLabel(labelname,trackCollectionHandle);
+
+  // For DeDxHitsNPHarm2
+  edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsNPHarm2TrackHandle;
+  event->getByLabel("dedxHitInfo", dEdxHitsNPHarm2TrackHandle);
+  dEdxHitsTrackMap = *dEdxHitsNPHarm2TrackHandle.product();
+
+  event->getByLabel(labelname,trackCollectionHandle);
+
+
 
 }
 
@@ -117,13 +137,12 @@ void TrackHelper::analyzeObject()
       _caloEMDeltaRp5W  += Eem;  
       _caloHadDeltaRp5W += Ehad;  
     }
-
+    
   }
    
-  
+ 
   //cout<<"Wells' result: _caloEMDeltaRp5 = "<<_caloEMDeltaRp5W<<endl;
   //cout<<" _caloHadDeltaRp5 = "<< _caloHadDeltaRp5W<<endl;
- 
 
   //-----
 
@@ -134,6 +153,7 @@ void TrackHelper::analyzeObject()
 
   //-----
 
+  // 3.) trackRelIso03 implementation
   edm::ParameterSet trackExtractorPSet = config->getParameter<edm::ParameterSet>("TrackExtractorPSet");
   std::string trackExtractorName = trackExtractorPSet.getParameter<std::string>("ComponentName");
   reco::isodeposit::IsoDepositExtractor *muIsoExtractorTrack_;
@@ -143,6 +163,23 @@ void TrackHelper::analyzeObject()
   reco::IsoDeposit::Vetos noVetos;
   double depTrkRp3 = depTrk.depositWithin(0.3, noVetos, true);
   _trackRelIso03 = max(0.,(depTrkRp3 - object->pt()) / object->pt());
+
+  //-----
+  
+  // 4.) For DeDx calculation
+
+  // For DeDxNPHarm2 
+  reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
+  dEdxNPHarm2Track = dEdxTrackMap[track];
+  
+  // For DeDxNPTru40
+  dEdxNPTru40Track = dEdxTrackMapTru40[track];
+  
+  // For DeDxHitsNPHarm2 
+  dEdxHitsNPHarm2Track = dEdxHitsTrackMap[track];
+ 
+
+
    
 }
 
