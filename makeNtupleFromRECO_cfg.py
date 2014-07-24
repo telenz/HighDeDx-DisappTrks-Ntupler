@@ -1726,8 +1726,7 @@ pPF += process.HSCParticleProducerSeq
 
 
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
-process.pPFlow += process.demo
-process.outpath = cms.EndPath()
+process.outpath = cms.EndPath(process.demo)
 
 
 ## Dump python config if wished
