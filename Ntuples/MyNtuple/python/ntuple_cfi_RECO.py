@@ -9,12 +9,11 @@ cms.EDAnalyzer("TheNtupleMaker",
                TrackExtractorPSet = cms.PSet(MIsoTrackExtractorBlock),
                ntupleName = cms.untracked.string("ntuple.root"),
                analyzerName = cms.untracked.string("analyzer.cc"),
-
+               isRECOfile = cms.untracked.bool(True),
 
 # NOTE: the names listed below will be the prefixes for
 #       the associated C++ variables created by mkanalyzer.py
 #       and the asscociated C++ structs.
-
                buffers =
                cms.untracked.
                vstring(
