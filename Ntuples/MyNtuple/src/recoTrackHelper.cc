@@ -13,6 +13,8 @@
 #include "DataFormats/RecoCandidate/interface/IsoDeposit.h"
 #include "PhysicsTools/IsolationAlgos/interface/IsoDepositExtractorFactory.h"
 #include "RecoMuon/MuonIdentification/plugins/MuonIdProducer.h"
+#include "TROOT.h"
+#include "TTree.h"
 
 //-----------------------------------------------------------------------------
 using namespace std;
@@ -20,47 +22,65 @@ using namespace reco;
 //-----------------------------------------------------------------------------
 // This constructor is called once per job
 TrackHelper::TrackHelper()
-  : HelperFor<reco::Track>() {}
+  : HelperFor<reco::Track>() {
+
+  isRECOfile = config->getUntrackedParameter<bool>("isRECOfile");
+
+  if(isRECOfile){
+    // !!! find the tree
+    string ntupleName = config->getUntrackedParameter<string>("ntupleName");
+    TFile * f = gROOT->GetFile(ntupleName.c_str());
+    
+    // !!! add a branch
+    TTree * t = (TTree*)f->Get("Events");
+    string branchName;
+    branchName = "recoTrackHelper_" + labelname + "_dummyHits";
+    t->Branch(branchName.c_str(),&dummyHits);
+  }
+
+}
     
 TrackHelper::~TrackHelper() {}
 
 // -- Called once per event
 void TrackHelper::analyzeEvent()
 {
-
+  
   // 1a.) Calo Isolation (my Version)
   event->getByLabel("towerMaker",towers);
   
   // 1b.) Calo Isolation (Wells version)
   event -> getManyByType(prods);
 
-  // 2.) For DeDx calculation
-  edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
-  event->getByLabel("dedxNPHarm2", dEdxNPHarm2TrackHandle);
-  dEdxTrackMap = *dEdxNPHarm2TrackHandle.product();
-
-  // For DeDxNPTru40
-  edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
-  event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
-  dEdxTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
-
-  //event->getByLabel(labelname,trackCollectionHandle);
-
-  // For DeDxHitsNPHarm2
-  edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsNPHarm2TrackHandle;
-  event->getByLabel("dedxHitInfo", dEdxHitsNPHarm2TrackHandle);
-  dEdxHitsTrackMap = *dEdxHitsNPHarm2TrackHandle.product();
-
-  event->getByLabel(labelname,trackCollectionHandle);
-
-
+  if(TrackHelper::isRECOfile){
+    // 2.) For DeDx calculation
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
+    event->getByLabel("dedxNPHarm2", dEdxNPHarm2TrackHandle);
+    dEdxTrackMap = *dEdxNPHarm2TrackHandle.product();
+  
+    // For DeDxNPTru40
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
+    event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
+    dEdxTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
+    
+    // For DeDxHitsNPHarm2
+    edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsNPHarm2TrackHandle;
+    event->getByLabel("dedxHitInfo", dEdxHitsNPHarm2TrackHandle);
+    dEdxHitsTrackMap = *dEdxHitsNPHarm2TrackHandle.product();
+    
+    event->getByLabel(labelname,trackCollectionHandle);
+    
+    //3.) Store Hit information
+    // !!! clear the dummy hits
+    dummyHits.clear();
+  }
+  
 
 }
 
 // -- Called once per object
 void TrackHelper::analyzeObject()
 {
-
 
   _caloEMDeltaRp3  = 0;  
   _caloHadDeltaRp3 = 0;  
@@ -79,11 +99,8 @@ void TrackHelper::analyzeObject()
     double Eem      = cal->emEnergy();  
     double Ehad     = cal->hadEnergy();  
 
-
     if (cal->emEt()  < 0.2) Eem  = 0;  
     if (cal->hadEt() < 0.5) Ehad = 0;  
-
-    //cout<<"Eem = "<<Eem<<endl;    
 
     if (deltaR<0.3) { 
       _caloEMDeltaRp3  += Eem;  
@@ -100,10 +117,6 @@ void TrackHelper::analyzeObject()
     }
 
   }
-
-
-  //cout<<"My result: _caloEMDeltaRp5 = "<<_caloEMDeltaRp5<<endl;
-  //cout<<" _caloHadDeltaRp5 = "<< _caloHadDeltaRp5<<endl;
 
   _caloEMDeltaRp3W  = 0;  
   _caloHadDeltaRp3W = 0;  
@@ -139,14 +152,11 @@ void TrackHelper::analyzeObject()
     }
     
   }
-   
- 
-  //cout<<"Wells' result: _caloEMDeltaRp5 = "<<_caloEMDeltaRp5W<<endl;
-  //cout<<" _caloHadDeltaRp5 = "<< _caloHadDeltaRp5W<<endl;
+
 
   //-----
 
-  // 2.) Save wether high Purity track  
+  // 2.) Save whether high Purity track  
   reco::TrackBase::TrackQuality _highPurityNumber = reco::TrackBase::qualityByName("highPurity");
   if( object->quality(_highPurityNumber) ) _trackHighPurity=1;
   else _trackHighPurity=0;
@@ -165,20 +175,25 @@ void TrackHelper::analyzeObject()
   _trackRelIso03 = max(0.,(depTrkRp3 - object->pt()) / object->pt());
 
   //-----
-  
   // 4.) For DeDx calculation
-
-  // For DeDxNPHarm2 
-  reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
-  dEdxNPHarm2Track = dEdxTrackMap[track];
-  
-  // For DeDxNPTru40
-  dEdxNPTru40Track = dEdxTrackMapTru40[track];
-  
-  // For DeDxHitsNPHarm2 
-  dEdxHitsNPHarm2Track = dEdxHitsTrackMap[track];
- 
-
+  if(isRECOfile){
+    // For DeDxNPHarm2 
+    reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
+    dEdxNPHarm2Track = dEdxTrackMap[track];
+    
+    // For DeDxNPTru40
+    dEdxNPTru40Track = dEdxTrackMapTru40[track];
+    
+    // For DeDxHitsNPHarm2 
+    dEdxHitsNPHarm2Track = dEdxHitsTrackMap[track];
+    
+    // 5.) For Hit Information
+    // !!! add the hit information
+    dummyHits.push_back(vector<double>());
+    for(int i = 0;i<100;i++){
+      dummyHits.back().push_back(event->id().event());
+    }
+  }
 
    
 }
