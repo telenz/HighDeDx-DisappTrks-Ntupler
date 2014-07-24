@@ -3,7 +3,8 @@
 
 # Can be used to get ntuples out of RECO and AODSIM files
 	
-	
+	mkdir HighDeDx-DisappTrks-Ntupler
+ 	cd HighDeDx-DisappTrks-Ntupler
 	cmsrel CMSSW_5_3_8_patch1
 	cd CMSSW_5_3_8_patch1
 	rm -r src
