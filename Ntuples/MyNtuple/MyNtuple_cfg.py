@@ -12,13 +12,13 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 # This is required in order to configure HLTConfigProducer
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
 
 process.source = cms.Source("PoolSource",
-							fileNames =
-							cms.untracked.vstring("file:ttH_pat2bean_53x.root"
-												  )
-							)
+                            fileNames =
+                            cms.untracked.vstring("file:ttH_pat2bean_53x.root"
+                                                  )
+                            )
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
 
 process.p = cms.Path(process.demo)
