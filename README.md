@@ -49,7 +49,7 @@
 	cd CMGTools/External/
 	git checkout tags/V00-02-10
 	cd -
-	git clone https://github.com/cms-ttH/BEAN.git
+	#git clone https://github.com/cms-ttH/BEAN.git
 
 	cd PhysicsTools
 	git clone https://github.com/hbprosper/TheNtupleMaker.git

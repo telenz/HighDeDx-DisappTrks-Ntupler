@@ -1341,6 +1341,7 @@ from RecoMuon.MuonIsolationProducers.trackExtractorBlocks_cff import *
 process.load('Configuration.StandardSequences.MagneticField_38T_cff')
 process.load('Configuration.StandardSequences.Reconstruction_cff')
 
+"""
 process.BNproducer = cms.EDProducer('BEANmaker',
                                     calometTag = cms.InputTag("none"),
                                     pfmetTag = cms.InputTag("patMETsPFlow"),
@@ -1387,7 +1388,7 @@ process.BNproducer = cms.EDProducer('BEANmaker',
                                     maxAbsZ = cms.untracked.double(24)
                                     )
 
-
+"""
 process.q2weights = cms.EDProducer('Q2Weights')
 
 
@@ -1640,13 +1641,13 @@ if runPF2PAT:
 
   #pPF += process.refitMuons
   pPF += process.q2weights
-  pPF += process.BNproducer
+  #pPF += process.BNproducer
   
   setattr( process, 'p' + postfix, pPF )
   process.out.SelectEvents.SelectEvents.append( 'p' + postfix )
   process.out.outputCommands = [ 'drop *' ]
   process.out.outputCommands.extend( [ # BEAN Objects
-    'keep *_BNproducer_*_*',
+    #'keep *_BNproducer_*_*',
     'keep double_kt6PFJets*_rho_*',
     #'keep *',
     #'keep *_TrackRefitter_*_*',
@@ -1717,9 +1718,12 @@ process.dedxHitInfo.UseCalibration     = cms.bool(True)
 
 process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
 process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
+#process.nEventsTest   = cms.EDProducer("EventCountProducer")
 
 #process.p1 = cms.Path(process.nEventsBefSkim + process.genParticles + process.exoticaHSCPSeq + process.nEventsBefEDM + process.ak5PFJetsPt15 + process.HSCParticleProducerSeq)
 
+
+#pPF += process.nEventsTest
 pPF += process.exoticaHSCPSeq
 pPF += process.HSCParticleProducerSeq
 ##--## HSCP
