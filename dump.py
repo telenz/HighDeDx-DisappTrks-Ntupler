@@ -46315,13 +46315,13 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double  eta()', 
         'double  mass()', 
         'int     pdgId()'),
-    Vertex = cms.untracked.vstring('recoVertex                      offlinePrimaryVertices          200', 
+    Vertex = cms.untracked.vstring('recoVertex                      offlinePrimaryVertices          100', 
         'double  ndof()', 
         'double  x()', 
         'double  y()', 
         'double  z()', 
         'double position().rho()'),
-    MET = cms.untracked.vstring('patMET                          patMETsPFlow                    200', 
+    MET = cms.untracked.vstring('patMET                          patMETsPFlow                      1', 
         'double  energy()', 
         'double  et()', 
         'double  pz()', 
@@ -47554,10 +47554,10 @@ process.patPF2PATSequence = cms.Sequence(process.PFBRECO+process.patDefaultSeque
 process.pAK5PF = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.ak5PFJets+process.PFTau+process.makePatElectrons+process.makePatMuons+process.makePatTaus+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetChargeAK5PF+process.patJetPartonMatchAK5PF+process.patJetGenJetMatchAK5PF+process.patJetPartons+process.patJetPartonAssociationAK5PF+process.patJetFlavourAssociationAK5PF+process.patJetsAK5PF+process.patMETCorrections+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent+process.patAddOnSequence)
 
 
-process.pPFlow = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.patPF2PATSequencePFlow+process.looseLeptonSequence+process.patAddOnSequencePFlow+process.puJetIdSqeuenceChs+process.patConversions+process.q2weights+process.BNproducer+process.exoticaHSCPSeq+process.HSCParticleProducerSeq+process.demo)
+process.pPFlow = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.patPF2PATSequencePFlow+process.looseLeptonSequence+process.patAddOnSequencePFlow+process.puJetIdSqeuenceChs+process.patConversions+process.q2weights+process.BNproducer+process.exoticaHSCPSeq+process.HSCParticleProducerSeq)
 
 
-process.outpath = cms.EndPath()
+process.outpath = cms.EndPath(process.demo)
 
 
 process.DBService = cms.Service("DBService")
