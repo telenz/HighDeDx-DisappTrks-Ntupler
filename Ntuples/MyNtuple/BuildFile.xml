@@ -76,6 +76,7 @@
 <use   name="DataFormats/TrajectorySeed"/>
 <use   name="DataFormats/V0Candidate"/>
 <use   name="DataFormats/VertexReco"/>
+<use   name="Geometry/TrackerGeometryBuilder"/>
 <use   name="SimDataFormats/CaloHit"/>
 <use   name="SimDataFormats/CrossingFrame"/>
 <use   name="SimDataFormats/EcalTestBeam"/>
