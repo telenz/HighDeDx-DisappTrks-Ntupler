@@ -13,6 +13,8 @@
 #include "DataFormats/RecoCandidate/interface/IsoDeposit.h"
 #include "PhysicsTools/IsolationAlgos/interface/IsoDepositExtractorFactory.h"
 #include "RecoMuon/MuonIdentification/plugins/MuonIdProducer.h"
+#include "Geometry/TrackerGeometryBuilder/interface/TrackerGeometry.h"
+#include "Geometry/Records/interface/TrackerDigiGeometryRecord.h"
 #include "TROOT.h"
 #include "TTree.h"
 
@@ -34,8 +36,21 @@ TrackHelper::TrackHelper()
     // !!! add a branch
     TTree * t = (TTree*)f->Get("Events");
     string branchName;
-    branchName = "recoTrackHelper_" + labelname + "_dummyHits";
-    t->Branch(branchName.c_str(),&dummyHits);
+    branchName = "recoTrackHelper_" + labelname + "_HitsDeDx";
+    t->Branch(branchName.c_str(),&HitsDeDx);
+    branchName = "recoTrackHelper_" + labelname + "_HitsPathlength";
+    t->Branch(branchName.c_str(),&HitsPathlength);
+    branchName = "recoTrackHelper_" + labelname + "_HitsShapetest";
+    t->Branch(branchName.c_str(),&HitsShapetest);
+    branchName = "recoTrackHelper_" + labelname + "_HitsSubdetId";
+    t->Branch(branchName.c_str(),&HitsSubdetId);
+    branchName = "recoTrackHelper_" + labelname + "_HitsEta";
+    t->Branch(branchName.c_str(),&HitsEta);
+    branchName = "recoTrackHelper_" + labelname + "_HitsPhi";
+    t->Branch(branchName.c_str(),&HitsPhi);
+    branchName = "recoTrackHelper_" + labelname + "_HitsTransverse";
+    t->Branch(branchName.c_str(),&HitsTransverse);
+
   }
 
 }
@@ -72,7 +87,13 @@ void TrackHelper::analyzeEvent()
     
     //3.) Store Hit information
     // !!! clear the dummy hits
-    dummyHits.clear();
+    HitsDeDx.clear();
+    HitsPathlength.clear();
+    HitsShapetest.clear();
+    HitsSubdetId.clear();
+    HitsEta.clear();
+    HitsPhi.clear();
+    HitsTransverse.clear();
   }
   
 
@@ -180,22 +201,44 @@ void TrackHelper::analyzeObject()
     // For DeDxNPHarm2 
     reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
     dEdxNPHarm2Track = dEdxTrackMap[track];
-    
     // For DeDxNPTru40
     dEdxNPTru40Track = dEdxTrackMapTru40[track];
-    
     // For DeDxHitsNPHarm2 
     dEdxHitsNPHarm2Track = dEdxHitsTrackMap[track];
     
     // 5.) For Hit Information
     // !!! add the hit information
-    dummyHits.push_back(vector<double>());
-    for(int i = 0;i<100;i++){
-      dummyHits.back().push_back(event->id().event());
-    }
-  }
 
-   
+    // get the complete tracking geometry from the event
+    edm::ESHandle<TrackerGeometry> trackingGeometry ;
+    eventsetup->get<TrackerDigiGeometryRecord>().get(trackingGeometry);
+    
+    HitsDeDx.push_back(vector<double>());
+    HitsPathlength.push_back(vector<double>());
+    HitsShapetest.push_back(vector<int>());
+    HitsSubdetId.push_back(vector<int>());
+    HitsEta.push_back(vector<double>());
+    HitsPhi.push_back(vector<double>());
+    HitsTransverse.push_back(vector<double>());
+
+    for(unsigned int i=0; i<dEdxHitsNPHarm2Track.charge.size(); i++){
+    
+      HitsDeDx.back().push_back(dEdxHitsNPHarm2Track.charge[i]);
+      HitsPathlength.back().push_back(dEdxHitsNPHarm2Track.pathlength[i]);
+      HitsShapetest.back().push_back((int)dEdxHitsNPHarm2Track.shapetest[i]);
+      HitsSubdetId.back().push_back((int)dEdxHitsNPHarm2Track.subdetid[i]);
+      
+      //get the geometry of your detector
+      const GeomDet* geomdet = trackingGeometry->idToDet( dEdxHitsNPHarm2Track.detIds[i] );
+      Local2DPoint point=Local2DPoint(dEdxHitsNPHarm2Track.localx[i],dEdxHitsNPHarm2Track.localy[i]);
+      GlobalPoint _pos = geomdet->toGlobal( point );
+      HitsEta.back().push_back(_pos.eta());
+      HitsPhi.back().push_back(_pos.phi());
+      HitsTransverse.back().push_back(_pos.transverse());
+      
+    }
+    
+  }
 }
 
 
