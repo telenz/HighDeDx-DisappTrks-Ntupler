@@ -12,6 +12,17 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 # This is required in order to configure HLTConfigProducer
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 
+#This is required to store hit position information
+process.load("Configuration.StandardSequences.Geometry_cff")
+process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
+globalTagMC   = 'START53_V7G'
+process.GlobalTag.globaltag = globalTagMC   + '::All'
+process.GlobalTag.toGet = cms.VPSet(
+   cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
+            tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
+            connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
+)
+
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
 
 process.source = cms.Source("PoolSource",
