@@ -245,11 +245,11 @@ void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
 
   edm::Handle<reco::TrackCollection> trackCollectionHandle;
   iEvent.getByLabel(m_tracksTag,trackCollectionHandle);
-
+ 
    edm::ESHandle<TrackerGeometry> tkGeom;
    iSetup.get<TrackerDigiGeometryRecord>().get( tkGeom );
    m_tracker = tkGeom.product();
- 
+
    std::vector<susybsm::HSCPDeDxInfo> dEdxInfos( TrajToTrackMap.size() );
 
    unsigned track_index = 0;
@@ -269,28 +269,41 @@ void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
       susybsm::HSCPDeDxInfo hscpDeDxInfo;
       for(vector<TrajectoryMeasurement>::const_iterator measurement_it = measurements.begin(); measurement_it!=measurements.end(); measurement_it++){
 
-         TrajectoryStateOnSurface trajState = measurement_it->updatedState();
+	 TrajectoryStateOnSurface trajState = measurement_it->updatedState();
          if( !trajState.isValid() ) continue;
 
          const TrackingRecHit*         hit                 = (*measurement_it->recHit()).hit();
-         const SiStripRecHit2D*        sistripsimplehit    = dynamic_cast<const SiStripRecHit2D*>(hit);
+	 const SiStripRecHit2D*        sistripsimplehit    = dynamic_cast<const SiStripRecHit2D*>(hit);
          const SiStripMatchedRecHit2D* sistripmatchedhit   = dynamic_cast<const SiStripMatchedRecHit2D*>(hit);
          const SiStripRecHit1D*        sistripsimple1dhit  = dynamic_cast<const SiStripRecHit1D*>(hit);
          const SiPixelRecHit*          pixelHit            = dynamic_cast<const SiPixelRecHit*>(hit);
+	 const DetId detid = hit->geographicalId();
 	 
          if(sistripsimplehit){
                 FillInfo(DeDxTools::GetCluster(sistripsimplehit), trajState,sistripsimplehit->geographicalId(), hscpDeDxInfo);       
   	        hscpDeDxInfo.shapetest.push_back(DeDxTools::shapeSelection(DeDxTools::GetCluster(sistripsimplehit)->amplitudes()));
-         }else if(sistripmatchedhit){
+		hscpDeDxInfo.localx.push_back((sistripsimplehit->localPosition()).x());
+		hscpDeDxInfo.localy.push_back((sistripsimplehit->localPosition()).y());
+		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
+	 }else if(sistripmatchedhit){
                 FillInfo(DeDxTools::GetCluster(sistripmatchedhit->monoHit()), trajState, sistripmatchedhit->monoId(), hscpDeDxInfo);
 	        hscpDeDxInfo.shapetest.push_back(DeDxTools::shapeSelection(DeDxTools::GetCluster(sistripmatchedhit->monoHit())->amplitudes()));
-           
-                FillInfo(DeDxTools::GetCluster(sistripmatchedhit->stereoHit()), trajState,sistripmatchedhit->stereoId(), hscpDeDxInfo);
-                 hscpDeDxInfo.shapetest.push_back(true);
-         }else if(sistripsimple1dhit){ 
+		hscpDeDxInfo.localx.push_back((sistripmatchedhit->localPosition()).x());
+		hscpDeDxInfo.localy.push_back((sistripmatchedhit->localPosition()).y());
+		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
+		
+		FillInfo(DeDxTools::GetCluster(sistripmatchedhit->stereoHit()), trajState,sistripmatchedhit->stereoId(), hscpDeDxInfo);
+		hscpDeDxInfo.shapetest.push_back(true);
+		hscpDeDxInfo.localx.push_back((sistripmatchedhit->localPosition()).x());
+		hscpDeDxInfo.localy.push_back((sistripmatchedhit->localPosition()).y());
+		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
+	 }else if(sistripsimple1dhit){ 
 	        FillInfo(DeDxTools::GetCluster(sistripsimple1dhit), trajState, sistripsimple1dhit->geographicalId(), hscpDeDxInfo);
                 hscpDeDxInfo.shapetest.push_back(DeDxTools::shapeSelection(DeDxTools::GetCluster(sistripsimple1dhit)->amplitudes()));
-        }else if(pixelHit){
+		hscpDeDxInfo.localx.push_back((sistripsimple1dhit->localPosition()).x());
+		hscpDeDxInfo.localy.push_back((sistripsimple1dhit->localPosition()).y());
+		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
+	 }else if(pixelHit){
                 double cosine = trajState.localDirection().z() / trajState.localDirection().mag();
                 stModInfo* MOD = MODsColl[pixelHit->geographicalId()];
                 hscpDeDxInfo.charge.push_back(pixelHit->cluster()->charge());
@@ -299,7 +312,10 @@ void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
                 hscpDeDxInfo.cosine.push_back(cosine);
                 hscpDeDxInfo.detIds.push_back(pixelHit->geographicalId());
                 hscpDeDxInfo.shapetest.push_back(false);
-         }else{
+		hscpDeDxInfo.localx.push_back((pixelHit->localPosition()).x());
+		hscpDeDxInfo.localy.push_back((pixelHit->localPosition()).y());
+		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
+	 }else{
          }
       }
 
