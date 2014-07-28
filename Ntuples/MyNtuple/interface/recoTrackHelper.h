@@ -129,7 +129,7 @@ namespace reco
 	    std::vector<double> vect_charge;
 	    for(unsigned int i=0; i<dEdxHitsNPHarm2Track.charge.size(); i++){
 	    
-	      if(dEdxHitsNPHarm2Track.detIds[i]<3)  continue;   // skip pixels
+	      if(dEdxHitsNPHarm2Track.subdetid[i]<3) continue;  // skip pixels
 	      if(!dEdxHitsNPHarm2Track.shapetest[i]) continue;  // shape test ???
 	      double Norm =3.61e-06*265;                        // unit change
 	      Norm *=10.0;                                      // mm --> cm
@@ -175,11 +175,16 @@ namespace reco
 	  };
 
 	  // For Hit information
-	  std::vector<std::vector<double> > dummyHits;
+	  std::vector<std::vector<double> > HitsDeDx;
+	  std::vector<std::vector<double> > HitsPathlength;
+	  std::vector<std::vector<int> > HitsShapetest;
+	  std::vector<std::vector<int> > HitsSubdetId;
+	  std::vector<std::vector<double> > HitsEta;
+	  std::vector<std::vector<double> > HitsPhi;
+	  std::vector<std::vector<double> > HitsTransverse;
 	  
-	// ------------------------- For DeDx ----------------------
-	
-	
+	  // ------------------------- For DeDx ----------------------
+	  
   private:
     // -- User internals
         bool isRECOfile;
