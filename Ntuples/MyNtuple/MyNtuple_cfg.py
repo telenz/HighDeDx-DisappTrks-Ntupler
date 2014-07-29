@@ -20,7 +20,7 @@ process.GlobalTag.globaltag = globalTagMC   + '::All'
 process.GlobalTag.toGet = cms.VPSet(
    cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
             tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
-            connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
+            connect = cms.untracked.string("sqlite_file:../../SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
 )
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
