@@ -1689,20 +1689,20 @@ process.genParticles.abortOnUnknownPDGCode = cms.untracked.bool(False)
 process.GlobalTag.toGet = cms.VPSet(
    cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
             tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
-            connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
+            connect = cms.untracked.string("sqlite_file:SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
 )
 
-process.dedxHarm2.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxTru40.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxProd.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxASmi.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNPHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNPTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNSHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNSTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNPProd.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxNPASmi.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
-process.dedxHitInfo.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/WellsCode/Files/MC7TeVGains.root")
+process.dedxHarm2.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxTru40.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxProd.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxASmi.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNPHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNPTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNSHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNSTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNPProd.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxNPASmi.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
+process.dedxHitInfo.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC7TeVGains.root")
 
 process.dedxHarm2.UseCalibration       = cms.bool(True)
 process.dedxTru40.UseCalibration       = cms.bool(True)
