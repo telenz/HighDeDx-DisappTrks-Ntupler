@@ -317,12 +317,13 @@ void DeDxDiscriminatorProducer::produce(edm::Event& iEvent, const edm::EventSetu
 		if(ClusterSaturatingStrip(DeDxTools::GetCluster(sistripsimple1dhit),sistripsimple1dhit->geographicalId())>0)NClusterSaturating++;
          }else if(pixelHit){
 	        Prob = GetPixelProbability((pixelHit->cluster()).get(), trajState, pixelHit->geographicalId());
-	        //if(shapetest && !(DeDxTools::shapeSelection(DeDxTools::GetCluster(sistripsimple1dhit)->amplitudes()))) Prob=-1.0;
+		//if(shapetest && !(DeDxTools::shapeSelection(DeDxTools::GetCluster(sistripsimple1dhit)->amplitudes()))) Prob=-1.0;
                 if(Prob>=0) vect_probs.push_back(Prob);
 		//if(ClusterSaturatingStrip(DeDxTools::GetCluster(sistripsimple1dhit),sistripsimple1dhit->geographicalId())>0)NClusterSaturating++;
 	 }
 	 else{
          }
+
       }
 
       double estimator          = ComputeDiscriminator(vect_probs);
@@ -427,6 +428,7 @@ double DeDxDiscriminatorProducer::GetPixelProbability(const SiPixelCluster*   cl
        charge+=CalibratedCharge;
      }
    }
+   charge = charge/265.;
    double path   = DeDxDiscriminatorTools::path(cosine,MOD->Thickness);
 
    int    BinX   = Prob_ChargePath->GetXaxis()->FindBin(trajState.localMomentum().mag());
