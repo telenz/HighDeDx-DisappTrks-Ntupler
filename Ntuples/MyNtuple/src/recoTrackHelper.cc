@@ -69,19 +69,30 @@ void TrackHelper::analyzeEvent()
 
   if(TrackHelper::isRECOfile){
     // 2.) For DeDx calculation
+    // For DeDxNPHarm2
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
     event->getByLabel("dedxNPHarm2", dEdxNPHarm2TrackHandle);
-    dEdxTrackMap = *dEdxNPHarm2TrackHandle.product();
+    dEdxNPTrackMapHarm2 = *dEdxNPHarm2TrackHandle.product();
   
     // For DeDxNPTru40
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
     event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
-    dEdxTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
+    dEdxNPTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
+
+    // For DeDxHarm2
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxHarm2TrackHandle;
+    event->getByLabel("dedxHarm2", dEdxHarm2TrackHandle);
+    dEdxTrackMapHarm2 = *dEdxHarm2TrackHandle.product();
+  
+    // For DeDxTru40
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxTru40TrackHandle;
+    event->getByLabel("dedxTru40", dEdxTru40TrackHandle);
+    dEdxTrackMapTru40 = *dEdxTru40TrackHandle.product();
     
-    // For DeDxHitsNPHarm2
-    edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsNPHarm2TrackHandle;
-    event->getByLabel("dedxHitInfo", dEdxHitsNPHarm2TrackHandle);
-    dEdxHitsTrackMap = *dEdxHitsNPHarm2TrackHandle.product();
+    // For my calculation of dE/dx
+    edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsHarm2TrackHandle;
+    event->getByLabel("dedxHitInfo", dEdxHitsHarm2TrackHandle);
+    dEdxHitsTrackMap = *dEdxHitsHarm2TrackHandle.product();
     
     event->getByLabel(labelname,trackCollectionHandle);
     
@@ -200,11 +211,16 @@ void TrackHelper::analyzeObject()
   if(isRECOfile){
     // For DeDxNPHarm2 
     reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
-    dEdxNPHarm2Track = dEdxTrackMap[track];
+    dEdxNPHarm2Track = dEdxNPTrackMapHarm2[track];
     // For DeDxNPTru40
-    dEdxNPTru40Track = dEdxTrackMapTru40[track];
-    // For DeDxHitsNPHarm2 
-    dEdxHitsNPHarm2Track = dEdxHitsTrackMap[track];
+    dEdxNPTru40Track = dEdxNPTrackMapTru40[track];
+    // For DeDxHarm2 
+    dEdxHarm2Track = dEdxTrackMapHarm2[track];
+    // For DeDxTru40
+    dEdxTru40Track = dEdxTrackMapTru40[track];
+
+    // For my calculation of dE/dx
+    dEdxHitsHarm2Track = dEdxHitsTrackMap[track];
     
     // 5.) For Hit Information
     // !!! add the hit information
@@ -221,21 +237,21 @@ void TrackHelper::analyzeObject()
     HitsPhi.push_back(vector<double>());
     HitsTransverse.push_back(vector<double>());
 
-    for(unsigned int i=0; i<dEdxHitsNPHarm2Track.charge.size(); i++){
+    for(unsigned int i=0; i<dEdxHitsHarm2Track.charge.size(); i++){
     
-      HitsDeDx.back().push_back(dEdxHitsNPHarm2Track.charge[i]);
-      HitsPathlength.back().push_back(dEdxHitsNPHarm2Track.pathlength[i]);
-      HitsShapetest.back().push_back((int)dEdxHitsNPHarm2Track.shapetest[i]);
-      HitsSubdetId.back().push_back((int)dEdxHitsNPHarm2Track.subdetid[i]);
+      HitsDeDx.back().push_back(dEdxHitsHarm2Track.charge[i]);
+      HitsPathlength.back().push_back(dEdxHitsHarm2Track.pathlength[i]);
+      HitsShapetest.back().push_back((int)dEdxHitsHarm2Track.shapetest[i]);
+      HitsSubdetId.back().push_back((int)dEdxHitsHarm2Track.subdetid[i]);
       
       //get the geometry of your detector
-      const GeomDet* geomdet = trackingGeometry->idToDet( dEdxHitsNPHarm2Track.detIds[i] );
-      Local2DPoint point=Local2DPoint(dEdxHitsNPHarm2Track.localx[i],dEdxHitsNPHarm2Track.localy[i]);
+      const GeomDet* geomdet = trackingGeometry->idToDet( dEdxHitsHarm2Track.detIds[i] );
+      Local2DPoint point=Local2DPoint(dEdxHitsHarm2Track.localx[i],dEdxHitsHarm2Track.localy[i]);
       GlobalPoint _pos = geomdet->toGlobal( point );
       HitsEta.back().push_back(_pos.eta());
       HitsPhi.back().push_back(_pos.phi());
       HitsTransverse.back().push_back(_pos.transverse());
-      
+
     }
     
   }
