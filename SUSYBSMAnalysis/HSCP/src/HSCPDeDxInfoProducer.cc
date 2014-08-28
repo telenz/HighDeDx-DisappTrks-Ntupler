@@ -35,6 +35,8 @@
 #include "CondFormats/DataRecord/interface/SiStripDeDxProton_3D_Rcd.h"
 #include "CondFormats/DataRecord/interface/SiStripDeDxPion_3D_Rcd.h"
 #include "CondFormats/DataRecord/interface/SiStripDeDxKaon_3D_Rcd.h"
+#include "FWCore/Framework/interface/Run.h"
+#include "DataFormats/FWLite/interface/Run.h"
 
 
 #include "TFile.h"
@@ -45,9 +47,7 @@ using namespace edm;
 
 HSCPDeDxInfoProducer::HSCPDeDxInfoProducer(const edm::ParameterSet& iConfig)
 {
-
    produces<ValueMap<susybsm::HSCPDeDxInfo> >();
-
    m_tracksTag = iConfig.getParameter<edm::InputTag>("tracks");
    m_trajTrackAssociationTag   = iConfig.getParameter<edm::InputTag>("trajectoryTrackAssociation");
 
@@ -55,24 +55,24 @@ HSCPDeDxInfoProducer::HSCPDeDxInfoProducer(const edm::ParameterSet& iConfig)
    useStrip = iConfig.getParameter<bool>("UseStrip");
    if(!usePixel && !useStrip)
    edm::LogWarning("DeDxHitsProducer") << "Pixel Hits AND Strip Hits will not be used to estimate dEdx --> BUG, Please Update the config file";
-
    Formula             = iConfig.getUntrackedParameter<unsigned>("Formula"            ,  0);
    Reccord             = iConfig.getUntrackedParameter<string>  ("Reccord"            , "SiStripDeDxMip_3D_Rcd");
    ProbabilityMode     = iConfig.getUntrackedParameter<string>  ("ProbabilityMode"    , "Accumulation");
-
-
+   
    MinTrackMomentum    = iConfig.getUntrackedParameter<double>  ("minTrackMomentum"   ,  0.0);
    MaxTrackMomentum    = iConfig.getUntrackedParameter<double>  ("maxTrackMomentum"   ,  99999.0); 
    MinTrackEta         = iConfig.getUntrackedParameter<double>  ("minTrackEta"        , -5.0);
    MaxTrackEta         = iConfig.getUntrackedParameter<double>  ("maxTrackEta"        ,  5.0);
    MaxNrStrips         = iConfig.getUntrackedParameter<unsigned>("maxNrStrips"        ,  255);
    MinTrackHits        = iConfig.getUntrackedParameter<unsigned>("MinTrackHits"       ,  3);
-
+   
    shapetest           = iConfig.getParameter<bool>("ShapeTest");
    useCalibration      = iConfig.getParameter<bool>("UseCalibration");
+   
    m_calibrationPath   = iConfig.getParameter<string>("calibrationPath");
-
+   
    Prob_ChargePath = NULL;
+   
 }
 
 
@@ -98,7 +98,6 @@ void  HSCPDeDxInfoProducer::beginRun(edm::Run & run, const edm::EventSetup& iSet
       exit(0);
    }
    DeDxMap_ = *DeDxMapHandle_.product();
-
    double xmin = DeDxMap_.rangeX().min;
    double xmax = DeDxMap_.rangeX().max;
    double ymin = DeDxMap_.rangeY().min;
@@ -108,8 +107,6 @@ void  HSCPDeDxInfoProducer::beginRun(edm::Run & run, const edm::EventSetup& iSet
 
    if(Prob_ChargePath)delete Prob_ChargePath;
    Prob_ChargePath  = new TH3D ("Prob_ChargePath"     , "Prob_ChargePath" , DeDxMap_.numberOfBinsX(), xmin, xmax, DeDxMap_.numberOfBinsY() , ymin, ymax, DeDxMap_.numberOfBinsZ(), zmin, zmax);
-
-   
 
    if(strcmp(ProbabilityMode.c_str(),"Accumulation")==0){
 //      printf("LOOOP ON P\n");
@@ -162,8 +159,7 @@ void  HSCPDeDxInfoProducer::beginRun(edm::Run & run, const edm::EventSetup& iSet
       exit(0);
    }
 
-
-
+   
 /*
    for(int i=0;i<Prob_ChargePath->GetXaxis()->GetNbins();i++){
       for(int j=0;j<Prob_ChargePath->GetYaxis()->GetNbins();j++){
@@ -173,8 +169,7 @@ void  HSCPDeDxInfoProducer::beginRun(edm::Run & run, const edm::EventSetup& iSet
       }
    }
 */
-
-
+   
 
    if(MODsColl.size()==0){
       edm::ESHandle<TrackerGeometry> tkGeom;
@@ -221,11 +216,11 @@ void  HSCPDeDxInfoProducer::beginRun(edm::Run & run, const edm::EventSetup& iSet
              MODsColl[MOD->DetId] = MOD;
          }
       }
- 
-      MakeCalibrationMap();
    }
 
+   MakeCalibrationMap(run.run());
 }
+   
 
 void  HSCPDeDxInfoProducer::endJob()
 {
@@ -236,6 +231,7 @@ void  HSCPDeDxInfoProducer::endJob()
 
 void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+
   auto_ptr<ValueMap<susybsm::HSCPDeDxInfo> > trackDeDxDiscrimAssociation(new ValueMap<susybsm::HSCPDeDxInfo> );  
   ValueMap<susybsm::HSCPDeDxInfo>::Filler filler(*trackDeDxDiscrimAssociation);
 
@@ -256,6 +252,7 @@ void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
    for(TrajTrackAssociationCollection::const_iterator it = TrajToTrackMap.begin(); it!=TrajToTrackMap.end(); ++it, track_index++) {
       dEdxInfos[track_index] = susybsm::HSCPDeDxInfo();
 
+      
       const Track      track = *it->val;
       const Trajectory traj  = *it->key;
 
@@ -304,15 +301,9 @@ void HSCPDeDxInfoProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
 		hscpDeDxInfo.localy.push_back((sistripsimple1dhit->localPosition()).y());
 		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
 	 }else if(pixelHit){
-                double cosine = trajState.localDirection().z() / trajState.localDirection().mag();
-                stModInfo* MOD = MODsColl[pixelHit->geographicalId()];
-                hscpDeDxInfo.charge.push_back(pixelHit->cluster()->charge());
-                hscpDeDxInfo.probability.push_back(-2);
-                hscpDeDxInfo.pathlength.push_back(MOD->Thickness/std::abs(cosine));
-                hscpDeDxInfo.cosine.push_back(cosine);
-                hscpDeDxInfo.detIds.push_back(pixelHit->geographicalId());
-                hscpDeDxInfo.shapetest.push_back(false);
-		hscpDeDxInfo.localx.push_back((pixelHit->localPosition()).x());
+	        FillPixelInfo((pixelHit->cluster()).get(), trajState,pixelHit->geographicalId(), hscpDeDxInfo);       
+		hscpDeDxInfo.shapetest.push_back(true); // doesn't make sense for pixel-> set always to true
+                hscpDeDxInfo.localx.push_back((pixelHit->localPosition()).x());
 		hscpDeDxInfo.localy.push_back((pixelHit->localPosition()).y());
 		hscpDeDxInfo.subdetid.push_back(detid.subdetId());
 	 }else{
@@ -369,26 +360,78 @@ void HSCPDeDxInfoProducer::FillInfo(const SiStripCluster*   cluster, TrajectoryS
    hscpDeDxInfo.detIds.push_back(detId);
 }
 
-void HSCPDeDxInfoProducer::MakeCalibrationMap(){
-   if(!useCalibration)return;
 
+void HSCPDeDxInfoProducer::FillPixelInfo(const SiPixelCluster*   cluster, TrajectoryStateOnSurface trajState,  const uint32_t &  detId, susybsm::HSCPDeDxInfo& hscpDeDxInfo)
+{
+
+   // Get All needed variables
+   LocalVector             trackDirection = trajState.localDirection();
+   double                  cosine         = trackDirection.z()/trackDirection.mag();
+   const vector<uint16_t>& ampls          = cluster->pixelADC();
+   stModInfo* MOD                         = MODsColl[detId];
+
+
+   // Find Probability for this given Charge and Path
+   double charge = 0;
+   if(useCalibration){
+      for(unsigned int i=0;i<ampls.size();i++){
+         int CalibratedCharge = ampls[i];
+         CalibratedCharge = (int)(CalibratedCharge / MOD->Gain);
+         charge+=CalibratedCharge;
+      }
+   }else{
+     for(unsigned int i=0;i<ampls.size();i++){
+       int CalibratedCharge = ampls[i];
+       CalibratedCharge = (int)(CalibratedCharge);
+       charge+=CalibratedCharge;
+     }      
+   }
+
+   double path   = DeDxDiscriminatorTools::path(cosine,MOD->Thickness);
+
+   int    BinX   = Prob_ChargePath->GetXaxis()->FindBin(trajState.localMomentum().mag());
+   int    BinY   = Prob_ChargePath->GetYaxis()->FindBin(path);
+   int    BinZ   = Prob_ChargePath->GetZaxis()->FindBin(charge/path);
+   double Prob   = Prob_ChargePath->GetBinContent(BinX,BinY,BinZ);
+
+   hscpDeDxInfo.charge.push_back(charge);
+   hscpDeDxInfo.probability.push_back(Prob);
+   hscpDeDxInfo.pathlength.push_back(path);
+   hscpDeDxInfo.cosine.push_back(cosine);
+   hscpDeDxInfo.detIds.push_back(detId);
+}
+
+
+void HSCPDeDxInfoProducer::MakeCalibrationMap(unsigned int run){
+
+   if(!useCalibration)return;
 
    TChain* t1 = new TChain("SiStripCalib/APVGain");
    t1->Add(m_calibrationPath.c_str());
 
-   unsigned int  tree_DetId;
-   unsigned char tree_APVId;
-   double        tree_Gain;
+   unsigned int  tree_DetId[16588];
+   unsigned char tree_APVId[16588];
+   double        tree_Gain[16588];
+   unsigned int  firstRun;
+   unsigned int  lastRun;
 
-   t1->SetBranchAddress("DetId"             ,&tree_DetId      );
-   t1->SetBranchAddress("APVId"             ,&tree_APVId      );
-   t1->SetBranchAddress("Gain"              ,&tree_Gain       );
+   t1->SetBranchAddress("DetId"             ,tree_DetId      );
+   t1->SetBranchAddress("APVId"             ,tree_APVId      );
+   t1->SetBranchAddress("Gain"              ,tree_Gain       );
+   t1->SetBranchAddress("firstRun"          ,&firstRun       );
+   t1->SetBranchAddress("lastRun"           ,&lastRun        );
 
    for (unsigned int ientry = 0; ientry < t1->GetEntries(); ientry++) {
        t1->GetEntry(ientry);
-       stModInfo* MOD  = MODsColl[tree_DetId];
-       MOD->Gain = tree_Gain;
+       if(run<=lastRun && run>=firstRun){
+       	 for(int j=0; j<16588; j++){
+	   stModInfo* MOD  = MODsColl[tree_DetId[j]];
+	   MOD->Gain = tree_Gain[j];
+	 }
+	 break;
+       }
    }
+ 
 
    delete t1;
 
