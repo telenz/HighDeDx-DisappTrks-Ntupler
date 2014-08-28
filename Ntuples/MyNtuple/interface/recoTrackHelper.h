@@ -114,26 +114,33 @@ namespace reco
 	double caloHadDeltaRp5W();
 
 	// ------------------------- For DeDx ----------------------
-	//For DeDxNPHarm2
+	  //For DeDxNPHarm2
 	  reco::DeDxData dEdxNPHarm2Track;
-	  edm::ValueMap<reco::DeDxData> dEdxTrackMap;
+	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapHarm2;
 	  //For DeDxNPTru40
 	  reco::DeDxData dEdxNPTru40Track;
+	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapTru40;
+	  //For DeDxHarm2
+	  reco::DeDxData dEdxHarm2Track;
+	  edm::ValueMap<reco::DeDxData> dEdxTrackMapHarm2;
+	  //For DeDxNPTru40
+	  reco::DeDxData dEdxTru40Track;
 	  edm::ValueMap<reco::DeDxData> dEdxTrackMapTru40;
-	  //For DeDxHitsNPHarm2
-	  susybsm::HSCPDeDxInfo dEdxHitsNPHarm2Track;
+	  //For my calculation of De/dx
+	  susybsm::HSCPDeDxInfo dEdxHitsHarm2Track;
 	  edm::ValueMap<susybsm::HSCPDeDxInfo> dEdxHitsTrackMap;
 
 	  double dEdxHits(unsigned int nHits, std::string method){
 
 	    std::vector<double> vect_charge;
-	    for(unsigned int i=0; i<dEdxHitsNPHarm2Track.charge.size(); i++){
+	    for(unsigned int i=0; i<dEdxHitsHarm2Track.charge.size(); i++){
 	    
-	      if(dEdxHitsNPHarm2Track.subdetid[i]<3) continue;  // skip pixels
-	      if(!dEdxHitsNPHarm2Track.shapetest[i]) continue;  // shape test ???
-	      double Norm =3.61e-06*265;                        // unit change
-	      Norm *=10.0;                                      // mm --> cm
-	      vect_charge.push_back(Norm*dEdxHitsNPHarm2Track.charge[i]/dEdxHitsNPHarm2Track.pathlength[i]);
+	      //if(dEdxHitsHarm2Track.subdetid[i]<3) continue;                                      // skip pixels
+	      if(dEdxHitsHarm2Track.subdetid[i]>2 && !dEdxHitsHarm2Track.shapetest[i]) continue;  // shape test only for strips 
+	      double Norm =3.61e-06*265;                                                              // unit change
+	      if(dEdxHitsHarm2Track.subdetid[i]<3) Norm=Norm/265.;                                  // only for pixel 
+	      Norm *=10.0;                                                                            // mm --> cm
+	      vect_charge.push_back(Norm*dEdxHitsHarm2Track.charge[i]/dEdxHitsHarm2Track.pathlength[i]);
 	      if(vect_charge.size()==nHits) break;
 	    }
 
@@ -212,14 +219,18 @@ namespace reco
 	 double dEdxNPHarm2() {return dEdxNPHarm2Track.dEdx();};
 	 double dEdxNPTru40() {return dEdxNPTru40Track.dEdx();};
 	 unsigned int dEdxNPNoM() {return dEdxNPHarm2Track.numberOfSaturatedMeasurements();};
-	
-	 double dEdxHitsNPHarm2(int nHits) {
+	 double dEdxHarm2() {return dEdxHarm2Track.dEdx();};
+	 double dEdxTru40() {return dEdxTru40Track.dEdx();};
+	 unsigned int dEdxNoM() {return dEdxHarm2Track.numberOfSaturatedMeasurements();};
+	 	 
+
+	 double dEdxHitsHarm2(int nHits) {
 	   return dEdxHits(nHits, "harm2");
 	 };
-	 double dEdxHitsNPTrun40(int nHits) {
+	 double dEdxHitsTrun40(int nHits) {
 	   return dEdxHits(nHits, "trun40");
 	 };
-	 double dEdxHitsNPMedian(int nHits) {
+	 double dEdxHitsMedian(int nHits) {
 	   return dEdxHits(nHits, "median");
 	 };
 	
