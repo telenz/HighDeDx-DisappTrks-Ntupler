@@ -51,8 +51,9 @@ private:
   virtual void endJob() ;
 
   void FillInfo(const SiStripCluster*   cluster, TrajectoryStateOnSurface trajState,const uint32_t &, susybsm::HSCPDeDxInfo& hscpDeDxInfo);
+  void FillPixelInfo(const SiPixelCluster*   cluster, TrajectoryStateOnSurface trajState,const uint32_t &, susybsm::HSCPDeDxInfo& hscpDeDxInfo);
   void FillPosition(TrajectoryStateOnSurface trajState,  const uint32_t &  detId, susybsm::HSCPDeDxInfo& hscpDeDxInfo);
-  void   MakeCalibrationMap();
+  void   MakeCalibrationMap(unsigned int run);
 
 
   // ----------member data ---------------------------
