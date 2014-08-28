@@ -27,6 +27,7 @@ options = VarParsing.VarParsing("analysis")
 # 2011_B_data-PR_-11
 # 2012_X_MC-bg_2400
 # 2012_B_data-PR_muon
+"""
 options.register ('jobParams',
                   #'multicrab',
                   #'2012_A_data-PR_-11',	# -1	2012A collisions
@@ -52,11 +53,18 @@ options.register ('jobParams',
                   #'2012_X_MC-bg_9125',		# 9125  TTH_125_Fast
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.string )
+"""
+
+options.register ('runOnMC',
+		  1,
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.bool )
+
 options.maxEvents = maxEvents
 #options.outputFile = 'NUT.root'
 options.parseArguments()
 
-
+"""
 # === Parse Job Params === #
 import shlex;
 my_splitter = shlex.shlex(options.jobParams, posix=True);
@@ -85,6 +93,10 @@ if (runOnMC and sampleNumber < 0):
 
 if (not runOnMC and sampleNumber >= 0):
 	print "ERROR: job set to run on collision data but sample number set to '" + sampleNumber + "' when it must be negative."; sys.exit(1);
+"""
+
+runOnMC = options.runOnMC
+runOnFastSim = False
 
 
 # === Print some basic info about the job setup === #
@@ -93,11 +105,7 @@ print ' ========================================='
 print '     BEAN Production Job'
 print ' ========================================='
 print ''
-print '     Job Type.......%s' % options.jobParams
-print '       - era........%s' % jobParams[0]
-print '       - sub-era....%s' % jobParams[1]
-print '       - sample num.%s' % jobParams[3]
-print '       - Run on MC..%d' % runOnMC 
+print '     Run on MC......%d' % runOnMC 
 print '     Max events.....%d' % options.maxEvents
 print '     Report every...%d' % reportEvery
 print ''
@@ -235,12 +243,6 @@ inputFiles = [] # overwritten, if "useRelVals" is 'True'
 
 
 
-if not runOnMC and sampleNumber>=0:
-  sys.exit( 'ERROR: Expecting to run on data with sampleNumber>=0.  The sampleNumber must be negative when running on data.' )
-
-if runOnMC and sampleNumber<0:
-  sys.exit( 'ERROR: Expecting to run on MC with sampleNumber<0.  The sampleNumber must be positive when running on MC.' )
-
 # maximum number of events
 maxInputEvents = 10 # reduce for testing
 
@@ -312,7 +314,7 @@ process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
-process.source.fileNames = ["file:0023A185-2F84-E211-BECE-002590596468.root"]
+process.source.fileNames = ["file:dataFile.root"]
 
 
 ###
@@ -1704,17 +1706,30 @@ else:
 			  connect = cms.untracked.string("sqlite_file:SUSYBSMAnalysis/HSCP/data/Data7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
 		)
 
-process.dedxHarm2.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxTru40.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxProd.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxASmi.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNPHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNPTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNSHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNSTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNPProd.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxNPASmi.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-process.dedxHitInfo.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+if runOnMC:
+  process.dedxHarm2.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxTru40.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxProd.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxASmi.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNPHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNPTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNSHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNSTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNPProd.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxNPASmi.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  process.dedxHitInfo.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+else:
+  process.dedxHarm2.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxTru40.calibrationPath      = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxProd.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxASmi.calibrationPath       = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNPHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNPTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNSHarm2.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNSTru40.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNPProd.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxNPASmi.calibrationPath     = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  process.dedxHitInfo.calibrationPath    = cms.string("file:SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
 
 process.dedxHarm2.UseCalibration       = cms.bool(True)
 process.dedxTru40.UseCalibration       = cms.bool(True)
@@ -1733,7 +1748,6 @@ process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
 #process.nEventsTest   = cms.EDProducer("EventCountProducer")
 
 #process.p1 = cms.Path(process.nEventsBefSkim + process.genParticles + process.exoticaHSCPSeq + process.nEventsBefEDM + process.ak5PFJetsPt15 + process.HSCParticleProducerSeq)
-
 
 #pPF += process.nEventsTest
 pPF += process.exoticaHSCPSeq
