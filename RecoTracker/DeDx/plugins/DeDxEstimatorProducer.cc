@@ -225,7 +225,7 @@ void DeDxEstimatorProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
            pixel.trajectoryMeasurement = &(*it);
            pixel.angleCosine = cosine; 
 	   pixel.charge = getPixelCharge((pixelHit->cluster()).get(),pixelHit->geographicalId());
-           //pixel.charge = pixelHit->cluster()->charge();
+	   //pixel.charge = pixelHit->cluster()->charge();
            pixel.NSaturating=-1;
            pixel.detId= pixelHit->geographicalId();
            hits.push_back(pixel);
