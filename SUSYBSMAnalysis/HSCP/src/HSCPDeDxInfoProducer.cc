@@ -391,7 +391,7 @@ void HSCPDeDxInfoProducer::FillPixelInfo(const SiPixelCluster*   cluster, Trajec
 
    int    BinX   = Prob_ChargePath->GetXaxis()->FindBin(trajState.localMomentum().mag());
    int    BinY   = Prob_ChargePath->GetYaxis()->FindBin(path);
-   int    BinZ   = Prob_ChargePath->GetZaxis()->FindBin(charge/path);
+   int    BinZ   = Prob_ChargePath->GetZaxis()->FindBin(charge/path/265.);
    double Prob   = Prob_ChargePath->GetBinContent(BinX,BinY,BinZ);
 
    hscpDeDxInfo.charge.push_back(charge);
