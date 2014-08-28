@@ -1,7 +1,7 @@
 # DeDx-DisappTrks-Ntupler
 # =======================
 
-# Can be used to get ntuples out of RECO and AODSIM files
+# Can be used to get ntuples out of RECO and AOD files
 	
 	mkdir HighDeDx-DisappTrks-Ntupler
  	cd HighDeDx-DisappTrks-Ntupler
