@@ -43,7 +43,7 @@ private:
   virtual void endJob() ;
 
   int    getCharge(const SiStripCluster*   Cluster, int& Saturating_Strips,const uint32_t &);
-  int    getPixelCharge(const SiPixelCluster*   Cluster, int& Saturating_Strips,const uint32_t &);
+  int    getPixelCharge(const SiPixelCluster*   Cluster,const uint32_t &);
 //  int    getCharge(const SiStripRecHit2D* sistripsimplehit, int& Saturating_Strips);
   void   MakeCalibrationMap(unsigned int run);
 
