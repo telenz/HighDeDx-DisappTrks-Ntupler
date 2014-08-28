@@ -1,4 +1,4 @@
-**/.pyc
+**/*.pyc
 SUSYBSMAnalysis/HSCP/python/*.pyc
 **/*~
 **/*.root
