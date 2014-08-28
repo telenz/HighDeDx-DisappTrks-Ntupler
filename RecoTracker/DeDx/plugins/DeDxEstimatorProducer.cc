@@ -97,7 +97,7 @@ void  DeDxEstimatorProducer::beginRun(edm::Run& run, const edm::EventSetup& iSet
    iSetup.get<TrackerDigiGeometryRecord>().get( tkGeom );
 
    vector<GeomDet*> Det = tkGeom->dets();
-   cout<<"Det.size() = "<<Det.size()<<endl;
+   
    for(unsigned int i=0;i<Det.size();i++){
       DetId  Detid  = Det[i]->geographicalId();
 
