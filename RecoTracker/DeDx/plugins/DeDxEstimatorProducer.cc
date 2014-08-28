@@ -224,7 +224,7 @@ void DeDxEstimatorProducer::produce(edm::Event& iEvent, const edm::EventSetup& i
 
            pixel.trajectoryMeasurement = &(*it);
            pixel.angleCosine = cosine; 
-	   pixel.charge = getPixelCharge((pixelHit->cluster()).get(),pixel.NSaturating,pixelHit->geographicalId());
+	   pixel.charge = getPixelCharge((pixelHit->cluster()).get(),pixelHit->geographicalId());
            //pixel.charge = pixelHit->cluster()->charge();
            pixel.NSaturating=-1;
            pixel.detId= pixelHit->geographicalId();
@@ -284,7 +284,6 @@ void DeDxEstimatorProducer::MakeCalibrationMap(unsigned int run)
 
    for (unsigned int ientry = 0; ientry < t1->GetEntries(); ientry++) {
        t1->GetEntry(ientry);
-
        if(run<=lastRun && run>=firstRun){
        	 for(int j=0; j<16588; j++){
 	   stModInfo* MOD  = MODsColl[tree_DetId[j]];
@@ -335,7 +334,7 @@ int DeDxEstimatorProducer::getCharge(const SiStripCluster*   Cluster, int& Satur
 }
 
 
-int DeDxEstimatorProducer::getPixelCharge(const SiPixelCluster*   Cluster, int& Saturating_Strips,
+int DeDxEstimatorProducer::getPixelCharge(const SiPixelCluster*   Cluster,
 				     const uint32_t & DetId)
 {
    const vector<uint16_t>&  Ampls       = Cluster->pixelADC();
