@@ -6,7 +6,7 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     skipBadFiles = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring('file:0023A185-2F84-E211-BECE-002590596468.root')
+    fileNames = cms.untracked.vstring('file:dataFile.root')
 )
 process.BeamHaloSummary = cms.EDProducer("BeamHaloSummaryProducer",
     l_HcalPhiWedgeConfidence = cms.double(0.7),
@@ -2808,7 +2808,7 @@ process.ak5GenJetsNoNu = cms.EDProducer("FastjetJetProducer",
     maxProblematicHcalCells = cms.uint32(9999999),
     src = cms.InputTag("genParticlesForJetsNoNu"),
     inputEtMin = cms.double(0.0),
-    srcPVs = cms.InputTag("goodOfflinePrimaryVertices"),
+    srcPVs = cms.InputTag(""),
     jetPtMin = cms.double(3.0),
     radiusPU = cms.double(0.5),
     maxProblematicEcalCells = cms.uint32(9999999),
@@ -3531,7 +3531,7 @@ process.ak7GenJetsNoNu = cms.EDProducer("FastjetJetProducer",
     maxProblematicHcalCells = cms.uint32(9999999),
     src = cms.InputTag("genParticlesForJetsNoNu"),
     inputEtMin = cms.double(0.0),
-    srcPVs = cms.InputTag("goodOfflinePrimaryVertices"),
+    srcPVs = cms.InputTag(""),
     jetPtMin = cms.double(3.0),
     radiusPU = cms.double(0.5),
     maxProblematicEcalCells = cms.uint32(9999999),
@@ -27503,7 +27503,7 @@ process.iterativeCone5GenJetsNoNu = cms.EDProducer("FastjetJetProducer",
     maxProblematicHcalCells = cms.uint32(9999999),
     src = cms.InputTag("genParticlesForJetsNoNu"),
     inputEtMin = cms.double(0.0),
-    srcPVs = cms.InputTag("goodOfflinePrimaryVertices"),
+    srcPVs = cms.InputTag(""),
     jetPtMin = cms.double(3.0),
     radiusPU = cms.double(0.5),
     maxProblematicEcalCells = cms.uint32(9999999),
@@ -31151,7 +31151,7 @@ process.muonMETValueMapProducer = cms.EDProducer("MuonMETValueMapProducer",
 
 
 process.muonMatch = cms.EDProducer("MCMatcher",
-    src = cms.InputTag("muons"),
+    src = cms.InputTag("pfIsolatedMuonsPFlow"),
     maxDPtRel = cms.double(0.5),
     mcPdgId = cms.vint32(13),
     mcStatus = cms.vint32(1),
@@ -33168,14 +33168,14 @@ process.patElectrons = cms.EDProducer("PATElectronProducer",
         mvaTrigV0 = cms.InputTag("mvaTrigV0"),
         mvaNonTrigV0 = cms.InputTag("mvaNonTrigV0")
     ),
-    genParticleMatch = cms.InputTag("electronMatch"),
+    genParticleMatch = cms.InputTag(""),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     isoDeposits = cms.PSet(
 
     ),
-    embedGenMatch = cms.bool(True)
+    embedGenMatch = cms.bool(False)
 )
 
 
@@ -33227,9 +33227,9 @@ process.patElectronsLoosePFlow = cms.EDProducer("PATElectronProducer",
         mvaTrigV0 = cms.InputTag("mvaTrigV0"),
         mvaNonTrigV0 = cms.InputTag("mvaNonTrigV0")
     ),
-    genParticleMatch = cms.InputTag("electronMatchPFlow"),
+    genParticleMatch = cms.InputTag(""),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     isoDeposits = cms.PSet(
         pfPUChargedHadrons = cms.InputTag("elPFIsoDepositPULoosePFlow"),
@@ -33238,7 +33238,7 @@ process.patElectronsLoosePFlow = cms.EDProducer("PATElectronProducer",
         pfPhotons = cms.InputTag("elPFIsoDepositGammaLoosePFlow"),
         pfChargedAll = cms.InputTag("elPFIsoDepositChargedAllLoosePFlow")
     ),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     isolationValues = cms.PSet(
         pfPUChargedHadrons = cms.InputTag("isoValElectronWithPUDR03LoosePFlow"),
         pfChargedHadrons = cms.InputTag("isoValElectronWithChargedDR03LoosePFlow"),
@@ -33296,9 +33296,9 @@ process.patElectronsPFlow = cms.EDProducer("PATElectronProducer",
     reducedEndcapRecHitCollection = cms.InputTag("reducedEcalRecHitsEE"),
     pvSrc = cms.InputTag("goodOfflinePrimaryVertices"),
     addResolutions = cms.bool(False),
-    genParticleMatch = cms.InputTag("electronMatchPFlow"),
+    genParticleMatch = cms.InputTag(""),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     electronIDSources = cms.PSet(
         mvaTrigV0 = cms.InputTag("mvaTrigV0"),
         mvaNonTrigV0 = cms.InputTag("mvaNonTrigV0")
@@ -33310,7 +33310,7 @@ process.patElectronsPFlow = cms.EDProducer("PATElectronProducer",
         pfPhotons = cms.InputTag("elPFIsoDepositGammaPFlow"),
         pfChargedHadrons = cms.InputTag("elPFIsoDepositChargedPFlow")
     ),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     isolationValues = cms.PSet(
         pfNeutralHadrons = cms.InputTag("elPFIsoValueNeutral03PFIdPFlow"),
         pfChargedAll = cms.InputTag("elPFIsoValueChargedAll04PFIdPFlow"),
@@ -33372,7 +33372,8 @@ process.patJetCorrFactors = cms.EDProducer("JetCorrFactorsProducer",
     primaryVertices = cms.InputTag("offlinePrimaryVertices"),
     levels = cms.vstring('L1FastJet', 
         'L2Relative', 
-        'L3Absolute'),
+        'L3Absolute', 
+        'L2L3Residual'),
     useNPV = cms.bool(True),
     rho = cms.InputTag("kt6PFJets","rho"),
     useRho = cms.bool(True),
@@ -33387,7 +33388,8 @@ process.patJetCorrFactorsAK5PF = cms.EDProducer("JetCorrFactorsProducer",
     primaryVertices = cms.InputTag("offlinePrimaryVertices"),
     levels = cms.vstring('L1FastJet', 
         'L2Relative', 
-        'L3Absolute'),
+        'L3Absolute', 
+        'L2L3Residual'),
     useNPV = cms.bool(True),
     rho = cms.InputTag("kt6PFJets","rho"),
     useRho = cms.bool(True),
@@ -33402,7 +33404,8 @@ process.patJetCorrFactorsPFlow = cms.EDProducer("JetCorrFactorsProducer",
     primaryVertices = cms.InputTag("goodOfflinePrimaryVertices"),
     levels = cms.vstring('L1FastJet', 
         'L2Relative', 
-        'L3Absolute'),
+        'L3Absolute', 
+        'L2L3Residual'),
     useNPV = cms.bool(True),
     rho = cms.InputTag("kt6PFJets","rho"),
     useRho = cms.bool(True),
@@ -33545,24 +33548,24 @@ process.patJetPartonsPFlow = cms.EDProducer("PartonSelector",
 
 process.patJets = cms.EDProducer("PATJetProducer",
     addJetCharge = cms.bool(True),
-    addGenJetMatch = cms.bool(True),
+    addGenJetMatch = cms.bool(False),
     embedPFCandidates = cms.bool(True),
     embedGenJetMatch = cms.bool(True),
     addAssociatedTracks = cms.bool(True),
     partonJetSource = cms.InputTag("NOT_IMPLEMENTED"),
-    addGenPartonMatch = cms.bool(True),
-    JetPartonMapSource = cms.InputTag("patJetFlavourAssociation"),
+    addGenPartonMatch = cms.bool(False),
+    JetPartonMapSource = cms.InputTag(""),
     resolutions = cms.PSet(
 
     ),
-    genPartonMatch = cms.InputTag("patJetPartonMatch"),
+    genPartonMatch = cms.InputTag(""),
     addTagInfos = cms.bool(False),
     addPartonJetMatch = cms.bool(False),
-    embedGenPartonMatch = cms.bool(True),
+    embedGenPartonMatch = cms.bool(False),
     efficiencies = cms.PSet(
 
     ),
-    genJetMatch = cms.InputTag("patJetGenJetMatch"),
+    genJetMatch = cms.InputTag(""),
     userData = cms.PSet(
         userCands = cms.PSet(
             src = cms.VInputTag("")
@@ -33590,7 +33593,7 @@ process.patJets = cms.EDProducer("PATJetProducer",
     addBTagInfo = cms.bool(True),
     embedCaloTowers = cms.bool(True),
     addResolutions = cms.bool(False),
-    getJetMCFlavour = cms.bool(True),
+    getJetMCFlavour = cms.bool(False),
     addDiscriminators = cms.bool(True),
     jetChargeSource = cms.InputTag("patJetCharge"),
     addJetCorrFactors = cms.bool(True),
@@ -33601,24 +33604,24 @@ process.patJets = cms.EDProducer("PATJetProducer",
 
 process.patJetsAK5PF = cms.EDProducer("PATJetProducer",
     addJetCharge = cms.bool(True),
-    addGenJetMatch = cms.bool(True),
+    addGenJetMatch = cms.bool(False),
     embedGenJetMatch = cms.bool(True),
     addAssociatedTracks = cms.bool(True),
     addBTagInfo = cms.bool(True),
     partonJetSource = cms.InputTag("NOT_IMPLEMENTED"),
-    addGenPartonMatch = cms.bool(True),
-    JetPartonMapSource = cms.InputTag("patJetFlavourAssociationAK5PF"),
+    addGenPartonMatch = cms.bool(False),
+    JetPartonMapSource = cms.InputTag("AK5PF"),
     resolutions = cms.PSet(
 
     ),
-    genPartonMatch = cms.InputTag("patJetPartonMatchAK5PF"),
+    genPartonMatch = cms.InputTag("AK5PF"),
     addTagInfos = cms.bool(False),
     addPartonJetMatch = cms.bool(False),
-    embedGenPartonMatch = cms.bool(True),
+    embedGenPartonMatch = cms.bool(False),
     efficiencies = cms.PSet(
 
     ),
-    genJetMatch = cms.InputTag("patJetGenJetMatchAK5PF"),
+    genJetMatch = cms.InputTag("AK5PF"),
     userData = cms.PSet(
         userCands = cms.PSet(
             src = cms.VInputTag("")
@@ -33648,7 +33651,7 @@ process.patJetsAK5PF = cms.EDProducer("PATJetProducer",
     embedPFCandidates = cms.bool(True),
     addJetCorrFactors = cms.bool(True),
     addResolutions = cms.bool(False),
-    getJetMCFlavour = cms.bool(True),
+    getJetMCFlavour = cms.bool(False),
     addDiscriminators = cms.bool(True),
     jetChargeSource = cms.InputTag("patJetChargeAK5PF"),
     embedCaloTowers = cms.bool(True),
@@ -33659,24 +33662,24 @@ process.patJetsAK5PF = cms.EDProducer("PATJetProducer",
 
 process.patJetsPFlow = cms.EDProducer("PATJetProducer",
     addJetCharge = cms.bool(True),
-    addGenJetMatch = cms.bool(True),
+    addGenJetMatch = cms.bool(False),
     embedGenJetMatch = cms.bool(True),
     addAssociatedTracks = cms.bool(True),
     addBTagInfo = cms.bool(True),
     partonJetSource = cms.InputTag("NOT_IMPLEMENTED"),
-    addGenPartonMatch = cms.bool(True),
-    JetPartonMapSource = cms.InputTag("patJetFlavourAssociationPFlow"),
+    addGenPartonMatch = cms.bool(False),
+    JetPartonMapSource = cms.InputTag(""),
     resolutions = cms.PSet(
 
     ),
-    genPartonMatch = cms.InputTag("patJetPartonMatchPFlow"),
+    genPartonMatch = cms.InputTag(""),
     addTagInfos = cms.bool(False),
     addPartonJetMatch = cms.bool(False),
-    embedGenPartonMatch = cms.bool(True),
+    embedGenPartonMatch = cms.bool(False),
     efficiencies = cms.PSet(
 
     ),
-    genJetMatch = cms.InputTag("patJetGenJetMatchPFlow"),
+    genJetMatch = cms.InputTag(""),
     userData = cms.PSet(
         userCands = cms.PSet(
             src = cms.VInputTag("")
@@ -33706,7 +33709,7 @@ process.patJetsPFlow = cms.EDProducer("PATJetProducer",
     embedPFCandidates = cms.bool(True),
     addJetCorrFactors = cms.bool(True),
     addResolutions = cms.bool(False),
-    getJetMCFlavour = cms.bool(True),
+    getJetMCFlavour = cms.bool(False),
     addDiscriminators = cms.bool(True),
     jetChargeSource = cms.InputTag("patJetChargePFlow"),
     embedCaloTowers = cms.bool(False),
@@ -33735,11 +33738,11 @@ process.patMETs = cms.EDProducer("PATMETProducer",
     ),
     addResolutions = cms.bool(False),
     addEfficiencies = cms.bool(False),
-    genMETSource = cms.InputTag("genMetTrue"),
+    genMETSource = cms.InputTag(""),
     efficiencies = cms.PSet(
 
     ),
-    addGenMET = cms.bool(True),
+    addGenMET = cms.bool(False),
     addMuonCorrections = cms.bool(True),
     muonSource = cms.InputTag("muons"),
     resolutions = cms.PSet(
@@ -33769,11 +33772,11 @@ process.patMETsAK5PF = cms.EDProducer("PATMETProducer",
     addResolutions = cms.bool(False),
     muonSource = cms.InputTag("muons"),
     addEfficiencies = cms.bool(False),
-    genMETSource = cms.InputTag("genMetTrue"),
+    genMETSource = cms.InputTag(""),
     efficiencies = cms.PSet(
 
     ),
-    addGenMET = cms.bool(True),
+    addGenMET = cms.bool(False),
     addMuonCorrections = cms.bool(False),
     resolutions = cms.PSet(
 
@@ -33802,11 +33805,11 @@ process.patMETsPFlow = cms.EDProducer("PATMETProducer",
     addResolutions = cms.bool(False),
     muonSource = cms.InputTag("muons"),
     addEfficiencies = cms.bool(False),
-    genMETSource = cms.InputTag("genMetTrue"),
+    genMETSource = cms.InputTag(""),
     efficiencies = cms.PSet(
 
     ),
-    addGenMET = cms.bool(True),
+    addGenMET = cms.bool(False),
     addMuonCorrections = cms.bool(False),
     resolutions = cms.PSet(
 
@@ -33890,14 +33893,14 @@ process.patMuons = cms.EDProducer("PATMuonProducer",
     embedMuonBestTrack = cms.bool(True),
     muonSource = cms.InputTag("muons"),
     embedCombinedMuon = cms.bool(True),
-    genParticleMatch = cms.InputTag("muonMatch"),
+    genParticleMatch = cms.InputTag(""),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     isoDeposits = cms.PSet(
 
     ),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     tcMETMuonCorrs = cms.InputTag("muonTCMETValueMapProducer","muCorrData"),
     embedPickyMuon = cms.bool(True)
 )
@@ -33948,7 +33951,7 @@ process.patMuonsLoosePFlow = cms.EDProducer("PATMuonProducer",
     embedCombinedMuon = cms.bool(True),
     genParticleMatch = cms.InputTag("muonMatchLoosePFlow"),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     isoDeposits = cms.PSet(
         pfPUChargedHadrons = cms.InputTag("muPFIsoDepositPULoosePFlow"),
@@ -33957,7 +33960,7 @@ process.patMuonsLoosePFlow = cms.EDProducer("PATMuonProducer",
         pfPhotons = cms.InputTag("muPFIsoDepositGammaLoosePFlow"),
         pfChargedAll = cms.InputTag("muPFIsoDepositChargedAllLoosePFlow")
     ),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     tcMETMuonCorrs = cms.InputTag("muonTCMETValueMapProducer","muCorrData"),
     isolationValues = cms.PSet(
         pfPUChargedHadrons = cms.InputTag("isoValMuonWithPUDR04LoosePFlow"),
@@ -34015,9 +34018,9 @@ process.patMuonsPFlow = cms.EDProducer("PATMuonProducer",
     embedMuonBestTrack = cms.bool(True),
     addResolutions = cms.bool(False),
     embedCombinedMuon = cms.bool(True),
-    genParticleMatch = cms.InputTag("muonMatchPFlow"),
+    genParticleMatch = cms.InputTag(""),
     beamLineSrc = cms.InputTag("offlineBeamSpot"),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     muonSource = cms.InputTag("muons"),
     isoDeposits = cms.PSet(
         pfNeutralHadrons = cms.InputTag("muPFIsoDepositNeutralPFlow"),
@@ -34026,7 +34029,7 @@ process.patMuonsPFlow = cms.EDProducer("PATMuonProducer",
         pfPhotons = cms.InputTag("muPFIsoDepositGammaPFlow"),
         pfChargedHadrons = cms.InputTag("muPFIsoDepositChargedPFlow")
     ),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     tcMETMuonCorrs = cms.InputTag("muonTCMETValueMapProducer","muCorrData"),
     embedPickyMuon = cms.bool(True),
     isolationValues = cms.PSet(
@@ -34061,7 +34064,7 @@ process.patPFJetMETtype1p2CorrPFlow = cms.EDProducer("PATPFJetMETcorrInputProduc
     offsetCorrLabel = cms.string('L1FastJet'),
     skipMuons = cms.bool(False),
     skipMuonSelection = cms.string('isGlobalMuon | isStandAloneMuon'),
-    jetCorrLabel = cms.string('L3Absolute')
+    jetCorrLabel = cms.string('L2L3Residual')
 )
 
 
@@ -34085,7 +34088,7 @@ process.patPFJetMETtype2CorrPFlow = cms.EDProducer("PATPFJetMETcorrInputProducer
     offsetCorrLabel = cms.string('L1FastJet'),
     skipMuons = cms.bool(False),
     skipMuonSelection = cms.string('isGlobalMuon | isStandAloneMuon'),
-    jetCorrLabel = cms.string('L3Absolute')
+    jetCorrLabel = cms.string('L2L3Residual')
 )
 
 
@@ -34160,7 +34163,7 @@ process.patPFMetPFlow = cms.EDProducer("PATMETProducer",
     efficiencies = cms.PSet(
 
     ),
-    addGenMET = cms.bool(True),
+    addGenMET = cms.bool(False),
     addMuonCorrections = cms.bool(False),
     muonSource = cms.InputTag("muons"),
     resolutions = cms.PSet(
@@ -34218,7 +34221,7 @@ process.patPhotons = cms.EDProducer("PATPhotonProducer",
         userFunctionLabels = cms.vstring(),
         userFunctions = cms.vstring()
     ),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     addEfficiencies = cms.bool(False),
     photonIDSources = cms.PSet(
@@ -34232,7 +34235,7 @@ process.patPhotons = cms.EDProducer("PATPhotonProducer",
 
     ),
     embedSuperCluster = cms.bool(True),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     resolutions = cms.PSet(
 
     ),
@@ -34241,7 +34244,7 @@ process.patPhotons = cms.EDProducer("PATPhotonProducer",
     userIsolation = cms.PSet(
 
     ),
-    genParticleMatch = cms.InputTag("photonMatch")
+    genParticleMatch = cms.InputTag("")
 )
 
 
@@ -34262,7 +34265,7 @@ process.patPhotonsPFlow = cms.EDProducer("PATPhotonProducer",
         userFunctionLabels = cms.vstring(),
         userFunctions = cms.vstring()
     ),
-    addGenMatch = cms.bool(True),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     addEfficiencies = cms.bool(False),
     photonIDSources = cms.PSet(
@@ -34276,11 +34279,11 @@ process.patPhotonsPFlow = cms.EDProducer("PATPhotonProducer",
 
     ),
     embedSuperCluster = cms.bool(True),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     resolutions = cms.PSet(
 
     ),
-    genParticleMatch = cms.InputTag("photonMatchPFlow"),
+    genParticleMatch = cms.InputTag(""),
     photonSource = cms.InputTag("photons"),
     userIsolation = cms.PSet(
 
@@ -34333,8 +34336,8 @@ process.patTaus = cms.EDProducer("PATTauProducer",
         byTightCombinedIsolationDeltaBetaCorr3Hits = cms.InputTag("hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr3Hits"),
         decayModeFinding = cms.InputTag("hpsPFTauDiscriminationByDecayModeFinding")
     ),
-    addGenJetMatch = cms.bool(True),
-    embedGenJetMatch = cms.bool(True),
+    addGenJetMatch = cms.bool(False),
+    embedGenJetMatch = cms.bool(False),
     embedLeadTrack = cms.bool(False),
     embedLeadPFCand = cms.bool(False),
     embedSignalPFChargedHadrCands = cms.bool(False),
@@ -34369,7 +34372,7 @@ process.patTaus = cms.EDProducer("PATTauProducer",
     efficiencies = cms.PSet(
 
     ),
-    genJetMatch = cms.InputTag("tauGenJetMatch"),
+    genJetMatch = cms.InputTag(""),
     embedIsolationPFCands = cms.bool(False),
     userData = cms.PSet(
         userCands = cms.PSet(
@@ -34394,8 +34397,8 @@ process.patTaus = cms.EDProducer("PATTauProducer",
     tauJetCorrFactorsSource = cms.VInputTag(cms.InputTag("patTauJetCorrFactors")),
     embedIsolationPFNeutralHadrCands = cms.bool(False),
     addTauID = cms.bool(True),
-    genParticleMatch = cms.InputTag("tauMatch"),
-    addGenMatch = cms.bool(True),
+    genParticleMatch = cms.InputTag(""),
+    addGenMatch = cms.bool(False),
     addResolutions = cms.bool(False),
     embedIsolationPFChargedHadrCands = cms.bool(False),
     embedIsolationTracks = cms.bool(False),
@@ -34407,7 +34410,7 @@ process.patTaus = cms.EDProducer("PATTauProducer",
         pfGamma = cms.InputTag("tauIsoDepositPFGammas")
     ),
     embedLeadPFChargedHadrCand = cms.bool(False),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     embedLeadPFNeutralCand = cms.bool(False)
 )
 
@@ -34464,8 +34467,8 @@ process.patTausPFlow = cms.EDProducer("PATTauProducer",
         againstMuonMedium2 = cms.InputTag("hpsPFTauDiscriminationByMediumMuonRejection2PFlow"),
         againstMuonTight2 = cms.InputTag("hpsPFTauDiscriminationByTightMuonRejection2PFlow")
     ),
-    addGenJetMatch = cms.bool(True),
-    embedGenJetMatch = cms.bool(True),
+    addGenJetMatch = cms.bool(False),
+    embedGenJetMatch = cms.bool(False),
     embedLeadTrack = cms.bool(False),
     embedLeadPFCand = cms.bool(False),
     embedSignalPFChargedHadrCands = cms.bool(False),
@@ -34500,7 +34503,7 @@ process.patTausPFlow = cms.EDProducer("PATTauProducer",
     efficiencies = cms.PSet(
 
     ),
-    genJetMatch = cms.InputTag("tauGenJetMatchPFlow"),
+    genJetMatch = cms.InputTag(""),
     addEfficiencies = cms.bool(False),
     userData = cms.PSet(
         userCands = cms.PSet(
@@ -34525,8 +34528,8 @@ process.patTausPFlow = cms.EDProducer("PATTauProducer",
     tauJetCorrFactorsSource = cms.VInputTag(cms.InputTag("patTauJetCorrFactors")),
     addResolutions = cms.bool(False),
     addTauID = cms.bool(True),
-    genParticleMatch = cms.InputTag("tauMatchPFlow"),
-    addGenMatch = cms.bool(True),
+    genParticleMatch = cms.InputTag(""),
+    addGenMatch = cms.bool(False),
     embedIsolationPFNeutralHadrCands = cms.bool(False),
     embedIsolationPFChargedHadrCands = cms.bool(False),
     embedIsolationTracks = cms.bool(False),
@@ -34538,7 +34541,7 @@ process.patTausPFlow = cms.EDProducer("PATTauProducer",
         pfGamma = cms.InputTag("tauIsoDepositPFGammasPFlow")
     ),
     embedLeadPFChargedHadrCand = cms.bool(False),
-    embedGenMatch = cms.bool(True),
+    embedGenMatch = cms.bool(False),
     embedLeadPFNeutralCand = cms.bool(False)
 )
 
@@ -45953,7 +45956,7 @@ process.step0a = cms.EDFilter("TriggerResultsFilter",
     l1tResults = cms.InputTag(""),
     l1techIgnorePrescales = cms.bool(False),
     hltResults = cms.InputTag("TriggerResults","","HLT"),
-    triggerConditions = cms.vstring('HLT_IsoMu20_eta2p1_TriCentralPFJet30_v*'),
+    triggerConditions = cms.vstring('HLT_Iso10Mu20_eta2p1_TriCentralPFJet30_v*'),
     throw = cms.bool(False),
     daqPartitions = cms.uint32(1)
 )
@@ -46165,6 +46168,8 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double  caloHadDeltaRp5()', 
         'double  dEdxNPHarm2()', 
         'double  dEdxNPTru40()', 
+        'double  dEdxHarm2()', 
+        'double  dEdxTru40()', 
         'unsigned int     dEdxNPNoM()', 
         'double  dEdxHitsNPHarm2(1000)', 
         'double  dEdxHitsNPHarm2(7)', 
@@ -46420,7 +46425,7 @@ process.muonPFIsolationDepositsSequencePFlow = cms.Sequence(process.muPFIsoDepos
 process.inclusiveVertexing = cms.Sequence(process.inclusiveVertexFinder+process.vertexMerger+process.trackVertexArbitrator+process.inclusiveMergedVertices)
 
 
-process.step0c = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.eventCleaningMC)
+process.step0c = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.eventCleaningData+process.HBHENoiseFilterResultProducer)
 
 
 process.pfNoPileUpSequence = cms.Sequence(process.pfPileUp+process.pfNoPileUp)
@@ -46636,7 +46641,7 @@ process.BeamHaloId = cms.Sequence(process.CSCHaloData+process.EcalHaloData+proce
 process.patDefaultSequenceTriggerEvent = cms.Sequence(process.patTriggerEvent)
 
 
-process.eventCleaning = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.eventCleaningMC)
+process.eventCleaning = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.eventCleaningData+process.HBHENoiseFilterResultProducer)
 
 
 process.produceShrinkingConeDiscriminationByTauNeuralClassifier = cms.Sequence(process.shrinkingConePFTauDiscriminationByTaNC+process.shrinkingConePFTauDiscriminationByTaNCfrOnePercent+process.shrinkingConePFTauDiscriminationByTaNCfrHalfPercent+process.shrinkingConePFTauDiscriminationByTaNCfrQuarterPercent+process.shrinkingConePFTauDiscriminationByTaNCfrTenthPercent)
@@ -46918,7 +46923,7 @@ process.doAlldEdXEstimatorsCTFP5LHC = cms.Sequence(process.dedxTruncated40CTFP5L
 process.patElectronEcalIsolation = cms.Sequence(process.eleIsoDepositEcalFromHits+process.eleIsoFromDepsEcalFromHitsByCrystal)
 
 
-process.looseLeptonSequence = cms.Sequence(process.pfIsolatedMuonsLoosePFlow+process.muonMatchLoosePFlow+process.patMuonsLoosePFlow+process.selectedPatMuonsLoosePFlow+process.selectedPatMuonsLoose+process.pfIsolatedElectronsLoosePFlow+process.patElectronsLoosePFlow+process.selectedPatElectronsLoosePFlow)
+process.looseLeptonSequence = cms.Sequence(process.pfIsolatedMuonsLoosePFlow+process.patMuonsLoosePFlow+process.selectedPatMuonsLoosePFlow+process.selectedPatMuonsLoose+process.pfIsolatedElectronsLoosePFlow+process.patElectronsLoosePFlow+process.selectedPatElectronsLoosePFlow)
 
 
 process.sisCone5JTA = cms.Sequence(process.sisCone5JetTracksAssociatorAtVertex+process.sisCone5JetTracksAssociatorAtCaloFace+process.sisCone5JetExtender)
@@ -47275,6 +47280,9 @@ process.muonreco = cms.Sequence(process.muontracking+process.muonIdProducerSeque
 process.ckftracks_woBH = cms.Sequence(process.iterTracking+process.electronSeedsSeq+process.doAlldEdXEstimators)
 
 
+process.patDefaultSequencePFlow = cms.Sequence(process.patElectronsPFlow+process.patMuonsPFlow+process.patHPSPFTauDiscriminationUpdatePFlow+process.patPFTauIsolationPFlow+process.patJetCorrectionsPFlow+process.jetTracksAssociatorAtVertexPFlow+process.btaggingAODPFlow+process.patJetChargePFlow+process.patJetsPFlow+process.patPFParticlesPFlow+process.patCandidateSummaryPFlow+process.selectedPatElectronsPFlow+process.selectedPatMuonsPFlow+process.selectedPatJetsPFlow+process.producePatPFMETCorrectionsPFlow+process.patMETsPFlow+process.selectedPatPFParticlesPFlow+process.selectedPatCandidateSummaryPFlow+process.countPatElectronsPFlow+process.countPatMuonsPFlow+process.countPatLeptonsPFlow+process.countPatJetsPFlow+process.patDefaultSequenceTriggerPFlow+process.patDefaultSequenceTriggerEventPFlow+process.countPatPFParticlesPFlow)
+
+
 process.trackerCosmics_TopBot = cms.Sequence(process.trackerlocalrecoTop+process.tracksP5Top+process.trackerlocalrecoBottom+process.tracksP5Bottom)
 
 
@@ -47326,6 +47334,9 @@ process.PFBRECO = cms.Sequence(process.pfNoPileUpSequence+process.pfParticleSele
 process.pfBasedElectronPhotonIsoSequence = cms.Sequence(process.pfParticleSelectionSequence+process.pfSelectedElectrons+process.electronPFIsolationDepositsSequence+process.elPFIsoValueCharged03PFId+process.elPFIsoValueChargedAll03PFId+process.elPFIsoValueGamma03PFId+process.elPFIsoValueNeutral03PFId+process.elPFIsoValuePU03PFId+process.elPFIsoValueCharged04PFId+process.elPFIsoValueChargedAll04PFId+process.elPFIsoValueGamma04PFId+process.elPFIsoValueNeutral04PFId+process.elPFIsoValuePU04PFId+process.elPFIsoValueCharged03NoPFId+process.elPFIsoValueChargedAll03NoPFId+process.elPFIsoValueGamma03NoPFId+process.elPFIsoValueNeutral03NoPFId+process.elPFIsoValuePU03NoPFId+process.elPFIsoValueCharged04NoPFId+process.elPFIsoValueChargedAll04NoPFId+process.elPFIsoValueGamma04NoPFId+process.elPFIsoValueNeutral04NoPFId+process.elPFIsoValuePU04NoPFId+process.pfSelectedPhotons+process.photonPFIsolationDepositsSequence+process.phPFIsoValueCharged03PFId+process.phPFIsoValueChargedAll03PFId+process.phPFIsoValueGamma03PFId+process.phPFIsoValueNeutral03PFId+process.phPFIsoValuePU03PFId+process.phPFIsoValueCharged04PFId+process.phPFIsoValueChargedAll04PFId+process.phPFIsoValueGamma04PFId+process.phPFIsoValueNeutral04PFId+process.phPFIsoValuePU04PFId)
 
 
+process.patPF2PATSequencePFlow = cms.Sequence(process.pfNoPileUpSequencePFlow+process.pfParticleSelectionSequencePFlow+process.pfPhotonSequencePFlow+process.pfAllMuonsPFlow+process.pfMuonsFromVertexPFlow+process.pfMuonsFromVertexLoosePFlow+process.pfSelectedMuonsPFlow+process.pfSelectedMuonsLoosePFlow+process.muonPFIsolationDepositsSequencePFlow+process.muPFIsoValueCharged03PFlow+process.isoValMuonWithChargedDR03PFlow+process.isoValMuonWithChargedDR03LoosePFlow+process.muPFIsoValueChargedAll03PFlow+process.isoValMuonWithChargedAllDR03PFlow+process.isoValMuonWithChargedAllDR03LoosePFlow+process.muPFIsoValueGamma03PFlow+process.isoValMuonWithPhotonsDR03PFlow+process.isoValMuonWithPhotonsDR03LoosePFlow+process.muPFIsoValueNeutral03PFlow+process.isoValMuonWithNeutralDR03PFlow+process.isoValMuonWithNeutralDR03LoosePFlow+process.muPFIsoValueGammaHighThreshold03PFlow+process.muPFIsoValueNeutralHighThreshold03PFlow+process.muPFIsoValuePU03PFlow+process.isoValMuonWithPUDR03PFlow+process.isoValMuonWithPUDR03LoosePFlow+process.muPFIsoValueCharged04PFlow+process.isoValMuonWithChargedDR04PFlow+process.isoValMuonWithChargedDR04LoosePFlow+process.muPFIsoValueChargedAll04PFlow+process.isoValMuonWithChargedAllDR04PFlow+process.isoValMuonWithChargedAllDR04LoosePFlow+process.muPFIsoValueGamma04PFlow+process.isoValMuonWithPhotonsDR04PFlow+process.isoValMuonWithPhotonsDR04LoosePFlow+process.muPFIsoValueNeutral04PFlow+process.isoValMuonWithNeutralDR04PFlow+process.isoValMuonWithNeutralDR04LoosePFlow+process.muPFIsoValueGammaHighThreshold04PFlow+process.muPFIsoValueNeutralHighThreshold04PFlow+process.muPFIsoValuePU04PFlow+process.isoValMuonWithPUDR04PFlow+process.isoValMuonWithPUDR04LoosePFlow+process.pfIsolatedMuonsPFlow+process.pfMuonsPFlow+process.pfNoMuonPFlow+process.pfAllElectronsPFlow+process.pfElectronsFromVertexPFlow+process.pfElectronsFromVertexLoosePFlow+process.pfSelectedElectronsPFlow+process.pfSelectedElectronsLoosePFlow+process.electronPFIsolationDepositsSequencePFlow+process.elPFIsoValueCharged03PFIdPFlow+process.isoValElectronWithChargedDR03PFlow+process.isoValElectronWithChargedDR03LoosePFlow+process.elPFIsoValueChargedAll03PFIdPFlow+process.isoValElectronWithChargedAllDR03PFlow+process.isoValElectronWithChargedAllDR03LoosePFlow+process.elPFIsoValueGamma03PFIdPFlow+process.isoValElectronWithPhotonsDR03PFlow+process.isoValElectronWithPhotonsDR03LoosePFlow+process.elPFIsoValueNeutral03PFIdPFlow+process.isoValElectronWithNeutralDR03PFlow+process.isoValElectronWithNeutralDR03LoosePFlow+process.elPFIsoValuePU03PFIdPFlow+process.isoValElectronWithPUDR03PFlow+process.isoValElectronWithPUDR03LoosePFlow+process.elPFIsoValueCharged04PFIdPFlow+process.isoValElectronWithChargedDR04PFlow+process.isoValElectronWithChargedDR04LoosePFlow+process.elPFIsoValueChargedAll04PFIdPFlow+process.isoValElectronWithChargedAllDR04PFlow+process.isoValElectronWithChargedAllDR04LoosePFlow+process.elPFIsoValueGamma04PFIdPFlow+process.isoValElectronWithPhotonsDR04PFlow+process.isoValElectronWithPhotonsDR04LoosePFlow+process.elPFIsoValueNeutral04PFIdPFlow+process.isoValElectronWithNeutralDR04PFlow+process.isoValElectronWithNeutralDR04LoosePFlow+process.elPFIsoValuePU04PFIdPFlow+process.isoValElectronWithPUDR04PFlow+process.isoValElectronWithPUDR04LoosePFlow+process.elPFIsoValueCharged03NoPFIdPFlow+process.elPFIsoValueChargedAll03NoPFIdPFlow+process.elPFIsoValueGamma03NoPFIdPFlow+process.elPFIsoValueNeutral03NoPFIdPFlow+process.elPFIsoValuePU03NoPFIdPFlow+process.elPFIsoValueCharged04NoPFIdPFlow+process.elPFIsoValueChargedAll04NoPFIdPFlow+process.elPFIsoValueGamma04NoPFIdPFlow+process.elPFIsoValueNeutral04NoPFIdPFlow+process.elPFIsoValuePU04NoPFIdPFlow+process.pfIsolatedElectronsPFlow+process.pfElectronsPFlow+process.pfNoElectronPFlow+process.pfJetsPFlow+process.pfNoJetPFlow+process.pfTauSequencePFlow+process.pfNoTauPFlow+process.pfMETPFlow+process.patDefaultSequencePFlow)
+
+
 process.makePatTausPFlow = cms.Sequence(process.patHPSPFTauDiscriminationUpdatePFlow+process.patPFTauIsolationPFlow+process.tauMatchPFlow+process.tauGenJetsPFlow+process.tauGenJetsSelectorAllHadronsPFlow+process.tauGenJetMatchPFlow+process.patTausPFlow)
 
 
@@ -47335,25 +47346,10 @@ process.tracksP5_wodEdX = cms.Sequence(process.cosmictracksP5+process.ctftracksP
 process.muonrecowith_TeVRefinemen = cms.Sequence(process.muontracking_with_TeVRefinement+process.muonIdProducerSequence)
 
 
+process.muonrecoComplete_minus_SET_minus_muIDmaps = cms.Sequence(process.muonrecowith_TeVRefinemen+process.muIsolation)
+
+
 process.PFBRECOPFlow = cms.Sequence(process.pfNoPileUpSequencePFlow+process.pfParticleSelectionSequencePFlow+process.pfPhotonSequencePFlow+process.pfMuonSequencePFlow+process.pfNoMuonPFlow+process.pfElectronSequencePFlow+process.pfNoElectronPFlow+process.pfJetsPFlow+process.pfNoJetPFlow+process.pfTauSequencePFlow+process.pfNoTauPFlow+process.pfMETPFlow)
-
-
-process.makePatTaus = cms.Sequence(process.patHPSPFTauDiscriminationUpdate+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.tauMatch+process.tauGenJets+process.tauGenJetsSelectorAllHadrons+process.tauGenJetMatch+process.patTaus)
-
-
-process.pfElectronTranslatorSequence = cms.Sequence(process.pfBasedElectronPhotonIsoSequence+process.pfElectronTranslator+process.pfElectronInterestingEcalDetIdEB+process.pfElectronInterestingEcalDetIdEE)
-
-
-process.patDefaultSequencePFlow = cms.Sequence(process.makePatElectronsPFlow+process.makePatMuonsPFlow+process.makePatTausPFlow+process.photonMatchPFlow+process.patJetCorrectionsPFlow+process.jetTracksAssociatorAtVertexPFlow+process.btaggingAODPFlow+process.patJetChargePFlow+process.patJetPartonMatchPFlow+process.genForPF2PATSequence+process.patJetGenJetMatchPFlow+process.patJetFlavourIdPFlow+process.patJetsPFlow+process.patPFParticlesPFlow+process.patCandidateSummaryPFlow+process.selectedPatElectronsPFlow+process.selectedPatMuonsPFlow+process.selectedPatTausPFlow+process.selectedPatJetsPFlow+process.producePatPFMETCorrectionsPFlow+process.patMETsPFlow+process.selectedPatPFParticlesPFlow+process.selectedPatCandidateSummaryPFlow+process.countPatElectronsPFlow+process.countPatMuonsPFlow+process.countPatTausPFlow+process.countPatLeptonsPFlow+process.countPatJetsPFlow+process.patDefaultSequenceTriggerPFlow+process.patDefaultSequenceTriggerEventPFlow+process.countPatPFParticlesPFlow)
-
-
-process.muonreco_plus_isolation_plus_SET = cms.Sequence(process.muonrecowith_TeVRefinemen+process.muonreco_with_SET+process.muIsolation)
-
-
-process.muonrecoComplete = cms.Sequence(process.muonreco_plus_isolation_plus_SET+process.muonSelectionTypeSequence)
-
-
-process.PF2PAT = cms.Sequence(process.pfNoPileUpSequence+process.pfParticleSelectionSequence+process.pfPhotonSequence+process.pfMuonSequence+process.pfNoMuon+process.pfElectronSequence+process.pfNoElectron+process.pfJetSequence+process.pfNoJet+process.pfTauSequence+process.pfNoTau+process.pfMET)
 
 
 process.muonreco_plus_isolation = cms.Sequence(process.muonrecowith_TeVRefinemen+process.muIsolation)
@@ -47362,31 +47358,40 @@ process.muonreco_plus_isolation = cms.Sequence(process.muonrecowith_TeVRefinemen
 process.pfPhotonTranslatorSequence = cms.Sequence(process.pfBasedElectronPhotonIsoSequence+process.pfPhotonTranslator+process.pfPhotonInterestingEcalDetIdEB+process.pfPhotonInterestingEcalDetIdEE)
 
 
-process.muonrecoComplete_minus_SET_minus_muIDmaps = cms.Sequence(process.muonrecowith_TeVRefinemen+process.muIsolation)
+process.patDefaultSequence = cms.Sequence(process.patElectrons+process.patMuons+process.patHPSPFTauDiscriminationUpdate+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.patTaus+process.patJetCorrFactors+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetCharge+process.patJetChargeAK5PF+process.patJets+process.patJetsAK5PF+process.patMETCorrections+process.patMETs+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJets+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJets+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent)
+
+
+process.makePatTaus = cms.Sequence(process.patHPSPFTauDiscriminationUpdate+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.tauMatch+process.tauGenJets+process.tauGenJetsSelectorAllHadrons+process.tauGenJetMatch+process.patTaus)
+
+
+process.pfElectronTranslatorSequence = cms.Sequence(process.pfBasedElectronPhotonIsoSequence+process.pfElectronTranslator+process.pfElectronInterestingEcalDetIdEB+process.pfElectronInterestingEcalDetIdEE)
 
 
 process.patCandidates = cms.Sequence(process.makePatElectrons+process.makePatMuons+process.makePatTaus+process.makePatPhotons+process.makePatJets+process.makePatMETs+process.patCandidateSummary)
 
 
+process.PF2PAT = cms.Sequence(process.pfNoPileUpSequence+process.pfParticleSelectionSequence+process.pfPhotonSequence+process.pfMuonSequence+process.pfNoMuon+process.pfElectronSequence+process.pfNoElectron+process.pfJetSequence+process.pfNoJet+process.pfTauSequence+process.pfNoTau+process.pfMET)
+
+
 process.patCandidatesPFlow = cms.Sequence(process.makePatElectronsPFlow+process.makePatMuonsPFlow+process.makePatTausPFlow+process.makePatPhotonsPFlow+process.makePatJetsPFlow+process.makePatMETsPFlow+process.patCandidateSummaryPFlow)
+
+
+process.muonreco_plus_isolation_plus_SET = cms.Sequence(process.muonrecowith_TeVRefinemen+process.muonreco_with_SET+process.muIsolation)
+
+
+process.muonrecoComplete = cms.Sequence(process.muonreco_plus_isolation_plus_SET+process.muonSelectionTypeSequence)
 
 
 process.muonrecoComplete_minus_muIDmaps = cms.Sequence(process.muonreco_plus_isolation_plus_SET)
 
 
-process.patPF2PATSequencePFlow = cms.Sequence(process.pfNoPileUpSequencePFlow+process.pfParticleSelectionSequencePFlow+process.pfPhotonSequencePFlow+process.pfAllMuonsPFlow+process.pfMuonsFromVertexPFlow+process.pfMuonsFromVertexLoosePFlow+process.pfSelectedMuonsPFlow+process.pfSelectedMuonsLoosePFlow+process.muonPFIsolationDepositsSequencePFlow+process.muPFIsoValueCharged03PFlow+process.isoValMuonWithChargedDR03PFlow+process.isoValMuonWithChargedDR03LoosePFlow+process.muPFIsoValueChargedAll03PFlow+process.isoValMuonWithChargedAllDR03PFlow+process.isoValMuonWithChargedAllDR03LoosePFlow+process.muPFIsoValueGamma03PFlow+process.isoValMuonWithPhotonsDR03PFlow+process.isoValMuonWithPhotonsDR03LoosePFlow+process.muPFIsoValueNeutral03PFlow+process.isoValMuonWithNeutralDR03PFlow+process.isoValMuonWithNeutralDR03LoosePFlow+process.muPFIsoValueGammaHighThreshold03PFlow+process.muPFIsoValueNeutralHighThreshold03PFlow+process.muPFIsoValuePU03PFlow+process.isoValMuonWithPUDR03PFlow+process.isoValMuonWithPUDR03LoosePFlow+process.muPFIsoValueCharged04PFlow+process.isoValMuonWithChargedDR04PFlow+process.isoValMuonWithChargedDR04LoosePFlow+process.muPFIsoValueChargedAll04PFlow+process.isoValMuonWithChargedAllDR04PFlow+process.isoValMuonWithChargedAllDR04LoosePFlow+process.muPFIsoValueGamma04PFlow+process.isoValMuonWithPhotonsDR04PFlow+process.isoValMuonWithPhotonsDR04LoosePFlow+process.muPFIsoValueNeutral04PFlow+process.isoValMuonWithNeutralDR04PFlow+process.isoValMuonWithNeutralDR04LoosePFlow+process.muPFIsoValueGammaHighThreshold04PFlow+process.muPFIsoValueNeutralHighThreshold04PFlow+process.muPFIsoValuePU04PFlow+process.isoValMuonWithPUDR04PFlow+process.isoValMuonWithPUDR04LoosePFlow+process.pfIsolatedMuonsPFlow+process.pfMuonsPFlow+process.pfNoMuonPFlow+process.pfAllElectronsPFlow+process.pfElectronsFromVertexPFlow+process.pfElectronsFromVertexLoosePFlow+process.pfSelectedElectronsPFlow+process.pfSelectedElectronsLoosePFlow+process.electronPFIsolationDepositsSequencePFlow+process.elPFIsoValueCharged03PFIdPFlow+process.isoValElectronWithChargedDR03PFlow+process.isoValElectronWithChargedDR03LoosePFlow+process.elPFIsoValueChargedAll03PFIdPFlow+process.isoValElectronWithChargedAllDR03PFlow+process.isoValElectronWithChargedAllDR03LoosePFlow+process.elPFIsoValueGamma03PFIdPFlow+process.isoValElectronWithPhotonsDR03PFlow+process.isoValElectronWithPhotonsDR03LoosePFlow+process.elPFIsoValueNeutral03PFIdPFlow+process.isoValElectronWithNeutralDR03PFlow+process.isoValElectronWithNeutralDR03LoosePFlow+process.elPFIsoValuePU03PFIdPFlow+process.isoValElectronWithPUDR03PFlow+process.isoValElectronWithPUDR03LoosePFlow+process.elPFIsoValueCharged04PFIdPFlow+process.isoValElectronWithChargedDR04PFlow+process.isoValElectronWithChargedDR04LoosePFlow+process.elPFIsoValueChargedAll04PFIdPFlow+process.isoValElectronWithChargedAllDR04PFlow+process.isoValElectronWithChargedAllDR04LoosePFlow+process.elPFIsoValueGamma04PFIdPFlow+process.isoValElectronWithPhotonsDR04PFlow+process.isoValElectronWithPhotonsDR04LoosePFlow+process.elPFIsoValueNeutral04PFIdPFlow+process.isoValElectronWithNeutralDR04PFlow+process.isoValElectronWithNeutralDR04LoosePFlow+process.elPFIsoValuePU04PFIdPFlow+process.isoValElectronWithPUDR04PFlow+process.isoValElectronWithPUDR04LoosePFlow+process.elPFIsoValueCharged03NoPFIdPFlow+process.elPFIsoValueChargedAll03NoPFIdPFlow+process.elPFIsoValueGamma03NoPFIdPFlow+process.elPFIsoValueNeutral03NoPFIdPFlow+process.elPFIsoValuePU03NoPFIdPFlow+process.elPFIsoValueCharged04NoPFIdPFlow+process.elPFIsoValueChargedAll04NoPFIdPFlow+process.elPFIsoValueGamma04NoPFIdPFlow+process.elPFIsoValueNeutral04NoPFIdPFlow+process.elPFIsoValuePU04NoPFIdPFlow+process.pfIsolatedElectronsPFlow+process.pfElectronsPFlow+process.pfNoElectronPFlow+process.pfJetsPFlow+process.pfNoJetPFlow+process.pfTauSequencePFlow+process.pfNoTauPFlow+process.pfMETPFlow+process.patDefaultSequencePFlow)
-
-
-process.particleFlowReco = cms.Sequence(process.particleFlowTrackWithDisplacedVertex+process.pfGsfElectronMVASelectionSequence+process.particleFlowBlock+process.particleFlowTmp+process.pfElectronTranslatorSequence+process.pfPhotonTranslatorSequence+process.pfParticleSelectionSequence)
+process.patPF2PATSequence = cms.Sequence(process.PFBRECO+process.patDefaultSequence)
 
 
 process.muonreco_plus_isolation_plus_SET_plus_muIDmaps = cms.Sequence(process.muonreco_plus_isolation_plus_SET+process.muonSelectionTypeSequence)
 
 
-process.highlevelreco = cms.Sequence(process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.PFTau+process.reducedRecHits)
-
-
-process.patDefaultSequence = cms.Sequence(process.makePatElectrons+process.makePatMuons+process.makePatTaus+process.patJetCorrFactors+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetCharge+process.patJetChargeAK5PF+process.patJetPartonMatch+process.patJetPartonMatchAK5PF+process.patJetGenJetMatch+process.patJetGenJetMatchAK5PF+process.patJetPartons+process.patJetPartonAssociation+process.patJetPartonAssociationAK5PF+process.patJetFlavourAssociation+process.patJetFlavourAssociationAK5PF+process.patJets+process.patJetsAK5PF+process.patMETCorrections+process.patMETs+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJets+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJets+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent)
+process.particleFlowReco = cms.Sequence(process.particleFlowTrackWithDisplacedVertex+process.pfGsfElectronMVASelectionSequence+process.particleFlowBlock+process.particleFlowTmp+process.pfElectronTranslatorSequence+process.pfPhotonTranslatorSequence+process.pfParticleSelectionSequence)
 
 
 process.globalreco = cms.Sequence(process.offlineBeamSpot+process.recopixelvertexing+process.trackingGlobalReco+process.hcalGlobalRecoSequence+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.egammaGlobalReco+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco)
@@ -47401,25 +47406,13 @@ process.reconstruction_fromRECO_noTrackingTest = cms.Sequence(process.clusterSum
 process.globalreco_plusPL = cms.Sequence(process.globalreco+process.ctfTracksPixelLess)
 
 
-process.reconstruction_woCosmicMuons = cms.Sequence(process.localreco+process.globalreco+process.highlevelreco+process.logErrorHarvester)
-
-
-process.reconstruction = cms.Sequence(((process.siPixelClusters+process.siPixelRecHits)+(process.siStripZeroSuppression+process.siStripClusters+process.siStripMatchedRecHits)+process.clusterSummaryProducer)+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.globalreco+process.highlevelreco+process.logErrorHarvester)
-
-
 process.globalreco_plusRS = cms.Sequence(process.globalreco+process.rstracks)
-
-
-process.reconstruction_HcalNZS = cms.Sequence(process.localreco_HcalNZS+process.globalreco+process.highlevelreco+process.logErrorHarvester)
-
-
-process.reconstruction_withPixellessTk = cms.Sequence(((process.siPixelClusters+process.siPixelRecHits)+(process.siStripZeroSuppression+process.siStripClusters+process.siStripMatchedRecHits)+process.clusterSummaryProducer)+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.globalreco_plusPL+process.highlevelreco+process.logErrorHarvester)
 
 
 process.reconstruction_noTracking = cms.Sequence(process.clusterSummaryProducer+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.offlineBeamSpot+process.pixelVertices+process.trackExtrapolator+process.hcalGlobalRecoSequence+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.ckfTracksFromConversions+process.conversionStepConversionTrackProducer+process.inOutConversionTrackProducer+process.outInConversionTrackProducer+process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.ecalDrivenGsfElectronCores+process.uncleanedOnlyCkfTracksFromConversions+process.uncleanedOnlyInOutConversionTrackProducer+process.uncleanedOnlyOutInConversionTrackProducer+process.uncleanedOnlyInOutOutInConversionTrackMerger+process.uncleanedOnlyPfConversions+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.gsfElectronCores+process.interestingEgammaIsoDetIds+process.photonIDSequence+process.eIdSequence+process.hfEMClusteringSequence+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.PFTau+process.reducedRecHits+process.logErrorHarvester)
 
 
-process.reconstruction_fromRECO_noTracking = cms.Sequence(process.clusterSummaryProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.offlineBeamSpot+process.pixelVertices+process.trackExtrapolator+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.ckfTracksFromConversions+process.conversionStepConversionTrackProducer+process.inOutConversionTrackProducer+process.outInConversionTrackProducer+process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.ecalDrivenGsfElectronCores+process.uncleanedOnlyCkfTracksFromConversions+process.uncleanedOnlyInOutConversionTrackProducer+process.uncleanedOnlyOutInConversionTrackProducer+process.uncleanedOnlyInOutOutInConversionTrackMerger+process.uncleanedOnlyPfConversions+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.gsfElectronCores+process.interestingEgammaIsoDetIds+process.photonIDSequence+process.eIdSequence+process.hfEMClusteringSequence+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metreco+process.btagging+process.recoPFMET+process.PFTau+process.interestingEcalDetIdEB+process.interestingEcalDetIdEBU+process.interestingEcalDetIdEE+process.interestingTrackEcalDetIds+process.reducedEcalRecHitsEB+process.reducedEcalRecHitsEE+process.reducedEcalRecHitsES+process.reducedHcalRecHitsSequence+process.logErrorHarvester)
+process.highlevelreco = cms.Sequence(process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metrecoPlusHCALNoise+process.btagging+process.recoPFMET+process.PFTau+process.reducedRecHits)
 
 
 process.reconstruction_standard_candle = cms.Sequence(((process.siPixelClusters+process.siPixelRecHits)+(process.siStripZeroSuppression+process.siStripClusters+process.siStripMatchedRecHits)+process.clusterSummaryProducer)+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.globalreco+process.vertexreco+process.recoJetAssociations+process.btagging+process.electronSequence+process.photonSequence)
@@ -47428,10 +47421,22 @@ process.reconstruction_standard_candle = cms.Sequence(((process.siPixelClusters+
 process.reconstruction_withRS = cms.Sequence(process.localreco+process.globalreco_plusRS+process.highlevelreco+process.logErrorHarvester)
 
 
-process.patPF2PATSequence = cms.Sequence(process.PFBRECO+process.patDefaultSequence)
+process.reconstruction_withPixellessTk = cms.Sequence(((process.siPixelClusters+process.siPixelRecHits)+(process.siStripZeroSuppression+process.siStripClusters+process.siStripMatchedRecHits)+process.clusterSummaryProducer)+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.globalreco_plusPL+process.highlevelreco+process.logErrorHarvester)
 
 
-process.pAK5PF = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.ak5PFJets+process.PFTau+process.makePatElectrons+process.makePatMuons+process.makePatTaus+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetChargeAK5PF+process.patJetPartonMatchAK5PF+process.patJetGenJetMatchAK5PF+process.patJetPartons+process.patJetPartonAssociationAK5PF+process.patJetFlavourAssociationAK5PF+process.patJetsAK5PF+process.patMETCorrections+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent+process.patAddOnSequence)
+process.reconstruction_woCosmicMuons = cms.Sequence(process.localreco+process.globalreco+process.highlevelreco+process.logErrorHarvester)
+
+
+process.reconstruction = cms.Sequence(((process.siPixelClusters+process.siPixelRecHits)+(process.siStripZeroSuppression+process.siStripClusters+process.siStripMatchedRecHits)+process.clusterSummaryProducer)+process.dtlocalreco+process.csclocalreco+process.rpcRecHits+process.calolocalreco+process.castorreco+process.globalreco+process.highlevelreco+process.logErrorHarvester)
+
+
+process.reconstruction_fromRECO_noTracking = cms.Sequence(process.clusterSummaryProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.offlineBeamSpot+process.pixelVertices+process.trackExtrapolator+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.ckfTracksFromConversions+process.conversionStepConversionTrackProducer+process.inOutConversionTrackProducer+process.outInConversionTrackProducer+process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.ecalDrivenGsfElectronCores+process.uncleanedOnlyCkfTracksFromConversions+process.uncleanedOnlyInOutConversionTrackProducer+process.uncleanedOnlyOutInConversionTrackProducer+process.uncleanedOnlyInOutOutInConversionTrackMerger+process.uncleanedOnlyPfConversions+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.gsfElectronCores+process.interestingEgammaIsoDetIds+process.photonIDSequence+process.eIdSequence+process.hfEMClusteringSequence+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metreco+process.btagging+process.recoPFMET+process.PFTau+process.interestingEcalDetIdEB+process.interestingEcalDetIdEBU+process.interestingEcalDetIdEE+process.interestingTrackEcalDetIds+process.reducedEcalRecHitsEB+process.reducedEcalRecHitsEE+process.reducedEcalRecHitsES+process.reducedHcalRecHitsSequence+process.logErrorHarvester)
+
+
+process.reconstruction_HcalNZS = cms.Sequence(process.localreco_HcalNZS+process.globalreco+process.highlevelreco+process.logErrorHarvester)
+
+
+process.pAK5PF = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.ak5PFJets+process.PFTau+process.patElectrons+process.patMuons+process.patHPSPFTauDiscriminationUpdate+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.patTaus+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetChargeAK5PF+process.patJetsAK5PF+process.patMETCorrections+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent+process.patAddOnSequence)
 
 
 process.pPFlow = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.patPF2PATSequencePFlow+process.looseLeptonSequence+process.patAddOnSequencePFlow+process.puJetIdSqeuenceChs+process.patConversions+process.q2weights+process.exoticaHSCPSeq+process.HSCParticleProducerSeq)
@@ -47668,7 +47673,8 @@ process.UpdaterService = cms.Service("UpdaterService")
 process.AK5PFchsCombinedCorrector = cms.ESProducer("JetCorrectionESChain",
     correctors = cms.vstring('AK5PFchsL1FastJet', 
         'AK5PFchsL2Relative', 
-        'AK5PFchsL3Absolute')
+        'AK5PFchsL3Absolute', 
+        'AK5PFchsL2L3Residual')
 )
 
 
@@ -52716,11 +52722,11 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
     BlobStreamerName = cms.untracked.string('TBufferBlobStreamingService'),
     toGet = cms.VPSet(cms.PSet(
         record = cms.string('SiStripDeDxMip_3D_Rcd'),
-        tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
-        connect = cms.untracked.string('sqlite_file:SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db')
+        tag = cms.string('Data7TeV_Deco_3D_Rcd_38X'),
+        connect = cms.untracked.string('sqlite_file:SUSYBSMAnalysis/HSCP/data/Data7TeV_Deco_SiStripDeDxMip_3D_Rcd.db')
     )),
     connect = cms.string('frontier://FrontierProd/CMS_COND_31X_GLOBALTAG'),
-    globaltag = cms.string('START53_V7G::All')
+    globaltag = cms.string('GR_R_53_V10::All')
 )
 
 
