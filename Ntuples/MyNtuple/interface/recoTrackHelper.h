@@ -137,9 +137,9 @@ namespace reco
 	    
 	      //if(dEdxHitsHarm2Track.subdetid[i]<3) continue;                                      // skip pixels
 	      if(dEdxHitsHarm2Track.subdetid[i]>2 && !dEdxHitsHarm2Track.shapetest[i]) continue;  // shape test only for strips 
-	      double Norm =3.61e-06*265;                                                              // unit change
-	      if(dEdxHitsHarm2Track.subdetid[i]<3) Norm=Norm/265.;                                  // only for pixel 
-	      Norm *=10.0;                                                                            // mm --> cm
+	      double Norm =3.61e-06*265;                                                          // unit change
+	      if(dEdxHitsHarm2Track.subdetid[i]<3) Norm=Norm/265.;                                // only for pixel 
+	      Norm *=10.0;                                                                        // mm --> cm
 	      vect_charge.push_back(Norm*dEdxHitsHarm2Track.charge[i]/dEdxHitsHarm2Track.pathlength[i]);
 	      if(vect_charge.size()==nHits) break;
 	    }
@@ -157,6 +157,7 @@ namespace reco
 	    }
 	    else if(method.compare("trun40")==0){
 
+	      std::sort(vect_charge.begin(), vect_charge.end());
 	      int nTrunc = int( vect_charge.size()*0.4);
 	      double sumdedx = 0;
 	      for(size_t i=0;i + nTrunc < vect_charge.size() ; i++){
