@@ -290,7 +290,7 @@ void DeDxDiscriminatorProducer::produce(edm::Event& iEvent, const edm::EventSetu
          const SiStripRecHit2D*        sistripsimplehit    = dynamic_cast<const SiStripRecHit2D*>(hit);
          const SiStripMatchedRecHit2D* sistripmatchedhit   = dynamic_cast<const SiStripMatchedRecHit2D*>(hit);
          const SiStripRecHit1D*        sistripsimple1dhit  = dynamic_cast<const SiStripRecHit1D*>(hit);
-	 const SiPixelRecHit* pixelHit                     = dynamic_cast<const SiPixelRecHit*>(hit);
+	 //	 const SiPixelRecHit* pixelHit                     = dynamic_cast<const SiPixelRecHit*>(hit);
 	  
 	 double Prob;
          if(sistripsimplehit){
