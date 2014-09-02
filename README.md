@@ -30,7 +30,14 @@
 	cd RecoMET/METAnalyzers
 	git checkout tags/RecoMET-METAnalyzers-V00-00-08
 	cd -
-	git cms-cvs-history import V00-00-07 RecoMET/METFilters
+	#git cms-cvs-history import V00-00-07 RecoMET/METFilters
+	git cms-cvs-history import V00-00-13-01 RecoMET/METFilters
+	# Additional packages for the tracking POG filters{
+	git cms-cvs-history import V01-00-11-01 DPGAnalysis/Skims
+	git cms-cvs-history import V00-11-17 DPGAnalysis/SiStripTools
+	git cms-cvs-history import V00-00-08 DataFormats/TrackerCommon
+	git cms-cvs-history import V01-09-05 RecoLocalTracker/SubCollectionProducers	
+	#} Additional packages for the tracking POG filters
 	git cms-cvs-history import V15-01-11 RecoParticleFlow/PFProducer
 	git cms-cvs-history import V02-02-00 RecoVertex/AdaptiveVertexFinder
 	git clone git@github.com:latinos/UserCode-sixie-Muon-MuonAnalysisTools Muon/MuonAnalysisTools/
