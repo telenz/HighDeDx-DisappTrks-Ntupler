@@ -36,7 +36,7 @@ HSCParticleProducer::HSCParticleProducer(const edm::ParameterSet& iConfig) {
   m_muonsTag      = iConfig.getParameter<edm::InputTag>("muons");
   m_MTmuonsTag      = iConfig.getParameter<edm::InputTag>("MTmuons");
   m_trackIsoTag   = iConfig.getParameter<edm::InputTag>("tracksIsolation");
-
+  
   useBetaFromTk   = iConfig.getParameter<bool>    ("useBetaFromTk"  );
   useBetaFromMuon = iConfig.getParameter<bool>    ("useBetaFromMuon");
   useBetaFromRpc  = iConfig.getParameter<bool>    ("useBetaFromRpc" );
@@ -114,7 +114,7 @@ HSCParticleProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
 
   // Fill the output collection with HSCP Candidate (the candiate only contains ref to muon AND/OR track object)
   *hscp = getHSCPSeedCollection(trackCollectionHandle, muonCollectionHandle, MTmuonCollectionHandle);
-
+  
   // find the track ref for isolation purposed (main track is supposed to be the Iso track after refitting)
   for(susybsm::HSCParticleCollection::iterator hscpcandidate = hscp->begin(); hscpcandidate != hscp->end(); ++hscpcandidate) {
       // Matching is needed because input track collection and muon inner track may lightly differs due to track refit
@@ -122,7 +122,7 @@ HSCParticleProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
       if(track.isNull())continue;
       float dRMin=1000; int found = -1;
       for(unsigned int t=0; t<trackIsoCollectionHandle->size();t++) {
-         reco::TrackRef Isotrack  = reco::TrackRef( trackIsoCollectionHandle, t );
+	 reco::TrackRef Isotrack  = reco::TrackRef( trackIsoCollectionHandle, t );
          if( fabs( (1.0/track->pt())-(1.0/Isotrack->pt())) > maxInvPtDiff) continue;
          float dR = deltaR(track->momentum(), Isotrack->momentum());
          if(dR <= minDR && dR < dRMin){ dRMin=dR; found = t;}
