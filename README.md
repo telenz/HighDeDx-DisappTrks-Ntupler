@@ -11,7 +11,7 @@
 	git clone https://github.com/telenz/HighDeDx-DisappTrks-Ntupler.git src	
 	cd src
 	cmsenv
-	git cms-cvs-history import CMSSW_5_3_1 Configuration/Skimming	
+	#git cms-cvs-history import CMSSW_5_3_1 Configuration/Skimming	
 	#git cms-cvs-history import CMSSW_6_2_0_pre7 AnalysisDataFormats/SUSYBSMObjects
 	#git mv -f classes_def_for_AnalysisDataFormats_SUSYBSMObjects_src.xml AnalysisDataFormats/SUSYBSMObjects/src/classes_def.xml 	
 	
