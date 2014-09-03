@@ -313,8 +313,9 @@ inputFiles = cms.untracked.vstring(
 process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
-process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
+#process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
 #process.source.fileNames = ["file:dataFile.root"]
+process.source.fileNames = ["file:TTJets_skimmed.root"]
 
 
 ###
@@ -360,6 +361,14 @@ process.trackingFailureFilter.VertexSource = cms.InputTag( pfVertices )
 process.load('CommonTools/RecoAlgos/HBHENoiseFilterResultProducer_cfi')
 
 process.step0c = process.eventCleaning ## original
+
+# Ecal laser correction filter from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFilters
+process.load('RecoMET.METFilters.ecalLaserCorrFilter_cfi')
+process.step0c += process.ecalLaserCorrFilter
+# Tracking POG filter
+process.load('RecoMET.METFilters.trackingPOGFilters_cff')
+process.step0c += process.trkPOGFilters
+
 
 #For Fastsim, disable HBHENoiseFilter
 if runOnFastSim:
@@ -1675,18 +1684,20 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load('Configuration.StandardSequences.Services_cff')
 
 process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducerFromSkim_cff")  #IF RUNNING ON HSCP SKIM
+#process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
 
 process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
+from Configuration.Skimming.PDWG_EXOHSCP_cff import *
 process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
 process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
 process.HSCPEventFilter.filter = cms.bool(False)
 
 #skim the jet collection to keep only 15GeV jets
-process.ak5PFJetsPt15 = cms.EDFilter( "EtMinPFJetSelector",
-                      src = cms.InputTag( "ak5PFJets" ),
-                      filter = cms.bool( False ),
-                      etMin = cms.double( 15.0 )
-                      )
+#process.ak5PFJetsPt15 = cms.EDFilter( "EtMinPFJetSelector",
+#                      src = cms.InputTag( "ak5PFJets" ),
+#                      filter = cms.bool( False ),
+#                      etMin = cms.double( 15.0 )
+#                      )
 
 process.load("PhysicsTools.HepMCCandAlgos.genParticles_cfi")
 process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
@@ -1747,11 +1758,9 @@ process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
 process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
 #process.nEventsTest   = cms.EDProducer("EventCountProducer")
 
-#process.p1 = cms.Path(process.nEventsBefSkim + process.genParticles + process.exoticaHSCPSeq + process.nEventsBefEDM + process.ak5PFJetsPt15 + process.HSCParticleProducerSeq)
-
-#pPF += process.nEventsTest
-pPF += process.exoticaHSCPSeq
-pPF += process.HSCParticleProducerSeq
+#process.hscpSequences =  cms.Path(process.exoticaHSCPSeq + process.HSCParticleProducerSeq)
+process.skimming = cms.Sequence(beginSeq+TrackRefitterSkim+trackerSeq+ecalSeq+hcalSeq+muonSeq)
+process.hscpSequences = cms.Path(process.skimming+process.HSCParticleProducerSeq)
 ##--## HSCP
 
 
