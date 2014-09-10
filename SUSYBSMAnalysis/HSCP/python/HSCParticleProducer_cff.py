@@ -201,7 +201,7 @@ HSCParticleProducer = cms.EDFilter("HSCParticleProducer",
    TrackAssociatorParameterBlock, #Needed for ECAL/Track Matching
 
    #DOES THE PRODUCER ACT AS AN EDFILTER?
-   filter = cms.bool(True),
+   filter = cms.bool(False),
 
    #WHAT (BETA) INFORMATION TO COMPUTE
    useBetaFromTk      = cms.bool(True),
