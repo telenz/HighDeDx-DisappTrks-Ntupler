@@ -314,8 +314,11 @@ process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
-#process.source.fileNames = ["file:dataFile.root"]
-process.source.fileNames = ["file:TTJets_skimmed.root"]
+#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_471.root"]
+#process.source.fileNames = ["file:TTJets_Summer12_S10_1477.root"]
+process.source.fileNames = ["file:dataFile.root"]
+#process.source.fileNames = ["file:TTJets_skimmed.root"]
+#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
 
 
 ###
@@ -1693,11 +1696,6 @@ process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
 process.HSCPEventFilter.filter = cms.bool(False)
 
 #skim the jet collection to keep only 15GeV jets
-#process.ak5PFJetsPt15 = cms.EDFilter( "EtMinPFJetSelector",
-#                      src = cms.InputTag( "ak5PFJets" ),
-#                      filter = cms.bool( False ),
-#                      etMin = cms.double( 15.0 )
-#                      )
 
 process.load("PhysicsTools.HepMCCandAlgos.genParticles_cfi")
 process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
@@ -1760,12 +1758,15 @@ process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
 
 #process.hscpSequences =  cms.Path(process.exoticaHSCPSeq + process.HSCParticleProducerSeq)
 process.skimming = cms.Sequence(beginSeq+TrackRefitterSkim+trackerSeq+ecalSeq+hcalSeq+muonSeq)
-process.hscpSequences = cms.Path(process.skimming+process.HSCParticleProducerSeq)
+#process.hscpSequences = cms.Path(process.skimming+process.HSCParticleProducerSeq)
+pPF += process.skimming+process.HSCParticleProducerSeq
 ##--## HSCP
 
-
+process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
-process.outpath = cms.EndPath(process.demo)
+pPF+=process.demo
+#process.outpath = cms.EndPath(process.demo)
+process.schedule = cms.Schedule(pAddPF,pPF)
 
 
 ## Dump python config if wished
