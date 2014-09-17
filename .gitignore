@@ -1,6 +1,8 @@
 **/*.pyc
 **/__init__.py
 SUSYBSMAnalysis/HSCP/python/*.pyc
+*.root
+Ntuples/MyNtuple/*.root
 **/*~
 BEAN/
 CMGTools/
