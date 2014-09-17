@@ -244,7 +244,7 @@ inputFiles = [] # overwritten, if "useRelVals" is 'True'
 
 
 # maximum number of events
-maxInputEvents = 10 # reduce for testing
+maxInputEvents = 100 # reduce for testing
 
 ### Conditions
 
@@ -314,8 +314,8 @@ process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
-#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_471.root"]
-process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
+process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+#process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
@@ -1777,4 +1777,10 @@ process.dtlocalreco_with_2DSegments = cms.Sequence(process.dt1DRecHits+process.d
 process.reconstruction_fromRECO = cms.Sequence(process.siPixelRecHits+process.siStripMatchedRecHits+process.clusterSummaryProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.offlineBeamSpot+process.recopixelvertexing+process.trackingGlobalReco+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.egammaGlobalReco+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metreco+process.btagging+process.recoPFMET+process.PFTau+process.interestingEcalDetIdEB+process.interestingEcalDetIdEBU+process.interestingEcalDetIdEE+process.interestingTrackEcalDetIds+process.reducedEcalRecHitsEB+process.reducedEcalRecHitsEE+process.reducedEcalRecHitsES+process.reducedHcalRecHitsSequence+process.logErrorHarvester)
 process.reconstruction_fromRECO_noTrackingTest = cms.Sequence(process.clusterSummaryProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.offlineBeamSpot+process.pixelVertices+process.trackExtrapolator+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.egammaGlobalReco+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.egammaHighLevelRecoPrePF+process.particleFlowReco+process.egammaHighLevelRecoPostPF+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metreco+process.btagging+process.recoPFMET+process.PFTau+process.interestingEcalDetIdEB+process.interestingEcalDetIdEBU+process.interestingEcalDetIdEE+process.interestingTrackEcalDetIds+process.reducedEcalRecHitsEB+process.reducedEcalRecHitsEE+process.reducedEcalRecHitsES+process.reducedHcalRecHitsSequence+process.logErrorHarvester)
 process.reconstruction_fromRECO_noTracking = cms.Sequence(process.clusterSummaryProducer+process.dt4DSegments+process.dt4DCosmicSegments+process.cscSegments+process.offlineBeamSpot+process.pixelVertices+process.trackExtrapolator+process.particleFlowCluster+process.ecalClusters+process.caloTowersRec+process.vertexreco+process.ckfTracksFromConversions+process.conversionStepConversionTrackProducer+process.inOutConversionTrackProducer+process.outInConversionTrackProducer+process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.jetGlobalReco+process.muonrecoComplete+process.pfTrackingGlobalReco+process.muoncosmicreco+process.CastorFullReco+process.ecalDrivenGsfElectronCores+process.uncleanedOnlyCkfTracksFromConversions+process.uncleanedOnlyInOutConversionTrackProducer+process.uncleanedOnlyOutInConversionTrackProducer+process.uncleanedOnlyInOutOutInConversionTrackMerger+process.uncleanedOnlyPfConversions+process.conversionSequence+process.photonSequence+process.particleFlowReco+process.gsfElectronCores+process.interestingEgammaIsoDetIds+process.photonIDSequence+process.eIdSequence+process.hfEMClusteringSequence+process.regionalCosmicTracksSeq+process.muoncosmichighlevelreco+process.muonshighlevelreco+process.particleFlowLinks+process.jetHighLevelReco+process.tautagging+process.metreco+process.btagging+process.recoPFMET+process.PFTau+process.interestingEcalDetIdEB+process.interestingEcalDetIdEBU+process.interestingEcalDetIdEE+process.interestingTrackEcalDetIds+process.reducedEcalRecHitsEB+process.reducedEcalRecHitsEE+process.reducedEcalRecHitsES+process.reducedHcalRecHitsSequence+process.logErrorHarvester)
-#outfile = open('dump.py','w'); print >> outfile,process.dumpPython(); outfile.close()
+
+
+if not runOnMC:
+  import PhysicsTools.PythonAnalysis.LumiList as LumiList
+  process.source.lumisToProcess = LumiList.LumiList(filename = '/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/Cert_190456-208686_8TeV_22Jan2013ReReco_Collisions12_JSON.txt').getVLuminosityBlockRange()
+
+outfile = open('dump.py','w'); print >> outfile,process.dumpPython(); outfile.close()
