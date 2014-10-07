@@ -94,30 +94,30 @@ eventSelSeq = cms.Sequence(TrackRefitterSkim + dedxSkimNPHarm2 + HSCPEventFilter
 #FOR INNER TRACKS     MATCHING A MUON INNER TRACK: DON'T APPLY ANY MORE CUTS (than what was already applied by loose selection)
 #THE FILTER IS ENABLED WHICH MEANS THAT IF NO TRACKS ARE PASSING THIS LOOSE CLEANING, THE EVENT IS SKIPPED
 #OUTPUT OF THIS COLLECTION IS HIGHLY COMPACT AND MUST BE STORE TO THE .ROOT FILE
-#generalTracksSkim = cms.EDFilter("HSCPTrackSelectorModule",
-#		 src = cms.InputTag("TrackRefitterSkim"),
-#		 filter = cms.bool(False),
-#
-#		 #Keep all muon tracks what ever it's pT
-#		 muonSource = cms.InputTag("muons"),	
-#
-#	         #Keep all inner tracks with pt>TRACK_PT whatever it's dEdx
-#		 trackerTrackPtMin = cms.double(TRACK_PT),
-#		 usededx = cms.bool(False),
-#		 InputDedx = cms.InputTag("dedxSkimNPHarm2"),
-#		 InnerTrackdEdxRightMin = cms.double(-99999.0),
-#		 InnerTrackdEdxLeftMax = cms.double(99999.0),
-#		 InnerMuondEdxRightMin = cms.double(-99999.0),
-#		 InnerMuondEdxLeftMax = cms.double(99999.0),
-#		 dEdxMeasurementsMinForMuonTrack = cms.uint32(0),
-#                 dEdxMeasurementsMinForInnerTrack = cms.uint32(4),							 
-#	)
+generalTracksSkim = cms.EDFilter("HSCPTrackSelectorModule",
+		 src = cms.InputTag("TrackRefitterSkim"),
+		 filter = cms.bool(False),
 
-generalTracksSkim = cms.EDFilter("TrackSelector",
-                                 src = cms.InputTag("TrackRefitterSkim"), 
-                                 cut = cms.string("pt > 30"),
-                                 filter = cms.bool(False)
-                                 )
+		 #Keep all muon tracks what ever it's pT
+		 muonSource = cms.InputTag("muons"),	
+
+	         #Keep all inner tracks with pt>TRACK_PT whatever it's dEdx
+		 trackerTrackPtMin = cms.double(TRACK_PT),
+		 usededx = cms.bool(False),
+		 InputDedx = cms.InputTag("dedxSkimNPHarm2"),
+		 InnerTrackdEdxRightMin = cms.double(-99999.0),
+		 InnerTrackdEdxLeftMax = cms.double(99999.0),
+		 InnerMuondEdxRightMin = cms.double(-99999.0),
+		 InnerMuondEdxLeftMax = cms.double(99999.0),
+		 dEdxMeasurementsMinForMuonTrack = cms.uint32(0),
+                 dEdxMeasurementsMinForInnerTrack = cms.uint32(4),							 
+	)
+
+#generalTracksSkim = cms.EDFilter("TrackSelector",
+#                                 src = cms.InputTag("TrackRefitterSkim"),
+#                                 cut = cms.string("pt > 30"),
+#                                 filter = cms.bool(False)
+#                                 )
 trackerSeq = cms.Sequence(generalTracksSkim)
 
 
