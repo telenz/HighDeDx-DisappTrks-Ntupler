@@ -307,15 +307,15 @@ if useRelVals:
 inputFiles = cms.untracked.vstring(
 	#	'/store/mc/Summer12/TTJets_MassiveBinDECAY_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S6_START52_V9-v1/0000/FEFAA4F3-63B8-E111-A65A-00304867924A.root',
 	#	'/store/user/puigh/TTH_HToAll_M_120_8TeV_FastSim_pythia6/TTH_HToAll_M_120_8TeV_FastSim_pythia6/95111b4e2be5b1aa536a508d15d97f92/TTH_HToAll_M_120_8TeV_FastSim_v1_12_1_gDX.root'
-	'/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/20001/880F12A9-1846-E311-A7C9-848F69FD47A5.root'
+	#'/store/mc/Summer12_DR53X/TTJets_MSDecays_central_TuneZ2star_8TeV-madgraph-tauola/AODSIM/PU_S10_START53_V19-v1/20001/880F12A9-1846-E311-A7C9-848F69FD47A5.root'
 )
 
 process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
-process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
-#process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
+#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
@@ -598,7 +598,6 @@ process.out.outputCommands += [ 'keep edmTriggerResults_*_*_*'
 
 process.out.outputCommands += [ 'keep *'                              
                                 ]
-
 
 keepSC = True
 keepTK = True
@@ -1686,14 +1685,14 @@ else:
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load('Configuration.StandardSequences.Services_cff')
 
-process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducerFromSkim_cff")  #IF RUNNING ON HSCP SKIM
-#process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
+#process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducerFromSkim_cff")  #IF RUNNING ON HSCP SKIM
+process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
 
-process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
-from Configuration.Skimming.PDWG_EXOHSCP_cff import *
-process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
-process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
-process.HSCPEventFilter.filter = cms.bool(False)
+#process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
+#from Configuration.Skimming.PDWG_EXOHSCP_cff import *
+#process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
+#process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
+#process.HSCPEventFilter.filter = cms.bool(False)
 
 #skim the jet collection to keep only 15GeV jets
 
@@ -1752,24 +1751,32 @@ process.dedxNPProd.UseCalibration      = cms.bool(True)
 process.dedxNPASmi.UseCalibration      = cms.bool(True)
 process.dedxHitInfo.UseCalibration     = cms.bool(True)
 
-process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
-process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
+#process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
+#process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
 #process.nEventsTest   = cms.EDProducer("EventCountProducer")
 
-#process.hscpSequences =  cms.Path(process.exoticaHSCPSeq + process.HSCParticleProducerSeq)
-process.skimming = cms.Sequence(beginSeq+TrackRefitterSkim+trackerSeq+ecalSeq+hcalSeq+muonSeq)
-#process.hscpSequences = cms.Path(process.skimming+process.HSCParticleProducerSeq)
-pPF += process.skimming+process.HSCParticleProducerSeq
+
+process.generalTracksReduced = cms.EDFilter("TrackSelector",
+                                 src = cms.InputTag("generalTracks"), 
+                                 cut = cms.string("pt > 30"),
+                                 filter = cms.bool(False)
+                                 )
+process.TrackRefitter.src =  cms.InputTag("generalTracksReduced")
+
+
+#process.skimming = cms.Sequence(beginSeq+TrackRefitterSkim+trackerSeq+ecalSeq+hcalSeq+muonSeq)
+#pPF += process.skimming+process.HSCParticleProducerSeq
+pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
 ##--## HSCP
 
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
-pPF+=process.demo
-#process.outpath = cms.EndPath(process.demo)
-process.schedule = cms.Schedule(pAddPF,pPF)
+#process.outpath  = cms.EndPath(process.out + process.demo)
+process.outpath  = cms.EndPath(process.demo)
+process.schedule = cms.Schedule(pAddPF,pPF,process.outpath)
 
 
-## Dump python config if wished
+
 process.pfPhotonSequence = cms.Sequence(process.pfSelectedPhotons+process.pfPhotonIsolationSequence+process.pfIsolatedPhotons)
 process.pfElectronSequence = cms.Sequence(process.pfAllElectrons+process.pfElectronsFromVertex+process.pfSelectedElectrons+process.pfElectronIsolationSequence+process.pfIsolatedElectrons+process.pfElectrons)
 process.dtlocalreco = cms.Sequence(process.dt1DRecHits+process.dt4DSegments+process.dt1DCosmicRecHits+process.dt4DCosmicSegments)
@@ -1783,4 +1790,5 @@ if not runOnMC:
   import PhysicsTools.PythonAnalysis.LumiList as LumiList
   process.source.lumisToProcess = LumiList.LumiList(filename = '/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/Cert_190456-208686_8TeV_22Jan2013ReReco_Collisions12_JSON.txt').getVLuminosityBlockRange()
 
+## Dump python config if wished
 outfile = open('dump.py','w'); print >> outfile,process.dumpPython(); outfile.close()
