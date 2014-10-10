@@ -127,20 +127,20 @@ namespace reco
 	  reco::DeDxData dEdxTru40Track;
 	  edm::ValueMap<reco::DeDxData> dEdxTrackMapTru40;
 	  //For my calculation of De/dx
-	  susybsm::HSCPDeDxInfo dEdxHitsHarm2Track;
+	  susybsm::HSCPDeDxInfo dEdxHits;
 	  edm::ValueMap<susybsm::HSCPDeDxInfo> dEdxHitsTrackMap;
 
-	  double dEdxHits(unsigned int nHits, std::string method){
+	  double dEdxOnTheFly(unsigned int nHits, std::string method){
 
 	    std::vector<double> vect_charge;
-	    for(unsigned int i=0; i<dEdxHitsHarm2Track.charge.size(); i++){
+	    for(unsigned int i=0; i<dEdxHits.charge.size(); i++){
 	    
-	      //if(dEdxHitsHarm2Track.subdetid[i]<3) continue;                                      // skip pixels
-	      if(dEdxHitsHarm2Track.subdetid[i]>2 && !dEdxHitsHarm2Track.shapetest[i]) continue;  // shape test only for strips 
+	      //if(dEdxHits.subdetid[i]<3) continue;                                      // skip pixels
+	      if(dEdxHits.subdetid[i]>2 && !dEdxHits.shapetest[i]) continue;  // shape test only for strips 
 	      double Norm =3.61e-06*265;                                                          // unit change
-	      if(dEdxHitsHarm2Track.subdetid[i]<3) Norm=Norm/265.;                                // only for pixel 
+	      if(dEdxHits.subdetid[i]<3) Norm=Norm/265.;                                // only for pixel 
 	      Norm *=10.0;                                                                        // mm --> cm
-	      vect_charge.push_back(Norm*dEdxHitsHarm2Track.charge[i]/dEdxHitsHarm2Track.pathlength[i]);
+	      vect_charge.push_back(Norm*dEdxHits.charge[i]/dEdxHits.pathlength[i]);
 	      if(vect_charge.size()==nHits) break;
 	    }
 
@@ -226,13 +226,13 @@ namespace reco
 	 	 
 
 	 double dEdxHitsHarm2(int nHits) {
-	   return dEdxHits(nHits, "harm2");
+	   return dEdxOnTheFly(nHits, "harm2");
 	 };
 	 double dEdxHitsTrun40(int nHits) {
-	   return dEdxHits(nHits, "trun40");
+	   return dEdxOnTheFly(nHits, "trun40");
 	 };
 	 double dEdxHitsMedian(int nHits) {
-	   return dEdxHits(nHits, "median");
+	   return dEdxOnTheFly(nHits, "median");
 	 };
 	
 
