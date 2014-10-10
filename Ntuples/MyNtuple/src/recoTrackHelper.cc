@@ -90,9 +90,9 @@ void TrackHelper::analyzeEvent()
     dEdxTrackMapTru40 = *dEdxTru40TrackHandle.product();
     
     // For my calculation of dE/dx
-    edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsHarm2TrackHandle;
-    event->getByLabel("dedxHitInfo", dEdxHitsHarm2TrackHandle);
-    dEdxHitsTrackMap = *dEdxHitsHarm2TrackHandle.product();
+    edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsInfoTrackHandle;
+    event->getByLabel("dedxHitInfo", dEdxHitsInfoTrackHandle);
+    dEdxHitsTrackMap = *dEdxHitsInfoTrackHandle.product();
     
     event->getByLabel(labelname,trackCollectionHandle);
     
@@ -220,7 +220,7 @@ void TrackHelper::analyzeObject()
     dEdxTru40Track = dEdxTrackMapTru40[track];
 
     // For my calculation of dE/dx
-    dEdxHitsHarm2Track = dEdxHitsTrackMap[track];
+    dEdxHits = dEdxHitsTrackMap[track];
     
     // 5.) For Hit Information
     // !!! add the hit information
@@ -237,16 +237,16 @@ void TrackHelper::analyzeObject()
     HitsPhi.push_back(vector<double>());
     HitsTransverse.push_back(vector<double>());
 
-    for(unsigned int i=0; i<dEdxHitsHarm2Track.charge.size(); i++){
+    for(unsigned int i=0; i<dEdxHits.charge.size(); i++){
     
-      HitsDeDx.back().push_back(dEdxHitsHarm2Track.charge[i]);
-      HitsPathlength.back().push_back(dEdxHitsHarm2Track.pathlength[i]);
-      HitsShapetest.back().push_back((int)dEdxHitsHarm2Track.shapetest[i]);
-      HitsSubdetId.back().push_back((int)dEdxHitsHarm2Track.subdetid[i]);
+      HitsDeDx.back().push_back(dEdxHits.charge[i]);
+      HitsPathlength.back().push_back(dEdxHits.pathlength[i]);
+      HitsShapetest.back().push_back((int)dEdxHits.shapetest[i]);
+      HitsSubdetId.back().push_back((int)dEdxHits.subdetid[i]);
       
       //get the geometry of your detector
-      const GeomDet* geomdet = trackingGeometry->idToDet( dEdxHitsHarm2Track.detIds[i] );
-      Local2DPoint point=Local2DPoint(dEdxHitsHarm2Track.localx[i],dEdxHitsHarm2Track.localy[i]);
+      const GeomDet* geomdet = trackingGeometry->idToDet( dEdxHits.detIds[i] );
+      Local2DPoint point=Local2DPoint(dEdxHits.localx[i],dEdxHits.localy[i]);
       GlobalPoint _pos = geomdet->toGlobal( point );
       HitsEta.back().push_back(_pos.eta());
       HitsPhi.back().push_back(_pos.phi());
