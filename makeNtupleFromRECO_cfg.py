@@ -1691,7 +1691,7 @@ process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
 #process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
 #from Configuration.Skimming.PDWG_EXOHSCP_cff import *
 #process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
-#process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
+process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
 #process.HSCPEventFilter.filter = cms.bool(False)
 
 #skim the jet collection to keep only 15GeV jets
@@ -1772,8 +1772,8 @@ pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
 #process.outpath  = cms.EndPath(process.out + process.demo)
-process.outpath  = cms.EndPath(process.demo)
-process.schedule = cms.Schedule(pAddPF,pPF,process.outpath)
+pPF += process.demo
+process.schedule = cms.Schedule(pAddPF,pPF)
 
 
 
