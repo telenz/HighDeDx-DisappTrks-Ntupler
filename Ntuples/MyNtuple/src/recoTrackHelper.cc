@@ -73,21 +73,31 @@ void TrackHelper::analyzeEvent()
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
     event->getByLabel("dedxNPHarm2", dEdxNPHarm2TrackHandle);
     dEdxNPTrackMapHarm2 = *dEdxNPHarm2TrackHandle.product();
-  
-    // For DeDxNPTru40
-    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
-    event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
-    dEdxNPTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
 
     // For DeDxHarm2
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxHarm2TrackHandle;
     event->getByLabel("dedxHarm2", dEdxHarm2TrackHandle);
     dEdxTrackMapHarm2 = *dEdxHarm2TrackHandle.product();
   
+    // For DeDxNPTru40
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPTru40TrackHandle;
+    event->getByLabel("dedxNPTru40", dEdxNPTru40TrackHandle);
+    dEdxNPTrackMapTru40 = *dEdxNPTru40TrackHandle.product();
+  
     // For DeDxTru40
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxTru40TrackHandle;
     event->getByLabel("dedxTru40", dEdxTru40TrackHandle);
     dEdxTrackMapTru40 = *dEdxTru40TrackHandle.product();
+
+    //For DeDxNPASmi
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPASmiTrackHandle;
+    event->getByLabel("dedxNPASmi", dEdxNPASmiTrackHandle);
+    dEdxTrackMapASmi = *dEdxNPASmiTrackHandle.product();
+
+    //For DeDxASmi
+    edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxASmiTrackHandle;
+    event->getByLabel("dedxASmi", dEdxASmiTrackHandle);
+    dEdxTrackMapASmi = *dEdxASmiTrackHandle.product();
     
     // For my calculation of dE/dx
     edm::Handle<edm::ValueMap<susybsm::HSCPDeDxInfo> > dEdxHitsInfoTrackHandle;
