@@ -117,15 +117,21 @@ namespace reco
 	  //For DeDxNPHarm2
 	  reco::DeDxData dEdxNPHarm2Track;
 	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapHarm2;
-	  //For DeDxNPTru40
-	  reco::DeDxData dEdxNPTru40Track;
-	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapTru40;
 	  //For DeDxHarm2
 	  reco::DeDxData dEdxHarm2Track;
 	  edm::ValueMap<reco::DeDxData> dEdxTrackMapHarm2;
 	  //For DeDxNPTru40
+	  reco::DeDxData dEdxNPTru40Track;
+	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapTru40;
+	  //For DeDxNPTru40
 	  reco::DeDxData dEdxTru40Track;
 	  edm::ValueMap<reco::DeDxData> dEdxTrackMapTru40;
+	  //For DeDxNPASmi
+	  reco::DeDxData dEdxNPASmiTrack;
+	  edm::ValueMap<reco::DeDxData> dEdxNPTrackMapASmi;
+	  //For DeDxASmi
+	  reco::DeDxData dEdxASmiTrack;
+	  edm::ValueMap<reco::DeDxData> dEdxTrackMapASmi;
 	  //For my calculation of De/dx
 	  susybsm::HSCPDeDxInfo dEdxHits;
 	  edm::ValueMap<susybsm::HSCPDeDxInfo> dEdxHitsTrackMap;
@@ -219,9 +225,11 @@ namespace reco
     	
 	 double dEdxNPHarm2() {return dEdxNPHarm2Track.dEdx();};
 	 double dEdxNPTru40() {return dEdxNPTru40Track.dEdx();};
+	 double dEdxNPASmi() {return dEdxNPASmiTrack.dEdx();};
 	 unsigned int dEdxNPNoM() {return dEdxNPHarm2Track.numberOfSaturatedMeasurements();};
 	 double dEdxHarm2() {return dEdxHarm2Track.dEdx();};
 	 double dEdxTru40() {return dEdxTru40Track.dEdx();};
+	 double dEdxASmi() {return dEdxASmiTrack.dEdx();};
 	 unsigned int dEdxNoM() {return dEdxHarm2Track.numberOfSaturatedMeasurements();};
 	 	 
 
