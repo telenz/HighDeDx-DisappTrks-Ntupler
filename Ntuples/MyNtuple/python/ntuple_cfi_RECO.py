@@ -59,7 +59,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                Electron =
                cms.untracked.
                vstring(
-    'patElectron                     patElectronsLoosePFlow          200',
+    'patElectron                     patElectronsLoosePFlow         200',
     #---------------------------------------------------------------------
     'double  energy()',
     'double  et()',
@@ -201,6 +201,8 @@ cms.EDAnalyzer("TheNtupleMaker",
     #'double  caloHadDeltaRp4W()',
     #'double  caloEMDeltaRp5W()',
     #'double  caloHadDeltaRp5W()'
+    #'double  dEdxNPASmi()',
+    #'double  dEdxASmi()',
     'double  dEdxNPHarm2()',
     'double  dEdxNPTru40()',
     'unsigned int     dEdxNPNoM()',
