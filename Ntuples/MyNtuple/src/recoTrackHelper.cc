@@ -92,7 +92,7 @@ void TrackHelper::analyzeEvent()
     //For DeDxNPASmi
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPASmiTrackHandle;
     event->getByLabel("dedxNPASmi", dEdxNPASmiTrackHandle);
-    dEdxTrackMapASmi = *dEdxNPASmiTrackHandle.product();
+    dEdxNPTrackMapASmi = *dEdxNPASmiTrackHandle.product();
 
     //For DeDxASmi
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxASmiTrackHandle;
@@ -224,10 +224,15 @@ void TrackHelper::analyzeObject()
     dEdxNPHarm2Track = dEdxNPTrackMapHarm2[track];
     // For DeDxNPTru40
     dEdxNPTru40Track = dEdxNPTrackMapTru40[track];
+    // For DeDxNPASmi
+    dEdxNPASmiTrack = dEdxNPTrackMapASmi[track];
     // For DeDxHarm2 
     dEdxHarm2Track = dEdxTrackMapHarm2[track];
     // For DeDxTru40
     dEdxTru40Track = dEdxTrackMapTru40[track];
+    // For DeDxASmi
+    dEdxASmiTrack = dEdxTrackMapASmi[track];
+
 
     // For my calculation of dE/dx
     dEdxHits = dEdxHitsTrackMap[track];
