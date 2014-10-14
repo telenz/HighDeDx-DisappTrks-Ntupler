@@ -1677,10 +1677,7 @@ if runPF2PAT:
 
 ##--## HSCP
 process.load("FWCore.MessageService.MessageLogger_cfi")
-if runOnMC:
-	process.load("Configuration.StandardSequences.Geometry_cff")
-else:
-	process.load("Configuration.Geometry.GeometryIdeal_cff")
+process.load("Configuration.Geometry.GeometryIdeal_cff")
 	
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load('Configuration.StandardSequences.Services_cff')
@@ -1787,7 +1784,7 @@ process.reconstruction_fromRECO_noTracking = cms.Sequence(process.clusterSummary
 
 
 if not runOnMC:
-  import PhysicsTools.PythonAnalysis.LumiList as LumiList
+  import FWCore.PythonUtilities.LumiList as LumiList
   process.source.lumisToProcess = LumiList.LumiList(filename = '/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/Cert_190456-208686_8TeV_22Jan2013ReReco_Collisions12_JSON.txt').getVLuminosityBlockRange()
 
 ## Dump python config if wished
