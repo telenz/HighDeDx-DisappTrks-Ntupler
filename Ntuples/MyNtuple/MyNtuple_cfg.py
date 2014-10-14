@@ -13,7 +13,7 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 
 #This is required to store hit position information
-process.load("Configuration.StandardSequences.Geometry_cff")
+process.load("Configuration.Geometry.GeometryIdeal_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 globalTagMC   = 'START53_V7G'
 process.GlobalTag.globaltag = globalTagMC   + '::All'
