@@ -714,120 +714,6 @@ process.HBHENoiseFilterResultProducer = cms.EDProducer("HBHENoiseFilterResultPro
 )
 
 
-process.HSCPIsolation01 = cms.EDProducer("ProduceIsolationMap",
-    TKLabel = cms.InputTag("generalTracks"),
-    IsolationConeDR = cms.double(0.1),
-    TkIsolationPtCut = cms.double(10),
-    TrackAssociatorParameters = cms.PSet(
-        muonMaxDistanceSigmaX = cms.double(0.0),
-        muonMaxDistanceSigmaY = cms.double(0.0),
-        CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-        dRHcal = cms.double(9999.0),
-        dREcal = cms.double(9999.0),
-        CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-        useEcal = cms.bool(True),
-        dRPreshowerPreselection = cms.double(0.2),
-        dREcalPreselection = cms.double(0.05),
-        HORecHitCollectionLabel = cms.InputTag("horeco"),
-        dRMuon = cms.double(9999.0),
-        propagateAllDirections = cms.bool(True),
-        muonMaxDistanceX = cms.double(5.0),
-        muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(False),
-        trajectoryUncertaintyTolerance = cms.double(-1.0),
-        usePreshower = cms.bool(False),
-        DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-        dRHcalPreselection = cms.double(0.2),
-        useMuon = cms.bool(True),
-        useCalo = cms.bool(False),
-        accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-        dRMuonPreselection = cms.double(0.2),
-        truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-        useHcal = cms.bool(True)
-    ),
-    inputCollection = cms.InputTag("generalTracksSkim")
-)
-
-
-process.HSCPIsolation03 = cms.EDProducer("ProduceIsolationMap",
-    TKLabel = cms.InputTag("generalTracks"),
-    IsolationConeDR = cms.double(0.3),
-    TkIsolationPtCut = cms.double(10),
-    TrackAssociatorParameters = cms.PSet(
-        muonMaxDistanceSigmaX = cms.double(0.0),
-        muonMaxDistanceSigmaY = cms.double(0.0),
-        CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-        dRHcal = cms.double(9999.0),
-        dREcal = cms.double(9999.0),
-        CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-        useEcal = cms.bool(True),
-        dRPreshowerPreselection = cms.double(0.2),
-        dREcalPreselection = cms.double(0.05),
-        HORecHitCollectionLabel = cms.InputTag("horeco"),
-        dRMuon = cms.double(9999.0),
-        propagateAllDirections = cms.bool(True),
-        muonMaxDistanceX = cms.double(5.0),
-        muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(False),
-        trajectoryUncertaintyTolerance = cms.double(-1.0),
-        usePreshower = cms.bool(False),
-        DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-        dRHcalPreselection = cms.double(0.2),
-        useMuon = cms.bool(True),
-        useCalo = cms.bool(False),
-        accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-        dRMuonPreselection = cms.double(0.2),
-        truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-        useHcal = cms.bool(True)
-    ),
-    inputCollection = cms.InputTag("generalTracksSkim")
-)
-
-
-process.HSCPIsolation05 = cms.EDProducer("ProduceIsolationMap",
-    TKLabel = cms.InputTag("generalTracks"),
-    IsolationConeDR = cms.double(0.5),
-    TkIsolationPtCut = cms.double(10),
-    TrackAssociatorParameters = cms.PSet(
-        muonMaxDistanceSigmaX = cms.double(0.0),
-        muonMaxDistanceSigmaY = cms.double(0.0),
-        CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-        dRHcal = cms.double(9999.0),
-        dREcal = cms.double(9999.0),
-        CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-        useEcal = cms.bool(True),
-        dRPreshowerPreselection = cms.double(0.2),
-        dREcalPreselection = cms.double(0.05),
-        HORecHitCollectionLabel = cms.InputTag("horeco"),
-        dRMuon = cms.double(9999.0),
-        propagateAllDirections = cms.bool(True),
-        muonMaxDistanceX = cms.double(5.0),
-        muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(False),
-        trajectoryUncertaintyTolerance = cms.double(-1.0),
-        usePreshower = cms.bool(False),
-        DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-        dRHcalPreselection = cms.double(0.2),
-        useMuon = cms.bool(True),
-        useCalo = cms.bool(False),
-        accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-        dRMuonPreselection = cms.double(0.2),
-        truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-        useHcal = cms.bool(True)
-    ),
-    inputCollection = cms.InputTag("generalTracksSkim")
-)
-
-
 process.HcalHaloData = cms.EDProducer("HcalHaloDataProducer",
     SumHcalEnergyThresholdParam = cms.double(18),
     NHitsHcalThresholdParam = cms.int32(4),
@@ -3040,7 +2926,7 @@ process.TrackProducer = cms.EDProducer("TrackProducer",
 
 
 process.TrackRefitter = cms.EDProducer("TrackRefitter",
-    src = cms.InputTag("generalTracksSkim"),
+    src = cms.InputTag("generalTracksReduced"),
     beamSpot = cms.InputTag("offlineBeamSpot"),
     srcConstr = cms.InputTag(""),
     constraint = cms.string(''),
@@ -3083,22 +2969,6 @@ process.TrackRefitterP5 = cms.EDProducer("TrackRefitter",
     TrajectoryInEvent = cms.bool(True),
     TTRHBuilder = cms.string('WithTrackAngle'),
     AlgorithmName = cms.string('ctf'),
-    Propagator = cms.string('RungeKuttaTrackerPropagator')
-)
-
-
-process.TrackRefitterSkim = cms.EDProducer("TrackRefitter",
-    src = cms.InputTag("generalTracks"),
-    beamSpot = cms.InputTag("offlineBeamSpot"),
-    srcConstr = cms.InputTag(""),
-    constraint = cms.string(''),
-    Fitter = cms.string('KFFittingSmootherWithOutliersRejectionAndRK'),
-    useHitsSplitting = cms.bool(False),
-    MeasurementTracker = cms.string(''),
-    NavigationSchool = cms.string('SimpleNavigationSchool'),
-    TrajectoryInEvent = cms.bool(True),
-    TTRHBuilder = cms.string('WithAngleAndTemplate'),
-    AlgorithmName = cms.string('undefAlgorithm'),
     Propagator = cms.string('RungeKuttaTrackerPropagator')
 )
 
@@ -10023,23 +9893,6 @@ process.dedxProd = cms.EDProducer("DeDxDiscriminatorProducer",
     Formula = cms.untracked.uint32(0),
     Reccord = cms.untracked.string('SiStripDeDxMip_3D_Rcd'),
     trajectoryTrackAssociation = cms.InputTag("TrackRefitter")
-)
-
-
-process.dedxSkimNPHarm2 = cms.EDProducer("DeDxEstimatorProducer",
-    UseStrip = cms.bool(True),
-    MisCalib_Mean = cms.untracked.double(1.0),
-    MeVperADCPixel = cms.double(3.61e-06),
-    UseCalibration = cms.bool(False),
-    calibrationPath = cms.string(''),
-    MisCalib_Sigma = cms.untracked.double(0.0),
-    tracks = cms.InputTag("TrackRefitterSkim"),
-    estimator = cms.string('generic'),
-    ShapeTest = cms.bool(False),
-    MeVperADCStrip = cms.double(0.00095665),
-    trajectoryTrackAssociation = cms.InputTag("TrackRefitterSkim"),
-    UsePixel = cms.bool(False),
-    exponent = cms.double(-2.0)
 )
 
 
@@ -19729,42 +19582,6 @@ process.hiGenParticlesForJets = cms.EDProducer("InputGenJetsParticleSelector",
     excludeResonances = cms.bool(True),
     excludeFromResonancePids = cms.vuint32(12, 13, 14, 16),
     tausAsJets = cms.bool(False)
-)
-
-
-process.highPtTrackEcalDetIds = cms.EDProducer("HighPtTrackEcalDetIdProducer",
-    TrackAssociatorParameters = cms.PSet(
-        muonMaxDistanceSigmaX = cms.double(0.0),
-        muonMaxDistanceSigmaY = cms.double(0.0),
-        CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-        dRHcal = cms.double(9999.0),
-        dRPreshowerPreselection = cms.double(0.2),
-        CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-        useEcal = cms.bool(True),
-        dREcal = cms.double(9999.0),
-        dREcalPreselection = cms.double(0.05),
-        HORecHitCollectionLabel = cms.InputTag("horeco"),
-        dRMuon = cms.double(9999.0),
-        propagateAllDirections = cms.bool(True),
-        muonMaxDistanceX = cms.double(5.0),
-        muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(True),
-        trajectoryUncertaintyTolerance = cms.double(-1.0),
-        usePreshower = cms.bool(False),
-        DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-        dRHcalPreselection = cms.double(0.2),
-        useMuon = cms.bool(True),
-        useCalo = cms.bool(False),
-        accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-        dRMuonPreselection = cms.double(0.2),
-        truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-        useHcal = cms.bool(True)
-    ),
-    TrackPt = cms.double(40.0),
-    inputCollection = cms.InputTag("generalTracksSkim")
 )
 
 
@@ -31619,11 +31436,6 @@ process.muonEcalDetIds = cms.EDProducer("InterestingEcalDetIdProducer",
 )
 
 
-process.muonEcalDetIdsHSCP = cms.EDProducer("InterestingEcalDetIdProducer",
-    inputCollection = cms.InputTag("muons")
-)
-
-
 process.muonMETValueMapProducer = cms.EDProducer("MuonMETValueMapProducer",
     TrackAssociatorParameters = cms.PSet(
         muonMaxDistanceSigmaX = cms.double(0.0),
@@ -32689,15 +32501,6 @@ process.muonsFromCosmics1Leg = cms.EDProducer("MuonIdProducer",
 )
 
 
-process.muonsSkim = cms.EDProducer("UpdatedMuonInnerTrackRef",
-    MuonTag = cms.untracked.InputTag("muons"),
-    NewTrackTag = cms.untracked.InputTag("generalTracksSkim"),
-    OldTrackTag = cms.untracked.InputTag("generalTracks"),
-    maxInvPtDiff = cms.untracked.double(0.005),
-    minDR = cms.untracked.double(0.01)
-)
-
-
 process.muonsWithSET = cms.EDProducer("MuonIdProducer",
     TrackExtractorPSet = cms.PSet(
         Diff_z = cms.double(0.2),
@@ -33028,14 +32831,8 @@ process.muontiming = cms.EDProducer("MuonTimingProducer",
         UseCSC = cms.bool(True),
         UseECAL = cms.bool(False)
     ),
-    MuonCollection = cms.InputTag("muonsSkim")
+    MuonCollection = cms.InputTag("muons")
 )
-
-
-process.nEventsBefEDM = cms.EDProducer("EventCountProducer")
-
-
-process.nEventsBefSkim = cms.EDProducer("EventCountProducer")
 
 
 process.negativeTrackCountingHighEffJetTags = cms.EDProducer("JetTagProducer",
@@ -39483,58 +39280,6 @@ process.reducedEcalRecHitsES = cms.EDProducer("ReducedESRecHitCollectionProducer
 )
 
 
-process.reducedHSCPEcalRecHitsEB = cms.EDProducer("ReducedRecHitCollectionProducer",
-    interestingDetIdCollections = cms.VInputTag(cms.InputTag("highPtTrackEcalDetIds"), cms.InputTag("muonEcalDetIdsHSCP")),
-    recHitsLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-    reducedHitsCollection = cms.string('')
-)
-
-
-process.reducedHSCPEcalRecHitsEE = cms.EDProducer("ReducedRecHitCollectionProducer",
-    interestingDetIdCollections = cms.VInputTag(cms.InputTag("highPtTrackEcalDetIds"), cms.InputTag("muonEcalDetIdsHSCP")),
-    recHitsLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-    reducedHitsCollection = cms.string('')
-)
-
-
-process.reducedHSCPhbhereco = cms.EDProducer("ReduceHcalRecHitCollectionProducer",
-    TrackAssociatorParameters = cms.PSet(
-        muonMaxDistanceSigmaX = cms.double(0.0),
-        muonMaxDistanceSigmaY = cms.double(0.0),
-        CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-        dRHcal = cms.double(9999.0),
-        dRPreshowerPreselection = cms.double(0.2),
-        CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-        useEcal = cms.bool(True),
-        dREcal = cms.double(9999.0),
-        dREcalPreselection = cms.double(0.05),
-        HORecHitCollectionLabel = cms.InputTag("horeco"),
-        dRMuon = cms.double(9999.0),
-        propagateAllDirections = cms.bool(True),
-        muonMaxDistanceX = cms.double(5.0),
-        muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(True),
-        trajectoryUncertaintyTolerance = cms.double(-1.0),
-        usePreshower = cms.bool(False),
-        DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-        dRHcalPreselection = cms.double(0.2),
-        useMuon = cms.bool(True),
-        useCalo = cms.bool(False),
-        accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-        dRMuonPreselection = cms.double(0.2),
-        truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-        useHcal = cms.bool(True)
-    ),
-    recHitsLabel = cms.InputTag("hbhereco"),
-    reducedHitsCollection = cms.string(''),
-    TrackPt = cms.double(40.0),
-    inputCollection = cms.InputTag("generalTracksSkim")
-)
-
-
 process.reducedHcalRecHits = cms.EDProducer("HcalHitSelection",
     interestingDetIds = cms.VInputTag(),
     hfTag = cms.InputTag("hfreco"),
@@ -45317,35 +45062,6 @@ process.HBHENoiseFilter = cms.EDFilter("HBHENoiseFilter",
 )
 
 
-process.HSCPEventFilter = cms.EDFilter("HSCPEventFilter",
-    dedxMaxLeft = cms.double(2.8),
-    trkPtMin = cms.double(40.0),
-    ndedxHits = cms.int32(4),
-    inputTrackCollection = cms.InputTag("TrackRefitterSkim"),
-    dxyMax = cms.double(99999),
-    Mu2PtMin = cms.double(20),
-    inputDedxCollection = cms.InputTag("dedxSkimNPHarm2"),
-    filter = cms.bool(False),
-    Mu1PtMin = cms.double(40.0),
-    etaMin = cms.double(-2.4),
-    SAMuPtMin = cms.double(70),
-    dedxMin = cms.double(3.0),
-    chi2nMax = cms.double(99999),
-    dzMax = cms.double(99999),
-    inputMuonCollection = cms.InputTag("muons"),
-    etaMax = cms.double(2.4)
-)
-
-
-process.HSCPTrigger = cms.EDFilter("HLTHighLevel",
-    eventSetupPathsKey = cms.string(''),
-    andOr = cms.bool(True),
-    HLTPaths = cms.vstring('*'),
-    throw = cms.bool(False),
-    TriggerResultsTag = cms.InputTag("TriggerResults","","HLT")
-)
-
-
 process.HSCParticleProducer = cms.EDFilter("HSCParticleProducer",
     TrackAssociatorParameters = cms.PSet(
         muonMaxDistanceSigmaX = cms.double(0.0),
@@ -45362,23 +45078,23 @@ process.HSCParticleProducer = cms.EDFilter("HSCParticleProducer",
         propagateAllDirections = cms.bool(True),
         muonMaxDistanceX = cms.double(5.0),
         muonMaxDistanceY = cms.double(5.0),
-        useHO = cms.bool(False),
+        useHO = cms.bool(True),
         trajectoryUncertaintyTolerance = cms.double(-1.0),
         usePreshower = cms.bool(False),
         DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-        EERecHitCollectionLabel = cms.InputTag("reducedHSCPEcalRecHitsEE"),
+        EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
         dRHcalPreselection = cms.double(0.2),
         useMuon = cms.bool(True),
         useCalo = cms.bool(False),
         accountForTrajectoryChangeCalo = cms.bool(False),
-        EBRecHitCollectionLabel = cms.InputTag("reducedHSCPEcalRecHitsEB"),
+        EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
         dRMuonPreselection = cms.double(0.2),
         truthMatch = cms.bool(False),
-        HBHERecHitCollectionLabel = cms.InputTag("reducedHSCPhbhereco"),
+        HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
         useHcal = cms.bool(True)
     ),
-    EERecHitCollection = cms.InputTag("reducedHSCPEcalRecHitsEE"),
-    EBRecHitCollection = cms.InputTag("reducedHSCPEcalRecHitsEB"),
+    EERecHitCollection = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
+    EBRecHitCollection = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
     maxInvPtDiff = cms.double(0.005),
     useBetaFromTk = cms.bool(True),
     minSAMuPt = cms.double(70),
@@ -45466,8 +45182,8 @@ process.HSCParticleProducer = cms.EDFilter("HSCParticleProducer",
     rpcRecHits = cms.InputTag("rpcRecHits"),
     minDR = cms.double(0.1),
     minMTDR = cms.double(0.3),
-    muons = cms.InputTag("muonsSkim"),
-    tracksIsolation = cms.InputTag("generalTracksSkim"),
+    muons = cms.InputTag("muons"),
+    tracksIsolation = cms.InputTag("generalTracks"),
     MTmuons = cms.InputTag("MTMuons"),
     useBetaFromRpc = cms.bool(True),
     tracks = cms.InputTag("TrackRefitter"),
@@ -45535,15 +45251,6 @@ process.HSCParticleSelector = cms.EDFilter("HSCParticleSelector",
             onlyConsiderMuon = cms.bool(True)
         )),
     source = cms.InputTag("HSCParticleProducer")
-)
-
-
-process.HSCPdEdxTrigger = cms.EDFilter("HLTHighLevel",
-    eventSetupPathsKey = cms.string(''),
-    TriggerResultsTag = cms.InputTag("TriggerResults","","HLT"),
-    HLTPaths = cms.vstring('HLT_*_dEdx*'),
-    andOr = cms.bool(True),
-    throw = cms.bool(False)
 )
 
 
@@ -45687,9 +45394,9 @@ process.electronsWithPresel = cms.EDFilter("GsfElectronSelector",
 )
 
 
-process.generalTracksSkim = cms.EDFilter("TrackSelector",
+process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
-    src = cms.InputTag("TrackRefitterSkim"),
+    src = cms.InputTag("generalTracks"),
     cut = cms.string('pt > 30')
 )
 
@@ -45845,15 +45552,6 @@ process.hcalLaserEventFilter = cms.EDFilter("HcalLaserEventFilter",
 process.highPtTracks = cms.EDFilter("TrackSelector",
     src = cms.InputTag("generalTracks"),
     cut = cms.string('pt > 15')
-)
-
-
-process.hltHighLevel = cms.EDFilter("HLTHighLevel",
-    eventSetupPathsKey = cms.string(''),
-    TriggerResultsTag = cms.InputTag("TriggerResults","","HLT"),
-    HLTPaths = cms.vstring(),
-    throw = cms.bool(True),
-    andOr = cms.bool(True)
 )
 
 
@@ -46778,6 +46476,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float  tauID("againstMuonTight")'),
     Track = cms.untracked.vstring('recoTrackHelper                       TrackRefitter                   2000', 
         'double  pt()', 
+        'double ptError()', 
         'double  px()', 
         'double  py()', 
         'double  pz()', 
@@ -46786,6 +46485,8 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double  vx()', 
         'double  vy()', 
         'double  vz()', 
+        'double chi2()', 
+        'double ndof()', 
         'unsigned short  numberOfValidHits()', 
         'unsigned short  hitPattern().trackerLayersWithoutMeasurement()', 
         'unsigned short  trackerExpectedHitsInner().numberOfLostHits()', 
@@ -46798,6 +46499,8 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double  caloHadDeltaRp4()', 
         'double  caloEMDeltaRp5()', 
         'double  caloHadDeltaRp5()', 
+        'double  dEdxNPASmi()', 
+        'double  dEdxASmi()', 
         'double  dEdxNPHarm2()', 
         'double  dEdxNPTru40()', 
         'unsigned int     dEdxNPNoM()', 
@@ -46846,7 +46549,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double  pt()', 
         'double  phi()', 
         'double  eta()'),
-    Electron = cms.untracked.vstring('patElectron                     patElectronsLoosePFlow          200', 
+    Electron = cms.untracked.vstring('patElectron                     patElectronsLoosePFlow         200', 
         'double  energy()', 
         'double  et()', 
         'double  pz()', 
@@ -47006,19 +46709,10 @@ process.hpsTancTauInitialSequence = cms.Sequence(process.combinatoricRecoTausDis
 process.selectedPatCandidates = cms.Sequence(process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatPhotons+process.selectedPatJets+process.selectedPatCandidateSummary)
 
 
-process.trackerSeq = cms.Sequence(process.generalTracksSkim)
-
-
-process.hltdEdxSeq = cms.Sequence(process.HSCPdEdxTrigger)
-
-
 process.pfSortByTypeSequence = cms.Sequence(process.pfAllNeutralHadrons+process.pfAllChargedHadrons+process.pfAllPhotons+process.pfAllChargedParticles+process.pfPileUpAllChargedParticles+process.pfAllNeutralHadronsAndPhotons)
 
 
 process.particleFlowTrackWithNuclear = cms.Sequence(process.pfTrack+process.pfTrackElec+process.pfNuclear)
-
-
-process.hcalSeq = cms.Sequence(process.reducedHSCPhbhereco)
 
 
 process.dtlocalreco_with_2DSegments = cms.Sequence(process.dt1DRecHits+process.dt2DSegments+process.dt4DSegments+process.dt1DCosmicRecHits+process.dt2DCosmicSegments+process.dt4DCosmicSegments)
@@ -47043,9 +46737,6 @@ process.patPFTauIsolation = cms.Sequence(process.tauIsoDepositPFCandidates+proce
 
 
 process.producePatPFMETCorrectionsPFlow = cms.Sequence(process.patPFMetPFlow+process.pfCandsNotInJetPFlow+process.selectedPatJetsForMETtype1p2CorrPFlow+process.selectedPatJetsForMETtype2CorrPFlow+process.patPFJetMETtype1p2CorrPFlow+process.patPFJetMETtype2CorrPFlow+process.pfCandMETcorrPFlow+process.patType1CorrectedPFMetPFlow+process.patType1p2CorrectedPFMetPFlow)
-
-
-process.muonSeq = cms.Sequence(process.muonsSkim)
 
 
 process.muonSelectionTypeSequence = cms.Sequence(process.muidTrackerMuonArbitrated+process.muidAllArbitrated+process.muidGlobalMuonPromptTight+process.muidTMLastStationLoose+process.muidTMLastStationTight+process.muidTM2DCompatibilityLoose+process.muidTM2DCompatibilityTight+process.muidTMOneStationLoose+process.muidTMOneStationTight+process.muidTMLastStationOptimizedLowPtLoose+process.muidTMLastStationOptimizedLowPtTight+process.muidGMTkChiCompatibility+process.muidGMStaChiCompatibility+process.muidGMTkKinkTight+process.muidTMLastStationAngLoose+process.muidTMLastStationAngTight+process.muidTMOneStationAngLoose+process.muidTMOneStationAngTight)
@@ -47108,6 +46799,9 @@ process.patPhotonHcalIsolation = cms.Sequence(process.gamIsoDepositHcalFromTower
 process.patPFTauIsolationPFlow = cms.Sequence(process.tauIsoDepositPFCandidatesPFlow+process.tauIsoDepositPFChargedHadronsPFlow+process.tauIsoDepositPFNeutralHadronsPFlow+process.tauIsoDepositPFGammasPFlow)
 
 
+process.doAlldEdXEstimatorsCTF = cms.Sequence(process.dedxTruncated40CTF+process.dedxDiscrimASmiCTF+process.dedxHarmonic2CTF)
+
+
 process.hpsPFTauDiscriminationByIsolationSeq = cms.Sequence(process.hpsPFTauDiscriminationByVLooseIsolation+process.hpsPFTauDiscriminationByLooseIsolation+process.hpsPFTauDiscriminationByMediumIsolation+process.hpsPFTauDiscriminationByTightIsolation)
 
 
@@ -47118,9 +46812,6 @@ process.interestingEgammaIsoDetIds = cms.Sequence(process.interestingEleIsoDetId
 
 
 process.uncleanedOnlyCkfTracksFromConversions = cms.Sequence(process.uncleanedOnlyConversionTrackCandidates+process.uncleanedOnlyCkfOutInTracksFromConversions+process.uncleanedOnlyCkfInOutTracksFromConversions)
-
-
-process.beginSeq = cms.Sequence(process.nEventsBefSkim)
 
 
 process.ak5JTA = cms.Sequence(process.ak5JetTracksAssociatorAtVertex+process.ak5JetTracksAssociatorAtCaloFace+process.ak5JetExtender)
@@ -47300,9 +46991,6 @@ process.JetPlusTrackCorrectionsSisCone5 = cms.Sequence(process.JPTeidTight+proce
 process.cosmictracksP5Top = cms.Sequence(process.cosmicseedfinderP5Top+process.cosmicCandidateFinderP5Top+process.cosmictrackfinderP5Top)
 
 
-process.doAlldEdXEstimatorsCTF = cms.Sequence(process.dedxTruncated40CTF+process.dedxDiscrimASmiCTF+process.dedxHarmonic2CTF)
-
-
 process.PixelLessStep = cms.Sequence(process.pixelLessStepClusters+process.pixelLessStepSeeds+process.pixelLessStepTrackCandidates+process.pixelLessStepTracks+process.pixelLessStepSelector)
 
 
@@ -47450,9 +47138,6 @@ process.patMETCorrectionsPFlow = cms.Sequence(process.producePFMETCorrectionsPFl
 process.egammareco_woConvPhotons = cms.Sequence(process.electronSequence+process.photonSequence)
 
 
-process.eventSelSeq = cms.Sequence(process.TrackRefitterSkim+process.dedxSkimNPHarm2+process.HSCPEventFilter)
-
-
 process.patAddOnSequence = cms.Sequence()
 
 
@@ -47489,13 +47174,13 @@ process.pfClusteringHCALall = cms.Sequence(process.particleFlowClusterHCAL+proce
 process.InitialStep = cms.Sequence(process.initialStepSeeds+process.initialStepTrackCandidates+process.initialStepTracks+process.initialStepSelector)
 
 
+process.conversionTrackMergers = cms.Sequence(process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.generalInOutOutInConversionTrackMerger+process.gsfGeneralInOutOutInConversionTrackMerger)
+
+
 process.recoAllPFJets = cms.Sequence(process.sisCone5PFJets+process.sisCone7PFJets+process.kt4PFJets+process.dummy+process.kt6PFJetsCentralChargedPileUp+process.kt6PFJetsCentralNeutral+process.kt6PFJetsCentralNeutralTight+process.fixedGridRhoAll+process.fixedGridRhoFastjetAll+process.iterativeCone5PFJets+process.ak5PFJets+process.ak7PFJets+process.ak5PFJetsTrimmed+process.ak5PFJetsPruned+process.ak5PFJetsFiltered+process.ak5PFJetsMassDropFiltered+process.gk5PFJets+process.gk7PFJets+process.ca4PFJets+process.ca6PFJets)
 
 
 process.patMETCorrections = cms.Sequence(process.produceCaloMETCorrections+process.producePFMETCorrections)
-
-
-process.conversionTrackMergers = cms.Sequence(process.inOutOutInConversionTrackMerger+process.generalConversionStepConversionTrackMerger+process.generalInOutOutInConversionTrackMerger+process.gsfGeneralInOutOutInConversionTrackMerger)
 
 
 process.JetPlusTrackCorrections = cms.Sequence(process.JPTeidTight+process.JetPlusTrackZSPCorJetIcone5)
@@ -47606,9 +47291,6 @@ process.jetGlobalReco = cms.Sequence(process.recoJets+process.recoJetIds+process
 process.pfPhotonIsolationSequence = cms.Sequence(process.photonPFIsolationDepositsSequence+process.phPFIsoValueCharged03PFId+process.phPFIsoValueChargedAll03PFId+process.phPFIsoValueGamma03PFId+process.phPFIsoValueNeutral03PFId+process.phPFIsoValuePU03PFId+process.phPFIsoValueCharged04PFId+process.phPFIsoValueChargedAll04PFId+process.phPFIsoValueGamma04PFId+process.phPFIsoValueNeutral04PFId+process.phPFIsoValuePU04PFId)
 
 
-process.cosmictracksP5Bottom = cms.Sequence(process.cosmicseedfinderP5Bottom+process.cosmicCandidateFinderP5Bottom+process.cosmictrackfinderP5Bottom)
-
-
 process.makePatElectronsPFlow = cms.Sequence(process.electronMatchPFlow+process.patElectronsPFlow)
 
 
@@ -47637,9 +47319,6 @@ process.JetPlusTrackCorrectionsIcone5 = cms.Sequence(process.JPTeidTight+process
 
 
 process.CSCHaloFilterDigiOrTriggerLevel = cms.Sequence(process.CSCHaloFilterDigiLevel+process.CSCHaloFilterTriggerLevel)
-
-
-process.hltSeq = cms.Sequence(process.HSCPTrigger)
 
 
 process.patAddOnSequencePFlow = cms.Sequence()
@@ -47678,7 +47357,7 @@ process.recoTauHPSTancSequence = cms.Sequence(process.recoTauCommonSequence+proc
 process.makePatMETs = cms.Sequence(process.patMETCorrections+process.patMETs)
 
 
-process.detIdProduceSeq = cms.Sequence(process.muonEcalDetIdsHSCP+process.highPtTrackEcalDetIds)
+process.cosmictracksP5Bottom = cms.Sequence(process.cosmicseedfinderP5Bottom+process.cosmicCandidateFinderP5Bottom+process.cosmictrackfinderP5Bottom)
 
 
 process.doAlldEdXEstimators = cms.Sequence(process.dedxTruncated40+process.dedxHarmonic2+process.dedxDiscrimASmi)
@@ -47861,9 +47540,6 @@ process.patHPSPFTauDiscriminationUpdatePFlow = cms.Sequence(process.updateHPSPFT
 process.tracksP5Top = cms.Sequence(process.ctftracksP5Top+process.cosmictracksP5Top)
 
 
-process.ecalSeq = cms.Sequence(process.detIdProduceSeq+process.reducedHSCPEcalRecHitsEB+process.reducedHSCPEcalRecHitsEE)
-
-
 process.recoTauClassicFixedConeSequence = cms.Sequence(process.recoTauCommonSequence+process.ak5PFJetsRecoTauPiZeros+process.produceAndDiscriminateFixedConePFTaus)
 
 
@@ -47903,13 +47579,7 @@ process.muonreco_with_SET = cms.Sequence(process.muontracking_with_SET)
 process.trackingGlobalReco = cms.Sequence(process.ckftracks+process.trackExtrapolator)
 
 
-process.exoticaHSCPdEdxSeq = cms.Sequence(process.nEventsBefSkim+process.hltdEdxSeq+process.trackerSeq+process.ecalSeq+process.hcalSeq+process.muonSeq+process.HSCPIsolation01+process.HSCPIsolation03+process.HSCPIsolation05)
-
-
 process.pfMuonSequence = cms.Sequence(process.pfAllMuons+process.pfMuonsFromVertex+process.pfSelectedMuons+process.pfMuonIsolationSequence+process.pfIsolatedMuons+process.pfMuons)
-
-
-process.muonreco = cms.Sequence(process.muontracking+process.muonIdProducerSequence)
 
 
 process.ckftracks_woBH = cms.Sequence(process.iterTracking+process.electronSeedsSeq+process.doAlldEdXEstimators)
@@ -47951,7 +47621,7 @@ process.pfElectronSequencePFlow = cms.Sequence(process.pfAllElectronsPFlow+proce
 process.egammaGlobalReco = cms.Sequence(process.electronGsfTracking+process.conversionTrackSequence+process.allConversionSequence)
 
 
-process.exoticaHSCPSeq = cms.Sequence(process.beginSeq+process.hltSeq+process.eventSelSeq+process.trackerSeq+process.ecalSeq+process.hcalSeq+process.muonSeq+process.HSCPIsolation01+process.HSCPIsolation03+process.HSCPIsolation05)
+process.muonreco = cms.Sequence(process.muontracking+process.muonIdProducerSequence)
 
 
 process.patHPSPFTauDiscriminationUpdate = cms.Sequence(process.updateHPSPFTaus)
@@ -47976,9 +47646,6 @@ process.makePatTausPFlow = cms.Sequence(process.patHPSPFTauDiscriminationUpdateP
 
 
 process.tracksP5_wodEdX = cms.Sequence(process.cosmictracksP5+process.ctftracksP5+process.trackerCosmics_TopBot)
-
-
-process.skimming = cms.Sequence(process.beginSeq+process.TrackRefitterSkim+process.trackerSeq+process.ecalSeq+process.hcalSeq+process.muonSeq)
 
 
 process.muonrecowith_TeVRefinemen = cms.Sequence(process.muontracking_with_TeVRefinement+process.muonIdProducerSequence)
@@ -48077,7 +47744,7 @@ process.reconstruction_HcalNZS = cms.Sequence(process.localreco_HcalNZS+process.
 process.pAK5PF = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.ak5PFJets+process.PFTau+process.patElectrons+process.patMuons+process.patHPSPFTauDiscriminationUpdate+process.patPFCandidateIsoDepositSelection+process.patPFTauIsolation+process.patTaus+process.patJetCorrFactorsAK5PF+process.jetTracksAssociatorAtVertexAK5PF+process.btaggingAK5PF+process.patJetChargeAK5PF+process.patJetsAK5PF+process.patMETCorrections+process.patMETsAK5PF+process.patCandidateSummary+process.selectedPatElectrons+process.selectedPatMuons+process.selectedPatTaus+process.selectedPatJetsAK5PF+process.selectedPatCandidateSummary+process.countPatElectrons+process.countPatMuons+process.countPatTaus+process.countPatLeptons+process.countPatJetsAK5PF+process.patDefaultSequenceTrigger+process.patDefaultSequenceTriggerEvent+process.patAddOnSequence)
 
 
-process.pPFlow = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.patPF2PATSequencePFlow+process.looseLeptonSequence+process.patAddOnSequencePFlow+process.puJetIdSqeuenceChs+process.patConversions+process.q2weights+process.skimming+process.HSCParticleProducerSeq+process.demo)
+process.pPFlow = cms.Path(process.goodOfflinePrimaryVertices+process.step0c+process.eidMVASequence+process.patPF2PATSequencePFlow+process.looseLeptonSequence+process.patAddOnSequencePFlow+process.puJetIdSqeuenceChs+process.patConversions+process.q2weights+process.generalTracksReduced+process.HSCParticleProducerSeq+process.demo)
 
 
 process.outpath = cms.EndPath(process.out)
@@ -55388,44 +55055,6 @@ process.DefaultClusterizer = cms.PSet(
     ClusterThreshold = cms.double(5.0)
 )
 
-process.EXOHSCPSkim_EventContent = cms.PSet(
-    outputCommands = cms.untracked.vstring('drop *', 
-        'keep EventAux_*_*_*', 
-        'keep LumiSummary_*_*_*', 
-        'keep edmMergeableCounter_*_*_*', 
-        'keep GenEventInfoProduct_generator_*_*', 
-        'keep L1GlobalTriggerReadoutRecord_*_*_*', 
-        'keep recoVertexs_offlinePrimaryVertices_*_*', 
-        'keep recoMuons_muonsSkim_*_*', 
-        'keep SiStripClusteredmNewDetSetVector_generalTracksSkim_*_*', 
-        'keep SiPixelClusteredmNewDetSetVector_generalTracksSkim_*_*', 
-        'keep recoTracks_generalTracksSkim_*_*', 
-        'keep recoTrackExtras_generalTracksSkim_*_*', 
-        'keep TrackingRecHitsOwned_generalTracksSkim_*_*', 
-        'keep *_dt1DRecHits_*_*', 
-        'keep *_dt4DSegments_*_*', 
-        'keep *_csc2DRecHits_*_*', 
-        'keep *_cscSegments_*_*', 
-        'keep *_rpcRecHits_*_*', 
-        'keep recoTracks_standAloneMuons_*_*', 
-        'keep recoTrackExtras_standAloneMuons_*_*', 
-        'keep TrackingRecHitsOwned_standAloneMuons_*_*', 
-        'keep recoTracks_globalMuons_*_*', 
-        'keep recoTrackExtras_globalMuons_*_*', 
-        'keep TrackingRecHitsOwned_globalMuons_*_*', 
-        'keep EcalRecHitsSorted_reducedHSCPEcalRecHitsEB_*_*', 
-        'keep EcalRecHitsSorted_reducedHSCPEcalRecHitsEE_*_*', 
-        'keep HBHERecHitsSorted_reducedHSCPhbhereco__*', 
-        'keep edmTriggerResults_TriggerResults__*', 
-        'keep *_hltTriggerSummaryAOD_*_*', 
-        'keep *_HSCPIsolation01__*', 
-        'keep *_HSCPIsolation03__*', 
-        'keep *_HSCPIsolation05__*', 
-        'keep *_ak5PFJets_*_*', 
-        'keep recoPFMETs_pfMet__*', 
-        'keep recoBeamSpot_offlineBeamSpot__*')
-)
-
 process.GenJetParameters = cms.PSet(
     Active_Area_Repeats = cms.int32(5),
     src = cms.InputTag("genParticlesForJets"),
@@ -57294,37 +56923,6 @@ process.TrackAssociatorParameters = cms.PSet(
     muonMaxDistanceX = cms.double(5.0),
     muonMaxDistanceY = cms.double(5.0),
     useHO = cms.bool(True),
-    trajectoryUncertaintyTolerance = cms.double(-1.0),
-    usePreshower = cms.bool(False),
-    DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
-    EERecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEE"),
-    dRHcalPreselection = cms.double(0.2),
-    useMuon = cms.bool(True),
-    useCalo = cms.bool(False),
-    accountForTrajectoryChangeCalo = cms.bool(False),
-    EBRecHitCollectionLabel = cms.InputTag("ecalRecHit","EcalRecHitsEB"),
-    dRMuonPreselection = cms.double(0.2),
-    truthMatch = cms.bool(False),
-    HBHERecHitCollectionLabel = cms.InputTag("hbhereco"),
-    useHcal = cms.bool(True)
-)
-
-process.TrackAssociatorParametersForHSCPIsol = cms.PSet(
-    muonMaxDistanceSigmaX = cms.double(0.0),
-    muonMaxDistanceSigmaY = cms.double(0.0),
-    CSCSegmentCollectionLabel = cms.InputTag("cscSegments"),
-    dRHcal = cms.double(9999.0),
-    dREcal = cms.double(9999.0),
-    CaloTowerCollectionLabel = cms.InputTag("towerMaker"),
-    useEcal = cms.bool(True),
-    dRPreshowerPreselection = cms.double(0.2),
-    dREcalPreselection = cms.double(0.05),
-    HORecHitCollectionLabel = cms.InputTag("horeco"),
-    dRMuon = cms.double(9999.0),
-    propagateAllDirections = cms.bool(True),
-    muonMaxDistanceX = cms.double(5.0),
-    muonMaxDistanceY = cms.double(5.0),
-    useHO = cms.bool(False),
     trajectoryUncertaintyTolerance = cms.double(-1.0),
     usePreshower = cms.bool(False),
     DTRecSegment4DCollectionLabel = cms.InputTag("dt4DSegments"),
