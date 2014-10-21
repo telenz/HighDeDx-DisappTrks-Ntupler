@@ -1768,8 +1768,8 @@ pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
 
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
-#process.outpath  = cms.EndPath(process.out + process.demo)
 pPF += process.demo
+#process.outpath  = cms.EndPath(process.out + process.demo)
 process.schedule = cms.Schedule(pAddPF,pPF)
 
 
