@@ -1768,6 +1768,11 @@ pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
 
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
+if not runOnMC:
+  _list = process.demo.buffers.value()
+  del _list[_list.index("SimTrack")]
+  del _list[_list.index("SimVertex")]
+  process.demo.buffers = _list
 pPF += process.demo
 #process.outpath  = cms.EndPath(process.out + process.demo)
 process.schedule = cms.Schedule(pAddPF,pPF)
