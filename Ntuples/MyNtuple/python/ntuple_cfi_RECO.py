@@ -28,7 +28,9 @@ cms.EDAnalyzer("TheNtupleMaker",
     'sdouble',
     'Tau',
     'Track',
-    'Vertex'
+    'Vertex',
+    'SimTrack',
+    'SimVertex'
     ),
                edmEventHelper =
                cms.untracked.
@@ -240,5 +242,35 @@ cms.EDAnalyzer("TheNtupleMaker",
     'double  y()',
     'double  z()',
     'double position().rho()',
+    ),
+                          SimTrack =
+               cms.untracked.
+               vstring(
+    'SimTrack                        g4SimHits                      5000',
+    #---------------------------------------------------------------------
+    'float  charge()',
+    'int  vertIndex()',
+    'bool  noVertex()',
+    'int  genpartIndex()',
+    'bool  noGenpart()',
+    'int  type()',
+    'unsigned int  trackId()',
+    'double momentum().pt()',
+    'double momentum().phi()',
+    'double momentum().eta()',
+    'double momentum().energy()',
+    ),
+               SimVertex =
+               cms.untracked.
+               vstring(
+    'SimVertex                       g4SimHits                      5000',
+    #---------------------------------------------------------------------
+    'int  parentIndex()',
+    'bool  noParent()',
+    'unsigned int  vertexId()',
+    'double position().x()',
+    'double position().y()',
+    'double position().z()',
+    'double position().t()',
     )
                )
