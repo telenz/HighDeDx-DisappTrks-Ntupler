@@ -313,9 +313,9 @@ inputFiles = cms.untracked.vstring(
 process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
-#process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
+process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m100_width0_0.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
-process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
+#process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
@@ -1778,6 +1778,15 @@ pPF += process.demo
 process.schedule = cms.Schedule(pAddPF,pPF)
 
 
+###---------- remove bugs in geant ------------------------
+process.load("SimG4Core.Application.g4SimHits_cfi")
+process.g4SimHits.StackingAction.SavePrimaryDecayProductsAndConversionsInCalo = cms.untracked.bool(True)
+process.g4SimHits.StackingAction.SavePrimaryDecayProductsAndConversionsInMuon = cms.untracked.bool(True)
+
+process.g4SimHits.SteppingAction.MaxTrackTimes = cms.vdouble(2000.0, 500.0, 500.0)
+process.g4SimHits.StackingAction.MaxTrackTimes = cms.vdouble(2000.0, 500.0, 500.0)
+process.common_maximum_time.MaxTrackTimes = cms.vdouble(2000.0, 500.0, 500.0)
+###---------- remove bugs in geant ------------------------
 
 process.pfPhotonSequence = cms.Sequence(process.pfSelectedPhotons+process.pfPhotonIsolationSequence+process.pfIsolatedPhotons)
 process.pfElectronSequence = cms.Sequence(process.pfAllElectrons+process.pfElectronsFromVertex+process.pfSelectedElectrons+process.pfElectronIsolationSequence+process.pfIsolatedElectrons+process.pfElectrons)
