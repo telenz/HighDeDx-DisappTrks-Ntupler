@@ -76,12 +76,13 @@ G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track * aTra
     classification = fKill;
   } else {
     const G4Track * mother = CurrentG4Track::track();
-    if ((savePDandCinTracker && isThisVolume(aTrack->GetTouchable(),tracker))||
-	(savePDandCinCalo && isThisVolume(aTrack->GetTouchable(),calo)) ||
-	(savePDandCinMuon && isThisVolume(aTrack->GetTouchable(),muon)))
+    bool toBeChecked = true;
+    if(!savePDandCinTracker && isThisVolume(aTrack->GetTouchable(),tracker))  toBeChecked = false;
+    if(!savePDandCinCalo    && isThisVolume(aTrack->GetTouchable(),calo))     toBeChecked = false;
+    if(!savePDandCinMuon    && isThisVolume(aTrack->GetTouchable(),muon))     toBeChecked = false;
+    if(toBeChecked){
       flag = isItPrimaryDecayProductOrConversion(aTrack, *mother);
-    if (saveFirstSecondary) flag = isItFromPrimary(*mother, flag);
-    newTA.secondary(aTrack, *mother, flag);
+    }
 
     if (aTrack->GetTrackStatus() == fStopAndKill) classification = fKill;
     if (killHeavy) {
