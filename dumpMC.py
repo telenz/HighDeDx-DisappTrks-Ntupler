@@ -6,7 +6,9 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     skipBadFiles = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring('file:TTJets_Summer12_S10_1303.root')
+    fileNames = cms.untracked.vstring('file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root'),
+    inputCommands = cms.untracked.vstring('keep *', 
+        'drop GenLumiInfoProduct_*_*_*')
 )
 process.BeamHaloSummary = cms.EDProducer("BeamHaloSummaryProducer",
     l_HcalPhiWedgeConfidence = cms.double(0.7),
