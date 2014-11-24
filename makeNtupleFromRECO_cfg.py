@@ -313,14 +313,18 @@ inputFiles = cms.untracked.vstring(
 process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
-process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
+#process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
+#process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
+process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
 #process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
-
-
+process.source.inputCommands = cms.untracked.vstring(
+                                                     'keep *',
+                                                     'drop GenLumiInfoProduct_*_*_*'
+                                                     )
 ###
 ### Output configuration
 ###
@@ -596,7 +600,7 @@ process.out.outputCommands += [ 'keep edmTriggerResults_*_*_*'
                               #, "keep *_puJetMva_*_*"
                                 ]
 
-process.out.outputCommands += [ 'keep *'                              
+process.out.outputCommands += [ 'keep *'
                                 ]
 
 keepSC = True
