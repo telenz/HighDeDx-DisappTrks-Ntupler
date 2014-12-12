@@ -50,12 +50,12 @@ cms.EDAnalyzer("TheNtupleMaker",
                vstring(
     'edmTriggerResultsHelper TriggerResults::HLT 1',
     #---------------------------------------------------------------------
-    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")',
-    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")',
-    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")',
-    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")',
-    ' int value("HLT_MET120_HBHENoiseCleaned_*")',
-    ' int prescale("HLT_MET120_HBHENoiseCleaned_*")',
+    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v',
+    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v',
+    ' int value("HLT_MET120_HBHENoiseCleaned_v1...20") value_HLT_MET120_HBHENoiseCleaned_v',
+    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") presclae_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v',
+    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") prescale_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v',
+    ' int prescale("HLT_MET120_HBHENoiseCleaned_v1...20") prescale_HLT_MET120_HBHENoiseCleaned_v'
     ),
 
                Electron =
