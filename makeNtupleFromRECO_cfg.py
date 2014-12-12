@@ -244,7 +244,7 @@ inputFiles = [] # overwritten, if "useRelVals" is 'True'
 
 
 # maximum number of events
-maxInputEvents = 100 # reduce for testing
+maxInputEvents = 10 # reduce for testing
 
 ### Conditions
 
@@ -315,8 +315,8 @@ process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:ttbar.root"]
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
 #process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
-process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
-#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+#process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
+process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
 #process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
@@ -1759,7 +1759,7 @@ process.dedxHitInfo.UseCalibration     = cms.bool(True)
 
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
                                  src = cms.InputTag("generalTracks"), 
-                                 cut = cms.string("pt > 30"),
+                                 cut = cms.string("pt > 10"),
                                  filter = cms.bool(False)
                                  )
 process.TrackRefitter.src =  cms.InputTag("generalTracksReduced")
