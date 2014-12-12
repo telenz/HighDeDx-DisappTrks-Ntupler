@@ -6,7 +6,7 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     skipBadFiles = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring('file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root'),
+    fileNames = cms.untracked.vstring('file:TTJets_Summer12_S10_1303.root'),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop GenLumiInfoProduct_*_*_*')
 )
@@ -44875,7 +44875,7 @@ process.electronsWithPresel = cms.EDFilter("GsfElectronSelector",
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
     src = cms.InputTag("generalTracks"),
-    cut = cms.string('pt > 30')
+    cut = cms.string('pt > 10')
 )
 
 
@@ -46022,12 +46022,12 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'double position().rho()'),
     isRECOfile = cms.untracked.bool(True),
     edmTriggerResultsHelper = cms.untracked.vstring('edmTriggerResultsHelper TriggerResults::HLT 1', 
-        ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")', 
-        ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")', 
-        ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")', 
-        ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")', 
-        ' int value("HLT_MET120_HBHENoiseCleaned_*")', 
-        ' int prescale("HLT_MET120_HBHENoiseCleaned_*")'),
+        ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v', 
+        ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v', 
+        ' int value("HLT_MET120_HBHENoiseCleaned_v1...20") value_HLT_MET120_HBHENoiseCleaned_v', 
+        ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") presclae_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v', 
+        ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") prescale_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v', 
+        ' int prescale("HLT_MET120_HBHENoiseCleaned_v1...20") prescale_HLT_MET120_HBHENoiseCleaned_v'),
     Electron = cms.untracked.vstring('patElectron                     patElectronsLoosePFlow         200', 
         'double  energy()', 
         'double  et()', 
@@ -57091,7 +57091,7 @@ process.looseSoftPFElectronCleanerForwardCuts = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(10)
 )
 
 process.mediumSoftPFElectronCleanerBarrelCuts = cms.PSet(
