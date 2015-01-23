@@ -251,8 +251,11 @@ maxInputEvents = 10 # reduce for testing
 # GlobalTags (w/o suffix '::All')
 #globalTagData = 'GR_R_52_V7'
 #globalTagMC   = 'START52_V9'
-globalTagData = 'GR_R_53_V10'
-globalTagMC   = 'START53_V7G'
+#globalTagData = 'GR_R_53_V10' // used for the current ntuples -> this is not correct: Look it up: https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideFrontierConditions#Global_tags_for_collision_da_AN3 and search for "Latest analysis GT for data"
+#globalTagMC   = 'START53_V7G' // used for the current ntuples -> this is not correct: 
+globalTagData = 'FT53_V21A_AN6'
+globalTagMC   = 'START53_V27'
+
 
 ### Output
 
