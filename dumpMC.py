@@ -53344,7 +53344,7 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
         connect = cms.untracked.string('sqlite_file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db')
     )),
     connect = cms.string('frontier://FrontierProd/CMS_COND_31X_GLOBALTAG'),
-    globaltag = cms.string('START53_V7G::All')
+    globaltag = cms.string('START53_V27::All')
 )
 
 
