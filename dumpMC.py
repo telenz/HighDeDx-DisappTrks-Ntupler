@@ -44840,20 +44840,6 @@ process.countPatTausPFlow = cms.EDFilter("PATCandViewCountFilter",
 )
 
 
-process.ecalLaserCorrFilter = cms.EDFilter("EcalLaserCorrFilter",
-    EBEnegyMIN = cms.double(10.0),
-    EBLaserMAX = cms.double(3.0),
-    EELaserMIN = cms.double(0.3),
-    EELaserMAX = cms.double(8.0),
-    EEEnegyMIN = cms.double(10.0),
-    EBRecHitSource = cms.InputTag("reducedEcalRecHitsEB"),
-    EBLaserMIN = cms.double(0.3),
-    EERecHitSource = cms.InputTag("reducedEcalRecHitsEE"),
-    taggingMode = cms.bool(False),
-    Debug = cms.bool(False)
-)
-
-
 process.eeBadScFilter = cms.EDFilter("EEBadScFilter",
     SCsize = cms.int32(5),
     badscEE = cms.vint32(-1023023, 1048098, -1078063),
@@ -46956,7 +46942,7 @@ process.recoJetAssociations = cms.Sequence(process.ic5JetTracksAssociatorAtVerte
 process.updateHPSPFTausPFlow = cms.Sequence(process.hpsPFTauDiscriminationByDecayModeFindingPFlow+process.hpsPFTauDiscriminationByChargedIsolationSeqPFlow+process.hpsPFTauDiscriminationByMVAIsolationSeqPFlow+process.hpsPFTauDiscriminationByRawCombinedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByRawChargedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByRawGammaIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByVLooseIsolationPFlow+process.hpsPFTauDiscriminationByLooseIsolationPFlow+process.hpsPFTauDiscriminationByMediumIsolationPFlow+process.hpsPFTauDiscriminationByTightIsolationPFlow+process.hpsPFTauDiscriminationByVLooseIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByLooseIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByMediumIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByTightIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByVLooseCombinedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorrPFlow+process.hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3HitsPFlow+process.hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3HitsPFlow+process.hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr3HitsPFlow+process.hpsPFTauDiscriminationByRawCombinedIsolationDBSumPtCorr3HitsPFlow+process.hpsPFTauDiscriminationByLooseElectronRejectionPFlow+process.hpsPFTauDiscriminationByMediumElectronRejectionPFlow+process.hpsPFTauDiscriminationByTightElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVAElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA2rawElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA2LooseElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA2VLooseElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA2MediumElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA2TightElectronRejectionPFlow+process.hpsPFTauDiscriminationByLooseMuonRejectionPFlow+process.hpsPFTauDiscriminationByMediumMuonRejectionPFlow+process.hpsPFTauDiscriminationByTightMuonRejectionPFlow+process.hpsPFTauDiscriminationByLooseMuonRejection2PFlow+process.hpsPFTauDiscriminationByMediumMuonRejection2PFlow+process.hpsPFTauDiscriminationByTightMuonRejection2PFlow+process.hpsPFTauDiscriminationByMVA3rawElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA3LooseElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA3VTightElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA3MediumElectronRejectionPFlow+process.hpsPFTauDiscriminationByMVA3TightElectronRejectionPFlow+process.hpsPFTauDiscriminationByDeadECALElectronRejectionPFlow)
 
 
-process.step0c = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.ecalLaserCorrFilter+process.trkPOGFilters+process.eventCleaningMC)
+process.step0c = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.trkPOGFilters+process.eventCleaningMC)
 
 
 process.jetPlusTrackZSPCorJetIcone5 = cms.Sequence(process.JetPlusTrackCorrectionsIcone5)
@@ -47064,7 +47050,7 @@ process.pfMuonIsolationSequence = cms.Sequence(process.muonPFIsolationSequence)
 process.egammaHighLevelRecoPrePF = cms.Sequence(process.gsfEcalDrivenElectronSequence+process.uncleanedOnlyElectronSequence+process.conversionSequence+process.photonSequence)
 
 
-process.eventCleaning = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.ecalLaserCorrFilter+process.trkPOGFilters+process.eventCleaningMC)
+process.eventCleaning = cms.Sequence(process.HBHENoiseFilter+process.CSCTightHaloFilter+process.hcalLaserEventFilter+process.EcalDeadCellTriggerPrimitiveFilter+process.eeBadScFilter+process.trackingFailureFilter+process.trkPOGFilters+process.eventCleaningMC)
 
 
 process.particleFlowClusterWithoutHO = cms.Sequence(process.towerMakerPF+process.pfClusteringECAL+process.pfClusteringHCAL+process.pfClusteringPS)
