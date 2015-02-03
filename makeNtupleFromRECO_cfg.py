@@ -319,8 +319,8 @@ process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
 #process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
 #process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
-process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
-#process.source.fileNames = ["file:TTJets_Summer12_S10_1303.root"]
+#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:dataFile.root"]
 #process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
@@ -373,8 +373,8 @@ process.load('CommonTools/RecoAlgos/HBHENoiseFilterResultProducer_cfi')
 process.step0c = process.eventCleaning ## original
 
 # Ecal laser correction filter from  https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFilters
-process.load('RecoMET.METFilters.ecalLaserCorrFilter_cfi')
-process.step0c += process.ecalLaserCorrFilter
+# process.load('RecoMET.METFilters.ecalLaserCorrFilter_cfi')
+# process.step0c += process.ecalLaserCorrFilter
 # Tracking POG filter
 process.load('RecoMET.METFilters.trackingPOGFilters_cff')
 process.step0c += process.trkPOGFilters
