@@ -6,7 +6,7 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     skipBadFiles = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring('file:0C69A8EC-21F5-E111-B996-001E673983F4.root'),
+    fileNames = cms.untracked.vstring('file:TTJets_skimmed.root'),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop GenLumiInfoProduct_*_*_*')
 )
@@ -57103,7 +57103,7 @@ process.looseSoftPFElectronCleanerForwardCuts = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(10)
 )
 
 process.mediumSoftPFElectronCleanerBarrelCuts = cms.PSet(
