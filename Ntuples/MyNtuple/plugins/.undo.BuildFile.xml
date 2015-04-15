@@ -95,3 +95,5 @@
 <use   name="rootmath"/>
 <use   name="rootrflx"/>
 <use name="Ntuples/MyNtuple"/>
+<library file="userplugin_recoTrackHelper.cc" name="recoTrackHelper">
+</library>
