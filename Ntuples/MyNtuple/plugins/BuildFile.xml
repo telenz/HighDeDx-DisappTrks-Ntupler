@@ -97,3 +97,5 @@
 <use name="Ntuples/MyNtuple"/>
 <library file="userplugin_recoTrackHelper.cc" name="recoTrackHelper">
 </library>
+<library file="userplugin_patElectronHelper.cc" name="patElectronHelper">
+</library>
