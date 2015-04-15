@@ -20,9 +20,11 @@ cms.EDAnalyzer("TheNtupleMaker",
     'edmEventHelper',
     'edmTriggerResultsHelper',
     'Electron',
+    'ElectronPFlow',
     'GenParticle',
     'Jet',
     'MET',
+    'MuonPFlow',
     'Muon',
     'PileupSummaryInfo',
     'sdouble',
@@ -53,15 +55,28 @@ cms.EDAnalyzer("TheNtupleMaker",
     ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v',
     ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") value_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v',
     ' int value("HLT_MET120_HBHENoiseCleaned_v1...20") value_HLT_MET120_HBHENoiseCleaned_v',
-    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") presclae_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v',
+    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v1...20") prescale_HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_v',
     ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v1...20") prescale_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_v',
     ' int prescale("HLT_MET120_HBHENoiseCleaned_v1...20") prescale_HLT_MET120_HBHENoiseCleaned_v'
     ),
 
-               Electron =
+               ElectronPFlow =
                cms.untracked.
                vstring(
     'patElectron                     patElectronsLoosePFlow         200',
+    #---------------------------------------------------------------------
+    'double  energy()',
+    'double  et()',
+    'double  pz()',
+    'double  pt()',
+    'double  phi()',
+    'double  eta()',
+    'float   electronID("mvaNonTrigV0")',
+    ),
+               Electron =
+               cms.untracked.
+               vstring(
+    'patElectron                     selectedPatElectrons            200',
     #---------------------------------------------------------------------
     'double  energy()',
     'double  et()',
@@ -102,6 +117,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'double  eta()',
     'double  mass()',
     'int     pdgId()',
+    'int     status()'
     ),
                
                MET =
@@ -116,7 +132,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'double  phi()',
     'double  eta()',
     ),
-               Muon =
+               MuonPFlow =
                cms.untracked.
                vstring(
     'patMuon                         selectedPatMuonsLoosePFlow      200',
@@ -127,6 +143,26 @@ cms.EDAnalyzer("TheNtupleMaker",
     'double  pt()',
     'double  phi()',
     'double  eta()',
+    'bool    isPFMuon()',
+    'bool    isGlobalMuon()',
+    'bool    isTrackerMuon()',
+    'bool    isStandAloneMuon()'
+    ),   
+               Muon =
+               cms.untracked.
+               vstring(
+    'patMuon                         selectedPatMuonsLoose           200',
+    #---------------------------------------------------------------------
+    'double  energy()',
+    'double  et()',
+    'double  pz()',
+    'double  pt()',
+    'double  phi()',
+    'double  eta()',
+    'bool    isPFMuon()',
+    'bool    isGlobalMuon()',
+    'bool    isTrackerMuon()',
+    'bool    isStandAloneMuon()'
     ),               
                PileupSummaryInfo =
                cms.untracked.
