@@ -44,7 +44,8 @@
 	git clone https://github.com/latinos/UserCode-EGamma-EGammaAnalysisTools.git EGamma/EGammaAnalysisTools
 	pushd EGamma/EGammaAnalysisTools/
 	git checkout tags/V00-00-08
-	wget -r http://nd.edu/~abrinke1/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h
+	#wget -r http://nd.edu/~abrinke1/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h
+        wget -r www.desy.de/~tlenz/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h	
 	cd data
 	cat download.url | xargs wget
 	popd
