@@ -9,7 +9,8 @@
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
-//#include "EgammaAnalysis/ElectronTools/interface/ElectronEffectiveArea.h"
+#include "EGamma/EGammaAnalysisTools/interface/ElectronEffectiveArea.h"
+#include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 //-----------------------------------------------------------------------------
 using namespace std;
 using namespace pat;
@@ -18,8 +19,7 @@ using namespace pat;
 ElectronHelper::ElectronHelper()
   : HelperFor<pat::Electron>() {
 
-  //isRECOfile = config->getUntrackedParameter<bool>("isRECOfile");
-  //isRealData = config->getUntrackedParameter<bool>("isRealData");
+  isRECOfile = config->getUntrackedParameter<bool>("isRECOfile");
 
 }
     
@@ -32,22 +32,17 @@ ElectronHelper::~ElectronHelper() {}
 //}
 
 // -- Called once per object
-/*
+
 void ElectronHelper::analyzeObject()
 {
-  if(isRealData){
     _Aeff04 = ElectronEffectiveArea::GetElectronEffectiveArea(ElectronEffectiveArea::kEleGammaAndNeutralHadronIso04, object->superCluster()->eta(), ElectronEffectiveArea::kEleEAData2012);
-  }
-  else{
-    _Aeff04 = ElectronEffectiveArea::GetElectronEffectiveArea(ElectronEffectiveArea::kEleGammaAndNeutralHadronIso04, object->superCluster()->eta(), ElectronEffectiveArea::kEleEAFall11MC);
-  }
 
 }
 
 // -- User access methods
- bool ElectronHelper::Aeff04()
+ float ElectronHelper::Aeff04()
  {return _Aeff04;}
-*/
+
 //double ElectronHelper::someMethod()  const
 //{
 //  return  //-- some-value --
