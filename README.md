@@ -7,7 +7,7 @@
  	cd HighDeDx-DisappTrks-Ntupler
 	cmsrel CMSSW_5_3_8_patch1
 	cd CMSSW_5_3_8_patch1
-	rm -r src
+	rm -rf src
 	git clone https://github.com/telenz/HighDeDx-DisappTrks-Ntupler.git src	
 	cd src
 	cmsenv
@@ -45,7 +45,7 @@
 	pushd EGamma/EGammaAnalysisTools/
 	git checkout tags/V00-00-08
 	#wget -r http://nd.edu/~abrinke1/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h
-        wget -r www.desy.de/~tlenz/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h	
+	wget -r www.desy.de/~tlenz/ElectronEffectiveArea.h -O interface/ElectronEffectiveArea.h	
 	cd data
 	cat download.url | xargs wget
 	popd
@@ -57,7 +57,7 @@
 	cd CMGTools/External/
 	git checkout tags/V00-02-10
 	cd -
-	#git clone https://github.com/cms-ttH/BEAN.git
+	git clone https://github.com/cms-ttH/BEAN.git
 
 	cd PhysicsTools
 	git clone https://github.com/hbprosper/TheNtupleMaker.git
