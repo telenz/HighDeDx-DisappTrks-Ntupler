@@ -60,6 +60,11 @@ options.register ('runOnMC',
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.bool )
 
+options.register ('runOnRECO',
+		  1,
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.bool )
+
 options.maxEvents = maxEvents
 #options.outputFile = 'NUT.root'
 options.parseArguments()
@@ -96,6 +101,7 @@ if (not runOnMC and sampleNumber >= 0):
 """
 
 runOnMC = options.runOnMC
+runOnRECO = options.runOnRECO
 runOnFastSim = False
 
 
@@ -105,7 +111,8 @@ print ' ========================================='
 print '     BEAN Production Job'
 print ' ========================================='
 print ''
-print '     Run on MC......%d' % runOnMC 
+print '     Run on MC......%d' % runOnMC
+print '     Run on RECO....%d' % runOnRECO 
 print '     Max events.....%d' % options.maxEvents
 print '     Report every...%d' % reportEvery
 print ''
@@ -320,9 +327,9 @@ process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
 #process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
-process.source.fileNames = ["file:TTJets_skimmed.root"]
+#process.source.fileNames = ["file:0C69A8EC-21F5-E111-B996-001E673983F4.root"]
 #process.source.fileNames = ["file:dataFile.root"]
-#process.source.fileNames = ["file:TTJets_skimmed.root"]
+process.source.fileNames = ["file:TTJets_skimmed.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
 process.source.inputCommands = cms.untracked.vstring(
                                                      'keep *',
@@ -1683,98 +1690,105 @@ if runPF2PAT:
 
 
 ##--## HSCP
-process.load("FWCore.MessageService.MessageLogger_cfi")
-process.load("Configuration.Geometry.GeometryIdeal_cff")
+if(runOnRECO):
+  process.load("FWCore.MessageService.MessageLogger_cfi")
+  process.load("Configuration.Geometry.GeometryIdeal_cff")
 	
-process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
-process.load('Configuration.StandardSequences.Services_cff')
+  process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
+  process.load('Configuration.StandardSequences.Services_cff')
 
-#process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducerFromSkim_cff")  #IF RUNNING ON HSCP SKIM
-process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
+  #process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducerFromSkim_cff")  #IF RUNNING ON HSCP SKIM
+  process.load("SUSYBSMAnalysis.HSCP.HSCParticleProducer_cff")  #
 
-#process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
-#from Configuration.Skimming.PDWG_EXOHSCP_cff import *
-#process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
-process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
-#process.HSCPEventFilter.filter = cms.bool(False)
+  #process.load('Configuration.Skimming.PDWG_EXOHSCP_cff')
+  #from Configuration.Skimming.PDWG_EXOHSCP_cff import *
+  #process.HSCPTrigger.HLTPaths = ["*"] #not apply any trigger filter for MC
+  process.HSCParticleProducer.useBetaFromEcal = cms.bool(False)
+  #process.HSCPEventFilter.filter = cms.bool(False)
 
-#skim the jet collection to keep only 15GeV jets
+  #skim the jet collection to keep only 15GeV jets
 
-process.load("PhysicsTools.HepMCCandAlgos.genParticles_cfi")
-process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
-process.genParticles.abortOnUnknownPDGCode = cms.untracked.bool(False)
+  process.load("PhysicsTools.HepMCCandAlgos.genParticles_cfi")
+  process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
+  process.genParticles.abortOnUnknownPDGCode = cms.untracked.bool(False)
 
-if runOnMC:
-	process.GlobalTag.toGet = cms.VPSet(
-		cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
-			  tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
-			  connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),	    
-		
-		)
-else:
-	process.GlobalTag.toGet = cms.VPSet(
-		cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
-			  tag = cms.string('Data7TeV_Deco_3D_Rcd_38X'),
-			  connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
-		)
+  if runOnMC:
+    process.GlobalTag.toGet = cms.VPSet(
+      cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
+                tag = cms.string('MC7TeV_Deco_3D_Rcd_38X'),
+                connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),	    
+      )
+  else:
+    process.GlobalTag.toGet = cms.VPSet(
+      cms.PSet( record = cms.string('SiStripDeDxMip_3D_Rcd'),
+                tag = cms.string('Data7TeV_Deco_3D_Rcd_38X'),
+                connect = cms.untracked.string("sqlite_file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data7TeV_Deco_SiStripDeDxMip_3D_Rcd.db")),
+      )
 
-if runOnMC:
-  process.dedxHarm2.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxTru40.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxProd.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxASmi.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNPHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNPTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNSHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNSTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNPProd.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxNPASmi.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-  process.dedxHitInfo.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
-else:
-  process.dedxHarm2.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxTru40.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxProd.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxASmi.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNPHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNPTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNSHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNSTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNPProd.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxNPASmi.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
-  process.dedxHitInfo.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+  if runOnMC:
+    process.dedxHarm2.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxTru40.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxProd.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxASmi.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNPHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNPTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNSHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNSTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNPProd.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxNPASmi.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+    process.dedxHitInfo.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/MC8TeVGains.root")
+  else:
+    process.dedxHarm2.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxTru40.calibrationPath      = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxProd.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxASmi.calibrationPath       = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNPHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNPTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNSHarm2.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNSTru40.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNPProd.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxNPASmi.calibrationPath     = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    process.dedxHitInfo.calibrationPath    = cms.string("file:/nfs/dust/cms/user/tlenz/HighDeDx-DisappTrks-Ntupler/CMSSW_5_3_8_patch1/src/SUSYBSMAnalysis/HSCP/data/Data8TeVGains.root")
+    
+  process.dedxHarm2.UseCalibration       = cms.bool(True)
+  process.dedxTru40.UseCalibration       = cms.bool(True)
+  process.dedxProd.UseCalibration        = cms.bool(True)
+  process.dedxASmi.UseCalibration        = cms.bool(True)
+  process.dedxNPHarm2.UseCalibration     = cms.bool(True)
+  process.dedxNPTru40.UseCalibration     = cms.bool(True)
+  process.dedxNSHarm2.UseCalibration     = cms.bool(True)
+  process.dedxNSTru40.UseCalibration     = cms.bool(True)
+  process.dedxNPProd.UseCalibration      = cms.bool(True)
+  process.dedxNPASmi.UseCalibration      = cms.bool(True)
+  process.dedxHitInfo.UseCalibration     = cms.bool(True)
 
-process.dedxHarm2.UseCalibration       = cms.bool(True)
-process.dedxTru40.UseCalibration       = cms.bool(True)
-process.dedxProd.UseCalibration        = cms.bool(True)
-process.dedxASmi.UseCalibration        = cms.bool(True)
-process.dedxNPHarm2.UseCalibration     = cms.bool(True)
-process.dedxNPTru40.UseCalibration     = cms.bool(True)
-process.dedxNSHarm2.UseCalibration     = cms.bool(True)
-process.dedxNSTru40.UseCalibration     = cms.bool(True)
-process.dedxNPProd.UseCalibration      = cms.bool(True)
-process.dedxNPASmi.UseCalibration      = cms.bool(True)
-process.dedxHitInfo.UseCalibration     = cms.bool(True)
-
-#process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
-#process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
-#process.nEventsTest   = cms.EDProducer("EventCountProducer")
+  #process.nEventsBefSkim  = cms.EDProducer("EventCountProducer")
+  #process.nEventsBefEDM   = cms.EDProducer("EventCountProducer")
+  #process.nEventsTest   = cms.EDProducer("EventCountProducer")
 
 
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
-                                 src = cms.InputTag("generalTracks"), 
-                                 cut = cms.string("pt > 10"),
-                                 filter = cms.bool(False)
-                                 )
-process.TrackRefitter.src =  cms.InputTag("generalTracksReduced")
+                                            src = cms.InputTag("generalTracks"), 
+                                            cut = cms.string("pt > 10"),
+                                            filter = cms.bool(False)
+                                            )
 
 
 #process.skimming = cms.Sequence(beginSeq+TrackRefitterSkim+trackerSeq+ecalSeq+hcalSeq+muonSeq)
 #pPF += process.skimming+process.HSCParticleProducerSeq
-pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
+if(runOnRECO):
+  process.TrackRefitter.src =  cms.InputTag("generalTracksReduced")
+  pPF += process.generalTracksReduced+process.HSCParticleProducerSeq
+else:
+  pPF += process.generalTracksReduced
 ##--## HSCP
 
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
-process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
+if(runOnRECO):
+  process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
+else:
+  process.load("Ntuples.MyNtuple.ntuple_cfi_AOD")
+  
 if not runOnMC:
   _list = process.demo.buffers.value()
   del _list[_list.index("SimTrack")]
