@@ -83,18 +83,17 @@ namespace pat
 	// virtual void analyzeEvent();
 	 
 	// Uncomment if this class does some object-level analysis
-	//virtual void analyzeObject();
+	virtual void analyzeObject();
 
 	// ---------------------------------------------------------
 	// -- User access methods go here
 	// ---------------------------------------------------------
-	//float Aeff04();
+	float Aeff04();
 	
   private:
     // -- User internals
-	//bool isRECOfile;
-	//bool isRealData;
-	//float _Aeff04();
+	bool isRECOfile;
+	float _Aeff04;
 
   public:
     // ---------------------------------------------------------
