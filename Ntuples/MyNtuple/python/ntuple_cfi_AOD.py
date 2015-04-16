@@ -14,22 +14,25 @@ cms.EDAnalyzer("TheNtupleMaker",
 # NOTE: the names listed below will be the prefixes for
 #       the associated C++ variables created by mkanalyzer.py
 #       and the asscociated C++ structs.
-
                buffers =
                cms.untracked.
                vstring(
     'edmEventHelper',
     'edmTriggerResultsHelper',
-    'Electron',
+    'PileupSummaryInfo',
+    'Vertex',
+    'sdouble',
+    'MET',
     'GenParticle',
     'Jet',
-    'MET',
-    'Muon',
-    'PileupSummaryInfo',
-    'sdouble',
+    'ElectronPFlow',
+    'Electron',    
+    'MuonPFlow',
+    'Muon',    
     'Tau',
-    'Track',
-    'Vertex'
+    'Track',    
+    #'SimTrack',
+    #'SimVertex'
     ),
                edmEventHelper =
                cms.untracked.
@@ -43,90 +46,16 @@ cms.EDAnalyzer("TheNtupleMaker",
     '   int   bunchCrossing()',
     '   int   orbitNumber()'
     ),
-
                edmTriggerResultsHelper =
                cms.untracked.
                vstring(
     'edmTriggerResultsHelper TriggerResults::HLT 1',
     #---------------------------------------------------------------------
-    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")',
-    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu95_NHEF0p95_*")',
-    ' int value("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")',
-    ' int prescale("HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95_*")',
-    ' int value("HLT_MET120_HBHENoiseCleaned_*")',
-    ' int prescale("HLT_MET120_HBHENoiseCleaned_*")',
+    ' int value("HLT_IsoMu24_eta2p1_v1...20") value_HLT_IsoMu24_eta2p1_v',
+    ' int value("HLT_Ele27_WP80_v1...20") value_HLT_Ele27_WP80_v',
+    ' int prescale("HLT_IsoMu24_eta2p1_v1...20") prescale_HLT_IsoMu24_eta2p1_v',
+    ' int prescale("HLT_Ele27_WP80_v1...20") prescale_HLT_Ele27_WP80_v',
     ),
-
-               Electron =
-               cms.untracked.
-               vstring(
-    'patElectron                     patElectronsLoosePFlow          200',
-    #---------------------------------------------------------------------
-    'double  energy()',
-    'double  et()',
-    'double  pz()',
-    'double  pt()',
-    'double  phi()',
-    'double  eta()',
-    'float   electronID("mvaNonTrigV0")',
-    ),
-               Jet =
-               cms.untracked.
-               vstring(
-    'patJet                          selectedPatJetsPFlow            200',
-    #---------------------------------------------------------------------
-    'double  energy()',
-    'double  et()',
-    'double  pt()',
-    'double  pz()',
-    'double  phi()',
-    'double  eta()',
-    'float  chargedHadronEnergyFraction()',
-    'float  neutralHadronEnergyFraction()',
-    'float  chargedEmEnergyFraction()',
-    'float  neutralEmEnergyFraction()',
-    ),
-               GenParticle =
-               cms.untracked.
-               vstring(
-    'recoGenParticle                 genParticles                    2000',
-    #---------------------------------------------------------------------
-    'int  charge()',
-    'double  p()',
-    'double  energy()',
-    'double  et()',
-    'double  pz()',
-    'double  pt()',
-    'double  phi()',
-    'double  eta()',
-    'double  mass()',
-    'int     pdgId()',
-    ),
-               
-               MET =
-               cms.untracked.
-               vstring(
-    'patMET                          patMETsPFlow                      1',
-    #---------------------------------------------------------------------
-    'double  energy()',
-    'double  et()',
-    'double  pz()',
-    'double  pt()',
-    'double  phi()',
-    'double  eta()',
-    ),
-               Muon =
-               cms.untracked.
-               vstring(
-    'patMuon                         selectedPatMuonsLoosePFlow      200',
-    #---------------------------------------------------------------------
-    'double  energy()',
-    'double  et()',
-    'double  pz()',
-    'double  pt()',
-    'double  phi()',
-    'double  eta()',
-    ),               
                PileupSummaryInfo =
                cms.untracked.
                vstring(
@@ -136,79 +65,273 @@ cms.EDAnalyzer("TheNtupleMaker",
     ' int getPU_NumInteractions()',
     ' float getTrueNumInteractions()',
    ),
-               sdouble =
-               cms.untracked.
-               vstring(
-    'sdouble                         kt6CaloJets_rho                   1',
-    #---------------------------------------------------------------------
-    'double value()',
-    ),
-               
-               Tau =
-               cms.untracked.
-               vstring(
-    'patTau                          selectedPatTaus                 200',
-    #---------------------------------------------------------------------
-    'double  energy()',
-    'double  et()',
-    'double  pz()',
-    'double  pt()',
-    'double  phi()',
-    'double  eta()',
-    'float  tauID("byLooseCombinedIsolationDeltaBetaCorr")',
-    'float  tauID("decayModeFinding")',
-    'float  tauID("againstElectronLoose")',
-    'float  tauID("againstMuonTight")',
-    ),
-               
-               Track =
-               cms.untracked.
-               vstring(
-    'recoTrackHelper                       generalTracks              2000',
-    #---------------------------------------------------------------------
-    'double  pt()',
-    'double  px()',
-    'double  py()',
-    'double  pz()',
-    'double  phi()',
-    'double  eta()',
-    'double  vx()',
-    'double  vy()',
-    'double  vz()',
-    'unsigned short  numberOfValidHits()',
-    'unsigned short  hitPattern().trackerLayersWithoutMeasurement()',
-    'unsigned short  trackerExpectedHitsInner().numberOfLostHits()',
-    'unsigned short  trackerExpectedHitsOuter().numberOfHits()',
-    'bool    trackHighPurity()',
-    'double  trackRelIso03()',
-    'double  caloEMDeltaRp3()',
-    'double  caloHadDeltaRp3()',
-    'double  caloEMDeltaRp4()',
-    'double  caloHadDeltaRp4()',
-    'double  caloEMDeltaRp5()',
-    'double  caloHadDeltaRp5()',
-    #'double  caloEMDeltaRp3W()',
-    #'double  caloHadDeltaRp3W()',
-    #'double  caloEMDeltaRp4W()',
-    #'double  caloHadDeltaRp4W()',
-    #'double  caloEMDeltaRp5W()',
-    #'double  caloHadDeltaRp5W()',
-    #'double  caloEMDeltaRp3W()',
-    #'double  caloHadDeltaRp3W()',
-    #'double  caloEMDeltaRp4W()',
-    #'double  caloHadDeltaRp4W()',
-    #'double  caloEMDeltaRp5W()',
-    #'double  caloHadDeltaRp5W()'
-    ),
                Vertex =
                cms.untracked.
                vstring(
     'recoVertex                      offlinePrimaryVertices          100',
     #---------------------------------------------------------------------
-    'double  ndof()',
-    'double  x()',
-    'double  y()',
-    'double  z()',
-    'double position().rho()',
+    'float  ndof()',
+    'float  x()',
+    'float  y()',
+    'float  z()',
+    'float position().rho()',
+    ),
+               sdouble =
+               cms.untracked.
+               vstring(
+    'sdouble                         kt6CaloJets_rho                   1',
+    #---------------------------------------------------------------------
+    'float value()',
+    ), 
+               MET =
+               cms.untracked.
+               vstring(
+    'patMET                          patMETsPFlow                      1',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    ),
+               GenParticle =
+               cms.untracked.
+               vstring(
+    'recoGenParticle                 genParticles                    2000',
+    #---------------------------------------------------------------------
+    'int  charge()',
+    'float  p()',
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'float  mass()',
+    'int     pdgId()',
+    'int     status()'
+    ),
+               Jet =
+               cms.untracked.
+               vstring(
+    'patJet                          selectedPatJetsPFlow            200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pt()',
+    'float  pz()',
+    'float  phi()',
+    'float  eta()',
+    'float  chargedHadronEnergyFraction()',
+    'float  neutralHadronEnergyFraction()',
+    'float  chargedEmEnergyFraction()',
+    'float  neutralEmEnergyFraction()',
+    ),
+               ElectronPFlow =
+               cms.untracked.
+               vstring(
+    'patElectronHelper                patElectronsLoosePFlow         200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'float  electronID("mvaNonTrigV0")',
+    'float   electronID("mvaTrigV0")',
+    'bool    passConversionVeto()',
+    'int     gsfTrack()->trackerExpectedHitsInner().numberOfLostHits()',
+    'float   superCluster()->eta()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()',
+    'float   Aeff04()'
+    ),
+               Electron =
+               cms.untracked.
+               vstring(
+    'patElectronHelper                selectedPatElectrons            200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'float  electronID("mvaNonTrigV0")',
+    'float   electronID("mvaTrigV0")',
+    'bool    passConversionVeto()',
+    'int     gsfTrack()->trackerExpectedHitsInner().numberOfLostHits()',
+    'float   superCluster()->eta()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()',
+    'float   Aeff04()'
+    ),
+               MuonPFlow =
+               cms.untracked.
+               vstring(
+    'patMuon                         selectedPatMuonsLoosePFlow      200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'bool    isPFMuon()',
+    'bool    isGlobalMuon()',
+    'bool    isTrackerMuon()',
+    'bool    isStandAloneMuon()',
+    'float   globalTrack().chi2()',
+    'float   globalTrack().ndof()',
+    'float   globalTrack().d0()',
+    'float   dB()',
+    'float   vertex().z()',
+    'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
+    'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
+    'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
+    'int     numberOfMatchedStations()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()'
+    ),   
+               Muon =
+               cms.untracked.
+               vstring(
+    'patMuon                         selectedPatMuonsLoose           200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'bool    isPFMuon()',
+    'bool    isGlobalMuon()',
+    'bool    isTrackerMuon()',
+    'bool    isStandAloneMuon()',
+    'float   globalTrack().chi2()',
+    'float   globalTrack().ndof()',
+    'float   globalTrack().d0()',
+    'float   dB()',
+    'float   vertex().z()',
+    'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
+    'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
+    'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
+    'int     numberOfMatchedStations()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()'
+    ),
+               Tau =
+               cms.untracked.
+               vstring(
+    'patTau                          selectedPatTaus                 200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pz()',
+    'float  pt()',
+    'float  phi()',
+    'float  eta()',
+    'float  tauID("byLooseCombinedIsolationDeltaBetaCorr")',
+    'float  tauID("decayModeFinding")',
+    'float  tauID("againstElectronLoose")',
+    'float  tauID("againstMuonTight")',
+    ),
+               Track =
+               cms.untracked.
+               vstring(
+    'recoTrackHelper                       generalTracksReduced     2000',
+    #---------------------------------------------------------------------
+    'float  pt()',
+    'float ptError()',
+    'float  px()',
+    'float  py()',
+    'float  pz()',
+    'float  phi()',
+    'float  eta()',
+    'float  vx()',
+    'float  vy()',
+    'float  vz()',
+    'float chi2()',
+    'float ndof()',
+    'unsigned short  numberOfValidHits()',
+    'unsigned short  hitPattern().trackerLayersWithoutMeasurement()',
+    'unsigned short  trackerExpectedHitsInner().numberOfLostHits()',
+    'unsigned short  trackerExpectedHitsOuter().numberOfHits()',
+    'bool    trackHighPurity()',
+    'float  trackRelIso03()',
+    'float  caloEMDeltaRp3()',
+    'float  caloHadDeltaRp3()',
+    'float  caloEMDeltaRp4()',
+    'float  caloHadDeltaRp4()',
+    'float  caloEMDeltaRp5()',
+    'float  caloHadDeltaRp5()',
+    #'float  dEdxNPASmi()',
+    #'float  dEdxASmi()',
+    #'float  dEdxNPHarm2()',
+    #'float  dEdxNPTru40()',
+    #'unsigned int     dEdxNPNoM()',
+    #'float  dEdxHarm2()',
+    #'float  dEdxTru40()',
+    #'unsigned int     dEdxNoM()',
+    #'float  dEdxHitsHarm2(1000)',
+    #'float  dEdxHitsHarm2(7)',
+    #'float  dEdxHitsHarm2(5)',
+    #'float  dEdxHitsHarm2(3)',
+    #'float  dEdxHitsHarm2(2)',
+    #'float  dEdxHitsHarm2(1)',
+    #'float  dEdxHitsTrun40(1000)',
+    #'float  dEdxHitsTrun40(7)',
+    #'float  dEdxHitsTrun40(5)',
+    #'float  dEdxHitsTrun40(3)',
+    #'float  dEdxHitsTrun40(2)',
+    #'float  dEdxHitsTrun40(1)',
+    #'float  dEdxHitsMedian(1000)',
+    #'float  dEdxHitsMedian(7)',
+    #'float  dEdxHitsMedian(5)',
+    #'float  dEdxHitsMedian(3)',
+    #'float  dEdxHitsMedian(2)',
+    #'float  dEdxHitsMedian(1)',
+    #'string  test()',
+    #'int  testINT()',
+    ),
+               SimTrack =
+               cms.untracked.
+               vstring(
+    'SimTrack                        g4SimHits                      5000',
+    #---------------------------------------------------------------------
+    'float  charge()',
+    'int  vertIndex()',
+    'bool  noVertex()',
+    'int  genpartIndex()',
+    'bool  noGenpart()',
+    'int  type()',
+    'unsigned int  trackId()',
+    'float momentum().pt()',
+    'float momentum().phi()',
+    'float momentum().eta()',
+    'float momentum().energy()',
+    ),
+               SimVertex =
+               cms.untracked.
+               vstring(
+    'SimVertex                       g4SimHits                      5000',
+    #---------------------------------------------------------------------
+    'int  parentIndex()',
+    'bool  noParent()',
+    'unsigned int  vertexId()',
+    'float position().x()',
+    'float position().y()',
+    'float position().z()',
+    'float position().t()',
     )
                )
