@@ -22,6 +22,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'PileupSummaryInfo',
     'Vertex',
     'sdouble',
+    'sdoublePF',
     'MET',
     'GenParticle',
     'Jet',
@@ -82,7 +83,15 @@ cms.EDAnalyzer("TheNtupleMaker",
     'sdouble                         kt6CaloJets_rho                   1',
     #---------------------------------------------------------------------
     'float value()',
-    ), 
+    ),
+               sdoublePF =
+               cms.untracked.
+               vstring(
+    'sdouble                         kt6PFJets_rho                   1',
+    #---------------------------------------------------------------------
+    'double value()',
+    ),
+          
                MET =
                cms.untracked.
                vstring(
@@ -98,9 +107,9 @@ cms.EDAnalyzer("TheNtupleMaker",
                GenParticle =
                cms.untracked.
                vstring(
-    'recoGenParticle                 genParticles                    2000',
+    'recoGenParticle                 genParticlesReduced            2000',
     #---------------------------------------------------------------------
-    'int  charge()',
+    'int    charge()',
     'float  p()',
     'float  energy()',
     'float  et()',
@@ -109,8 +118,8 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float  phi()',
     'float  eta()',
     'float  mass()',
-    'int     pdgId()',
-    'int     status()'
+    'int    pdgId()',
+    'int    status()'
     ),
                Jet =
                cms.untracked.
