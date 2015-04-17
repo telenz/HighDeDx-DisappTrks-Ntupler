@@ -54,8 +54,14 @@ cms.EDAnalyzer("TheNtupleMaker",
     #---------------------------------------------------------------------
     ' int value("HLT_IsoMu24_eta2p1_v1...20") value_HLT_IsoMu24_eta2p1_v',
     ' int value("HLT_Ele27_WP80_v1...20") value_HLT_Ele27_WP80_v',
+    ' int value("HLT_Mu13_Mu8_v1...20") value_HLT_Mu13_Mu8_v',
+    ' int value("HLT_Mu17_Mu8_v1...20") value_HLT_Mu17_Mu8_v',
+    ' int value("HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v1...25") value_HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v',
     ' int prescale("HLT_IsoMu24_eta2p1_v1...20") prescale_HLT_IsoMu24_eta2p1_v',
     ' int prescale("HLT_Ele27_WP80_v1...20") prescale_HLT_Ele27_WP80_v',
+    ' int prescale("HLT_Mu13_Mu8_v1...20") prescale_HLT_Mu13_Mu8_v',
+    ' int prescale("HLT_Mu17_Mu8_v1...20") prescale_HLT_Mu17_Mu8_v',
+    ' int prescale("HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v1...25") prescale_HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v',
     ),
                PileupSummaryInfo =
                cms.untracked.
