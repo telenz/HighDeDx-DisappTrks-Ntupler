@@ -72,3 +72,8 @@
 
 	#the end
 
+	# For CMSSW_5_3_20 these packages need to be addtionally installed
+	#git cms-cvs-history import CMSSW_5_3_8_patch3 RecoBTag/SoftLepton
+	#git cms-cvs-history import CMSSW_5_3_8_patch3 RecoBTag/Configuration
+	#git cms-cvs-history import CMSSW_5_3_8_patch3 RecoBTau/JetTagComputer
+	#scram b -j24
