@@ -1783,6 +1783,15 @@ else:
   pPF += process.generalTracksReduced
 ##--## HSCP
 
+process.genParticlesReduced  = cms.EDFilter("GenParticleSelector",
+                                            src = cms.InputTag("genParticles"), 
+                                            cut = cms.string("pt > 1"),
+                                            filter = cms.bool(False)
+                                            )
+if(runOnMC):
+  pPF += process.genParticlesReduced
+
+
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 if(runOnRECO):
   process.load("Ntuples.MyNtuple.ntuple_cfi_RECO")
