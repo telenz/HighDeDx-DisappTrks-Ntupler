@@ -97,7 +97,6 @@ cms.EDAnalyzer("TheNtupleMaker",
     #---------------------------------------------------------------------
     'double value()',
     ),
-          
                MET =
                cms.untracked.
                vstring(
@@ -210,6 +209,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float   globalTrack().d0()',
     'float   dB()',
     'float   vertex().z()',
+    'float   innerTrack()->dz()',
     'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
     'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
     'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
@@ -240,6 +240,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float   globalTrack().d0()',
     'float   dB()',
     'float   vertex().z()',
+    'float   innerTrack()->dz()',
     'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
     'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
     'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
