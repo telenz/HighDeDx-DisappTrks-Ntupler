@@ -284,6 +284,7 @@ wantSummary = True
 
 process.load( "TopQuarkAnalysis.Configuration.patRefSel_basics_cff" )
 process.MessageLogger.cerr.FwkReport.reportEvery = reportEvery;
+process.MessageLogger.cerr.default.limit = 5
 process.options.wantSummary = wantSummary
 if runOnMC:
   process.GlobalTag.globaltag = globalTagMC   + '::All'
@@ -326,10 +327,11 @@ process.maxEvents.input  = maxInputEvents
 #process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
 #process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
 #process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
-#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
 #process.source.fileNames = ["file:0C69A8EC-21F5-E111-B996-001E673983F4.root"]
 #process.source.fileNames = ["file:dataFile.root"]
-process.source.fileNames = ["file:TTJets_skimmed.root"]
+#process.source.fileNames = ["file:TTJets_skimmed.root"]
+#process.source.fileNames = ["file:SingleMu_dataFile.root"]
 #process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
 process.source.inputCommands = cms.untracked.vstring(
                                                      'keep *',
@@ -1798,7 +1800,7 @@ if(runOnRECO):
 else:
   process.load("Ntuples.MyNtuple.ntuple_cfi_AOD")
   
-if not runOnMC:
+if not runOnMC and runOnRECO:
   _list = process.demo.buffers.value()
   del _list[_list.index("SimTrack")]
   del _list[_list.index("SimVertex")]
