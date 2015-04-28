@@ -22,6 +22,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'PileupSummaryInfo',
     'Vertex',
     'sdouble',
+    'sdoublePF',
     'MET',
     'GenParticle',
     'Jet',
@@ -85,7 +86,14 @@ cms.EDAnalyzer("TheNtupleMaker",
     'sdouble                         kt6CaloJets_rho                   1',
     #---------------------------------------------------------------------
     'float value()',
-    ), 
+    ),
+               sdoublePF =
+               cms.untracked.
+               vstring(
+    'sdouble                         kt6PFJets_rho                   1',
+    #---------------------------------------------------------------------
+    'double value()',
+    ),
                MET =
                cms.untracked.
                vstring(
@@ -134,7 +142,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                ElectronPFlow =
                cms.untracked.
                vstring(
-    'patElectron                     patElectronsLoosePFlow         200',
+    'patElectronHelper                patElectronsLoosePFlow         200',
     #---------------------------------------------------------------------
     'float  energy()',
     'float  et()',
@@ -143,11 +151,20 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float  phi()',
     'float  eta()',
     'float  electronID("mvaNonTrigV0")',
+    'float   electronID("mvaTrigV0")',
+    'bool    passConversionVeto()',
+    'int     gsfTrack()->trackerExpectedHitsInner().numberOfLostHits()',
+    'float   superCluster()->eta()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()',
+    'float   Aeff04()'
     ),
                Electron =
                cms.untracked.
                vstring(
-    'patElectron                     selectedPatElectrons            200',
+    'patElectronHelper               selectedPatElectrons            200',
     #---------------------------------------------------------------------
     'float  energy()',
     'float  et()',
@@ -156,6 +173,15 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float  phi()',
     'float  eta()',
     'float  electronID("mvaNonTrigV0")',
+    'float   electronID("mvaTrigV0")',
+    'bool    passConversionVeto()',
+    'int     gsfTrack()->trackerExpectedHitsInner().numberOfLostHits()',
+    'float   superCluster()->eta()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()',
+    'float   Aeff04()'
     ),
                MuonPFlow =
                cms.untracked.
@@ -171,7 +197,21 @@ cms.EDAnalyzer("TheNtupleMaker",
     'bool    isPFMuon()',
     'bool    isGlobalMuon()',
     'bool    isTrackerMuon()',
-    'bool    isStandAloneMuon()'
+    'bool    isStandAloneMuon()',
+    'float   globalTrack().chi2()',
+    'float   globalTrack().ndof()',
+    'float   globalTrack().d0()',
+    'float   dB()',
+    'float   vertex().z()',
+    'float   innerTrack()->dz()',
+    'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
+    'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
+    'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
+    'int     numberOfMatchedStations()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()'
     ),   
                Muon =
                cms.untracked.
@@ -187,7 +227,22 @@ cms.EDAnalyzer("TheNtupleMaker",
     'bool    isPFMuon()',
     'bool    isGlobalMuon()',
     'bool    isTrackerMuon()',
-    'bool    isStandAloneMuon()'
+    'bool    isStandAloneMuon()',
+    'float   globalTrack().chi2()',
+    'float   globalTrack().ndof()',
+    'float   globalTrack().d0()',
+    'float   dB()',
+    'float   vertex().z()',
+    'float   innerTrack()->dz()',
+    'int     globalTrack()->hitPattern().numberOfValidMuonHits()',
+    'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()',
+    'int     innerTrack()->hitPattern().numberOfValidPixelHits()',
+    'int     numberOfMatchedStations()',
+    'float   chargedHadronIso()',
+    'float   neutralHadronIso()',
+    'float   photonIso()',
+    'float   puChargedHadronIso()'
+
     ),
                Tau =
                cms.untracked.
