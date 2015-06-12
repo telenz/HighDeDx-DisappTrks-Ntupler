@@ -6,7 +6,7 @@ process.source = cms.Source("PoolSource",
     noEventSort = cms.untracked.bool(True),
     skipBadFiles = cms.untracked.bool(True),
     duplicateCheckMode = cms.untracked.string('noDuplicateCheck'),
-    fileNames = cms.untracked.vstring('file:0C69A8EC-21F5-E111-B996-001E673983F4.root'),
+    fileNames = cms.untracked.vstring('file:DYJetsToLL_Summer12_S10_1.root'),
     inputCommands = cms.untracked.vstring('keep *', 
         'drop GenLumiInfoProduct_*_*_*')
 )
@@ -41247,7 +41247,7 @@ process.genParticlesReduced = cms.EDFilter("GenParticleSelector",
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
     src = cms.InputTag("generalTracks"),
-    cut = cms.string('pt > 10')
+    cut = cms.string('pt > 15')
 )
 
 
@@ -42336,6 +42336,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float   globalTrack().d0()', 
         'float   dB()', 
         'float   vertex().z()', 
+        'float   innerTrack()->dz()', 
         'int     globalTrack()->hitPattern().numberOfValidMuonHits()', 
         'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()', 
         'int     innerTrack()->hitPattern().numberOfValidPixelHits()', 
@@ -42403,6 +42404,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float  vz()', 
         'float chi2()', 
         'float ndof()', 
+        'float  charge()', 
         'unsigned short  numberOfValidHits()', 
         'unsigned short  hitPattern().trackerLayersWithoutMeasurement()', 
         'unsigned short  trackerExpectedHitsInner().numberOfLostHits()', 
@@ -42494,6 +42496,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float   globalTrack().d0()', 
         'float   dB()', 
         'float   vertex().z()', 
+        'float   innerTrack()->dz()', 
         'int     globalTrack()->hitPattern().numberOfValidMuonHits()', 
         'int     innerTrack()->hitPattern().trackerLayersWithMeasurement()', 
         'int     innerTrack()->hitPattern().numberOfValidPixelHits()', 
@@ -43642,7 +43645,7 @@ process.MessageLogger = cms.Service("MessageLogger",
             limit = cms.untracked.int32(10000000)
         ),
         default = cms.untracked.PSet(
-            limit = cms.untracked.int32(10000000)
+            limit = cms.untracked.int32(5)
         ),
         Root_NoDictionary = cms.untracked.PSet(
             optionalPSet = cms.untracked.bool(True),
