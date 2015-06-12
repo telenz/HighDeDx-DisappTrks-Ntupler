@@ -1771,7 +1771,7 @@ if(runOnRECO):
 
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
                                             src = cms.InputTag("generalTracks"), 
-                                            cut = cms.string("pt > 10"),
+                                            cut = cms.string("pt > 15"),
                                             filter = cms.bool(False)
                                             )
 
@@ -1806,9 +1806,8 @@ if not runOnMC and runOnRECO:
   del _list[_list.index("SimVertex")]
   process.demo.buffers = _list
 pPF += process.demo
-#process.outpath  = cms.EndPath(process.out + process.demo)
 process.schedule = cms.Schedule(pAddPF,pPF)
-
+#process.schedule = cms.Schedule(pAddPF,pPF,process.outpath)
 
 
 process.pfPhotonSequence = cms.Sequence(process.pfSelectedPhotons+process.pfPhotonIsolationSequence+process.pfIsolatedPhotons)
