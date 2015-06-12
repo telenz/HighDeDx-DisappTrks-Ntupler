@@ -45392,7 +45392,7 @@ process.genParticlesReduced = cms.EDFilter("GenParticleSelector",
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
     src = cms.InputTag("generalTracks"),
-    cut = cms.string('pt > 10')
+    cut = cms.string('pt > 15')
 )
 
 
@@ -46522,7 +46522,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         '   int   luminosityBlock()', 
         '   int   bunchCrossing()', 
         '   int   orbitNumber()'),
-    GenParticle = cms.untracked.vstring('recoGenParticle                 genParticles                    2000', 
+    GenParticle = cms.untracked.vstring('recoGenParticle                 genParticlesReduced             2000', 
         'int  charge()', 
         'float  p()', 
         'float  energy()', 
@@ -46547,6 +46547,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float  vz()', 
         'float chi2()', 
         'float ndof()', 
+        'float  charge()', 
         'unsigned short  numberOfValidHits()', 
         'unsigned short  hitPattern().trackerLayersWithoutMeasurement()', 
         'unsigned short  trackerExpectedHitsInner().numberOfLostHits()', 
