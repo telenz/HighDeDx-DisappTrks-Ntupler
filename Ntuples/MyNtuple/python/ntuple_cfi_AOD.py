@@ -112,7 +112,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                GenParticle =
                cms.untracked.
                vstring(
-    'recoGenParticle                 genParticlesReduced            2000',
+    'recoGenParticle                 genParticlesReduced             2000',
     #---------------------------------------------------------------------
     'int    charge()',
     'float  p()',
@@ -168,7 +168,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                Electron =
                cms.untracked.
                vstring(
-    'patElectronHelper                selectedPatElectrons            200',
+    'patElectronHelper                 selectedPatElectrons          200',
     #---------------------------------------------------------------------
     'float  energy()',
     'float  et()',
@@ -273,7 +273,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'recoTrackHelper                       generalTracksReduced     2000',
     #---------------------------------------------------------------------
     'float  pt()',
-    'float ptError()',
+    'float  ptError()',
     'float  px()',
     'float  py()',
     'float  pz()',
@@ -282,8 +282,8 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float  vx()',
     'float  vy()',
     'float  vz()',
-    'float chi2()',
-    'float ndof()',
+    'float  chi2()',
+    'float  ndof()',
     'float  charge()',
     'unsigned short  numberOfValidHits()',
     'unsigned short  hitPattern().trackerLayersWithoutMeasurement()',
