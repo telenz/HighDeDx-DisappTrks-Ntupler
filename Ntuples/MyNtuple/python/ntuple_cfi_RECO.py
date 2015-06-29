@@ -26,6 +26,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'MET',
     'GenParticle',
     'Jet',
+    'GenJet',
     'ElectronPFlow',
     'Electron',    
     'MuonPFlow',
@@ -126,7 +127,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                Jet =
                cms.untracked.
                vstring(
-    'patJet                          selectedPatJetsPFlow            200',
+    'patJetHelper                    selectedPatJetsPFlow            200',
     #---------------------------------------------------------------------
     'float  energy()',
     'float  et()',
@@ -138,6 +139,23 @@ cms.EDAnalyzer("TheNtupleMaker",
     'float  neutralHadronEnergyFraction()',
     'float  chargedEmEnergyFraction()',
     'float  neutralEmEnergyFraction()',
+    'float  jecUnc()'
+    ),
+                          GenJet =
+               cms.untracked.
+               vstring(
+    'recoGenJet                    ak5GenJets                         200',
+    #---------------------------------------------------------------------
+    'float  energy()',
+    'float  et()',
+    'float  pt()',
+    'float  pz()',
+    'float  phi()',
+    'float  eta()',
+    #'float  chargedHadronEnergyFraction()',
+    #'float  neutralHadronEnergyFraction()',
+    #'float  chargedEmEnergyFraction()',
+    #'float  neutralEmEnergyFraction()',
     ),
                ElectronPFlow =
                cms.untracked.
