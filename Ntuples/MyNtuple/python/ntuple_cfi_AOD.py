@@ -10,6 +10,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                ntupleName = cms.untracked.string("ntuple.root"),
                analyzerName = cms.untracked.string("analyzer.cc"),
                isRECOfile = cms.untracked.bool(False),
+               isALCARECOfile = cms.untracked.bool(False),
 
 # NOTE: the names listed below will be the prefixes for
 #       the associated C++ variables created by mkanalyzer.py
