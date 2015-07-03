@@ -26,9 +26,10 @@ using namespace reco;
 TrackHelper::TrackHelper()
   : HelperFor<reco::Track>() {
 
-  isRECOfile = config->getUntrackedParameter<bool>("isRECOfile");
+  isRECOfile     = config->getUntrackedParameter<bool>("isRECOfile");
+  isALCARECOfile = config->getUntrackedParameter<bool>("isALCARECOfile");
 
-  if(isRECOfile){
+  if(isRECOfile && !isALCARECOfile){
     // !!! find the tree
     string ntupleName = config->getUntrackedParameter<string>("ntupleName");
     TFile * f = gROOT->GetFile(ntupleName.c_str());
@@ -62,12 +63,16 @@ void TrackHelper::analyzeEvent()
 {
   
   // 1a.) Calo Isolation (my Version)
-  event->getByLabel("towerMaker",towers);
-  
+  if(!isALCARECOfile){
+    event->getByLabel("towerMaker",towers);
+  }
   // 1b.) Calo Isolation (Wells version)
-  event -> getManyByType(prods);
+  if(!isALCARECOfile){
+    event -> getManyByType(prods);
+  }
 
-  if(TrackHelper::isRECOfile){
+  
+  if(isRECOfile && !isALCARECOfile){
     // 2.) For DeDx calculation
     // For DeDxNPHarm2
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
@@ -132,7 +137,7 @@ void TrackHelper::analyzeObject()
   _caloHadDeltaRp5 = 0;  
 
   // 1a.) Calculate calo isolation (my Version)
-
+  if(!isALCARECOfile){
   for ( cal = towers->begin(); cal != towers->end(); ++cal ) {
 
     double deltaEta = fabs(object->eta() - cal->eta());  
@@ -159,6 +164,7 @@ void TrackHelper::analyzeObject()
     }
 
   }
+  }
 
   _caloEMDeltaRp3W  = 0;  
   _caloHadDeltaRp3W = 0;  
@@ -168,6 +174,7 @@ void TrackHelper::analyzeObject()
   _caloHadDeltaRp5W = 0; 
   
   // 1b.) Calculate Calo isolation (Wells version)
+  if(!isALCARECOfile){
   std::vector<edm::Handle<CaloTowerCollection> >::iterator i = prods.begin();
   const CaloTowerCollection& c=*(*i);
   for (CaloTowerCollection::const_iterator j=c.begin(); j!=c.end(); j++) {
@@ -194,31 +201,31 @@ void TrackHelper::analyzeObject()
     }
     
   }
-
-
+  }
   //-----
 
   // 2.) Save whether high Purity track  
   reco::TrackBase::TrackQuality _highPurityNumber = reco::TrackBase::qualityByName("highPurity");
   if( object->quality(_highPurityNumber) ) _trackHighPurity=1;
   else _trackHighPurity=0;
-
   //-----
 
   // 3.) trackRelIso03 implementation
+  if(!isALCARECOfile){
   edm::ParameterSet trackExtractorPSet = config->getParameter<edm::ParameterSet>("TrackExtractorPSet");
   std::string trackExtractorName = trackExtractorPSet.getParameter<std::string>("ComponentName");
   reco::isodeposit::IsoDepositExtractor *muIsoExtractorTrack_;
   muIsoExtractorTrack_ = IsoDepositExtractorFactory::get()->create( trackExtractorName,trackExtractorPSet);
- 
+
   reco::IsoDeposit depTrk = muIsoExtractorTrack_->deposit(*event, *eventsetup , *object);
   reco::IsoDeposit::Vetos noVetos;
   double depTrkRp3 = depTrk.depositWithin(0.3, noVetos, true);
   _trackRelIso03 = max(0.,(depTrkRp3 - object->pt()) / object->pt());
 
+  }
   //-----
   // 4.) For DeDx calculation
-  if(isRECOfile){
+  if(isRECOfile && !isALCARECOfile){
     // For DeDxNPHarm2 
     reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
     dEdxNPHarm2Track = dEdxNPTrackMapHarm2[track];
@@ -243,7 +250,7 @@ void TrackHelper::analyzeObject()
     // get the complete tracking geometry from the event
     edm::ESHandle<TrackerGeometry> trackingGeometry ;
     eventsetup->get<TrackerDigiGeometryRecord>().get(trackingGeometry);
-    
+
     HitsDeDx.push_back(vector<double>());
     HitsPathlength.push_back(vector<double>());
     HitsShapetest.push_back(vector<int>());
