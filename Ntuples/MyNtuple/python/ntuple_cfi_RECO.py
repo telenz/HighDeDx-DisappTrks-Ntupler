@@ -11,6 +11,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                analyzerName = cms.untracked.string("analyzer.cc"),
                isRECOfile = cms.untracked.bool(True),
                isALCARECOfile = cms.untracked.bool(False),
+               isSignal = cms.untracked.bool(False),  
 
 # NOTE: the names listed below will be the prefixes for
 #       the associated C++ variables created by mkanalyzer.py
