@@ -10,6 +10,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                ntupleName = cms.untracked.string("ntuple.root"),
                analyzerName = cms.untracked.string("analyzer.cc"),
                isRECOfile = cms.untracked.bool(True),
+               isALCARECOfile = cms.untracked.bool(False),
 
 # NOTE: the names listed below will be the prefixes for
 #       the associated C++ variables created by mkanalyzer.py
@@ -18,6 +19,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                cms.untracked.
                vstring(
     'edmEventHelper',
+    'edmEventHelperExtra',
     'edmTriggerResultsHelper',
     'PileupSummaryInfo',
     'Vertex',
@@ -48,6 +50,13 @@ cms.EDAnalyzer("TheNtupleMaker",
     '   int   bunchCrossing()',
     '   int   orbitNumber()'
     ),
+               edmEventHelperExtra =
+               cms.untracked.
+               vstring(
+    'edmEventHelperExtra             Event::edm                        1',
+    #---------------------------------------------------------------------
+    ),
+
 
                edmTriggerResultsHelper =
                cms.untracked.
