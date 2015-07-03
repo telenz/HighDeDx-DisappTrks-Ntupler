@@ -202,6 +202,7 @@ namespace reco
   private:
     // -- User internals
         bool isRECOfile;
+	bool isALCARECOfile;
 	bool _trackHighPurity;
 	double _trackRelIso03;
 	edm::Handle<CaloTowerCollection> towers;
