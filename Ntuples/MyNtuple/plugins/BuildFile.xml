@@ -101,3 +101,7 @@
 </library>
 <library file="userplugin_patJetHelper.cc" name="patJetHelper">
 </library>
+
+<use name="FWCore/Framework"/>
+<library file="userplugin_edmEventHelperExtra.cc" name="edmEventHelperExtra">
+</library>
