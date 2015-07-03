@@ -15,6 +15,8 @@
 	#git cms-cvs-history import CMSSW_6_2_0_pre7 AnalysisDataFormats/SUSYBSMObjects
 	#git mv -f classes_def_for_AnalysisDataFormats_SUSYBSMObjects_src.xml AnalysisDataFormats/SUSYBSMObjects/src/classes_def.xml 	
 	
+	git cms-cvs-history import CMSSW_5_3_8_patch3 ElectroWeakAnalysis/Utilities
+
 	git cms-cvs-history import V07-00-01 TopQuarkAnalysis/Configuration
 	git cms-cvs-history import V06-07-11-01 TopQuarkAnalysis/TopTools
 	git cms-cvs-history import  V06-05-06-07 DataFormats/PatCandidates
