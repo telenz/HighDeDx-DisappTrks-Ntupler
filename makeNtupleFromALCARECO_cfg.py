@@ -196,7 +196,6 @@ process.schedule = cms.Schedule(process.pPF)
 
 
 ## Dump python config if wished
-outfile = open('dumpALCARECO.py','w'); print >> outfile,process.dumpPython(); outfile.close()
 if(runOnMC):
   outfile = open('dumpALCARECO_MC.py','w'); print >> outfile,process.dumpPython(); outfile.close()
 else:
