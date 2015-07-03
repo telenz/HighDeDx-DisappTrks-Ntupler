@@ -3,4 +3,6 @@
  <class name="reco::TrackHelper"/>
  <class name="HelperFor<pat::Electron>"/>
  <class name="pat::ElectronHelper"/>
+ <class name="HelperFor<pat::Jet>"/>
+ <class name="pat::JetHelper"/>
 </lcgdict>
