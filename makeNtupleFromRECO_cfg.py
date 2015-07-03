@@ -323,16 +323,18 @@ inputFiles = cms.untracked.vstring(
 
 process.source.fileNames = inputFiles
 process.maxEvents.input  = maxInputEvents
-#process.source.fileNames = ["file:ttbar.root"]
-#process.source.fileNames = ["file:/nfs/dust/cms/user/tlenz/HSCPrecoSECOND/workdir/recoFULLSPLITTED/results/pMSSM12_MCMC1_30_549144_m200_width5_205.root"]
-#process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
-#process.source.fileNames = ["file:RECO_RAW2DIGI_L1Reco_RECO_PU_MG_mass_100_ctau_1cm_0.root"]
-process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
-#process.source.fileNames = ["file:0C69A8EC-21F5-E111-B996-001E673983F4.root"]
-#process.source.fileNames = ["file:dataFile.root"]
-#process.source.fileNames = ["file:TTJets_skimmed.root"]
-#process.source.fileNames = ["file:SingleMu_dataFile.root"]
-#process.source.fileNames = ["file:MET_Run2012A_22Jan2013_1.root"]
+
+if(runOnRECO):
+  if(runOnMC):
+    process.source.fileNames = ["file:TTJets_skimmed.root"]
+  else:
+    process.source.fileNames = ["file:MET_Run2012A_22Jan2013_0.root"]
+else:
+  if(runOnMC):
+    process.source.fileNames = ["file:DYJetsToLL_Summer12_S10_1.root"]
+  else:
+    process.source.fileNames = ["file:SingleMu_dataFile.root"]
+
 process.source.inputCommands = cms.untracked.vstring(
                                                      'keep *',
                                                      'drop GenLumiInfoProduct_*_*_*'
@@ -1793,6 +1795,19 @@ process.genParticlesReduced  = cms.EDFilter("GenParticleSelector",
 if(runOnMC):
   pPF += process.genParticlesReduced
 
+##################################################### # Produce PDF weights (maximum is 3) ###########################
+#process.pdfWeights = cms.EDProducer("PdfWeightProducer",
+#                                    # Fix POWHEG if buggy (this PDF set will also appear on output, 
+#                                    # so only two more PDF sets can be added in PdfSetNames if not "")
+#                                    #FixPOWHEG = cms.untracked.string("cteq66.LHgrid"),
+#                                    GenTag = cms.untracked.InputTag("genParticles"),
+#                                    PdfInfoTag = cms.untracked.InputTag("generator"),
+#                                    PdfSetNames = cms.untracked.vstring("cteq66.LHgrid","NNPDF21_100.LHgrid","MSTW2008nlo68cl.LHgrid")
+#                                    )
+#
+#if runOnMC:
+#  pPF+=process.pdfWeights
+######################################################################################################################
 
 process.load("L1TriggerConfig.L1GtConfigProducers.L1GtConfig_cff")
 if(runOnRECO):
