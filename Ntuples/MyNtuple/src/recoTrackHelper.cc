@@ -72,7 +72,7 @@ void TrackHelper::analyzeEvent()
   }
 
   
-  if(isRECOfile && !isALCARECOfile){
+  if(isRECOfile){
     // 2.) For DeDx calculation
     // For DeDxNPHarm2
     edm::Handle<edm::ValueMap<reco::DeDxData> > dEdxNPHarm2TrackHandle;
@@ -225,7 +225,7 @@ void TrackHelper::analyzeObject()
   }
   //-----
   // 4.) For DeDx calculation
-  if(isRECOfile && !isALCARECOfile){
+  if(isRECOfile){
     // For DeDxNPHarm2 
     reco::TrackRef track  = reco::TrackRef( trackCollectionHandle, oindex);
     dEdxNPHarm2Track = dEdxNPTrackMapHarm2[track];
