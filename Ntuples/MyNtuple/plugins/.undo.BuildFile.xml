@@ -99,3 +99,5 @@
 </library>
 <library file="userplugin_patElectronHelper.cc" name="patElectronHelper">
 </library>
+<library file="userplugin_patJetHelper.cc" name="patJetHelper">
+</library>
