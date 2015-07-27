@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("ProtonAnalysis")
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:ALCARECO.root')
+    fileNames = cms.untracked.vstring('file:MET_Run2012A_22Jan2013_0.root')
 )
 process.CosmicMuonSeed = cms.EDProducer("CosmicMuonSeedGenerator",
     DTRecSegmentLabel = cms.InputTag("dt4DCosmicSegments"),
@@ -10522,8 +10522,8 @@ process.genParticlesReduced = cms.EDFilter("GenParticleSelector",
 
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
-    src = cms.InputTag("ALCARECOSiStripCalMinBias"),
-    cut = cms.string('p > 0.5 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0')
+    src = cms.InputTag("generalTracks"),
+    cut = cms.string('p > 0.0 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0')
 )
 
 
@@ -10615,6 +10615,7 @@ process.demo = cms.EDAnalyzer("TheNtupleMaker",
         'float momentum().energy()'),
     buffers = cms.untracked.vstring('edmEventHelper', 
         'PileupSummaryInfo', 
+        'Vertex', 
         'Track', 
         'GenParticle'),
     edmEventHelper = cms.untracked.vstring('edmEventHelper                  info                              1', 
