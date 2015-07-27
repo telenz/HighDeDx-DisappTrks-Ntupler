@@ -21,6 +21,7 @@ cms.EDAnalyzer("TheNtupleMaker",
                vstring(
     'edmEventHelper',
     'PileupSummaryInfo',
+    'Vertex',
     'Track',
     'GenParticle'
     #'SimTrack',
