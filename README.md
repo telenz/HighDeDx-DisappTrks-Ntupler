@@ -79,3 +79,4 @@
 	#git cms-cvs-history import CMSSW_5_3_8_patch3 RecoBTag/Configuration
 	#git cms-cvs-history import CMSSW_5_3_8_patch3 RecoBTau/JetTagComputer
 	#scram b -j24
+ 	#TEST
