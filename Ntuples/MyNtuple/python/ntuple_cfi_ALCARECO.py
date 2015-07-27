@@ -23,7 +23,7 @@ cms.EDAnalyzer("TheNtupleMaker",
     'PileupSummaryInfo',
     'Vertex',
     'Track',
-    'GenParticle'
+    #'GenParticle'
     #'SimTrack',
     #'SimVertex'
     ),

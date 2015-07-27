@@ -28,10 +28,10 @@ EventHelperExtra::EventHelperExtra()
   string branchName;
   branchName = "doubles_pdfWeights_cteq66_PATuple";
   t->Branch(branchName.c_str(),&pdfWeights_cteq66);
-  branchName = "doubles_pdfWeights_NNPDF21_PATuple";
-  t->Branch(branchName.c_str(),&pdfWeights_NNPDF21);
-  branchName = "doubles_pdfWeights_MSTW2008_PATuple";
-  t->Branch(branchName.c_str(),&pdfWeights_MSTW2008);
+  //branchName = "doubles_pdfWeights_NNPDF21_PATuple";
+  //t->Branch(branchName.c_str(),&pdfWeights_NNPDF21);
+  //branchName = "doubles_pdfWeights_MSTW2008_PATuple";
+  //t->Branch(branchName.c_str(),&pdfWeights_MSTW2008);
 }
     
 EventHelperExtra::~EventHelperExtra() {}
@@ -46,15 +46,15 @@ void EventHelperExtra::analyzeEvent()
     event->getByLabel(edm::InputTag("pdfWeights","cteq66"),_pdfWeights_cteq66);
     pdfWeights_cteq66.insert(pdfWeights_cteq66.begin(),_pdfWeights_cteq66->begin(),_pdfWeights_cteq66->end());
 
-    pdfWeights_NNPDF21.clear();
-    edm::Handle<vector<double> > _pdfWeights_NNPDF21;
-    event->getByLabel(edm::InputTag("pdfWeights","NNPDF21"),_pdfWeights_NNPDF21);
-    pdfWeights_NNPDF21.insert(pdfWeights_NNPDF21.begin(),_pdfWeights_NNPDF21->begin(),_pdfWeights_NNPDF21->end());
+    //pdfWeights_NNPDF21.clear();
+    //edm::Handle<vector<double> > _pdfWeights_NNPDF21;
+    //event->getByLabel(edm::InputTag("pdfWeights","NNPDF21"),_pdfWeights_NNPDF21);
+    //pdfWeights_NNPDF21.insert(pdfWeights_NNPDF21.begin(),_pdfWeights_NNPDF21->begin(),_pdfWeights_NNPDF21->end());
 
-    pdfWeights_MSTW2008.clear();
-    edm::Handle<vector<double> > _pdfWeights_MSTW2008;
-    event->getByLabel(edm::InputTag("pdfWeights","MSTW2008nlo68cl"),_pdfWeights_MSTW2008);
-    pdfWeights_MSTW2008.insert(pdfWeights_MSTW2008.begin(),_pdfWeights_MSTW2008->begin(),_pdfWeights_MSTW2008->end());
+    //pdfWeights_MSTW2008.clear();
+    //edm::Handle<vector<double> > _pdfWeights_MSTW2008;
+    //event->getByLabel(edm::InputTag("pdfWeights","MSTW2008nlo68cl"),_pdfWeights_MSTW2008);
+    //pdfWeights_MSTW2008.insert(pdfWeights_MSTW2008.begin(),_pdfWeights_MSTW2008->begin(),_pdfWeights_MSTW2008->end());
   }
 }
 

@@ -29,7 +29,7 @@ TrackHelper::TrackHelper()
   isRECOfile     = config->getUntrackedParameter<bool>("isRECOfile");
   isALCARECOfile = config->getUntrackedParameter<bool>("isALCARECOfile");
 
-  if(isRECOfile && !isALCARECOfile){
+  if(isRECOfile){
     // !!! find the tree
     string ntupleName = config->getUntrackedParameter<string>("ntupleName");
     TFile * f = gROOT->GetFile(ntupleName.c_str());
