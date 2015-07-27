@@ -5,8 +5,8 @@
 	
 	mkdir HighDeDx-DisappTrks-Ntupler
  	cd HighDeDx-DisappTrks-Ntupler
-	cmsrel CMSSW_5_3_8_patch1
-	cd CMSSW_5_3_8_patch1
+	cmsrel CMSSW_5_3_8_patch3
+	cd CMSSW_5_3_8_patch3
 	rm -rf src
 	git clone https://github.com/telenz/HighDeDx-DisappTrks-Ntupler.git src	
 	cd src
