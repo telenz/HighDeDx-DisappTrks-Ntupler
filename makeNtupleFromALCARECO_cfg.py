@@ -66,7 +66,7 @@ process.source = cms.Source("PoolSource",
 if(runOnMC):
   process.source.fileNames = cms.untracked.vstring("file:ALCARECO_MC.root")
 else:
-  process.source.fileNames = cms.untracked.vstring("file:ALCARECO.root")
+  process.source.fileNames = cms.untracked.vstring("file:MET_Run2012A_22Jan2013_0.root")
   
 process.out = cms.OutputModule("PoolOutputModule",
                                fileName = cms.untracked.string('out_alcareco.root'),
@@ -155,18 +155,18 @@ process.HSCParticleProducerSeq.remove(process.MuonOnlySeq)
 process.HSCParticleProducerSeq.remove(process.muontiming)
 process.HSCParticleProducerSeq.remove(process.dt4DSegmentsMT)
 
-if(runOnMC):
-  process.generalTracksReduced = cms.EDFilter("TrackSelector",
-                                              src = cms.InputTag("generalTracks"), 
-                                              cut = cms.string("p > 0.5 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0"),
-                                              filter = cms.bool(False)
-                                              )
-else:
-  process.generalTracksReduced = cms.EDFilter("TrackSelector",
-                                            src = cms.InputTag("ALCARECOSiStripCalMinBias"), 
-                                            cut = cms.string("p > 0.5 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0"),
+#if(runOnMC):
+process.generalTracksReduced = cms.EDFilter("TrackSelector",
+                                            src = cms.InputTag("generalTracks"), 
+                                            cut = cms.string("p > 0.0 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0"),
                                             filter = cms.bool(False)
                                             )
+#else:
+#  process.generalTracksReduced = cms.EDFilter("TrackSelector",
+#                                            src = cms.InputTag("ALCARECOSiStripCalMinBias"), 
+#                                            cut = cms.string("p > 0.5 && p < 2.5 && trackerExpectedHitsInner.numberOfLostHits==0 && hitPattern.trackerLayersWithoutMeasurement==0"),
+#                                            filter = cms.bool(False)
+#                                            )
 
 
 process.pPF = cms.Path()
