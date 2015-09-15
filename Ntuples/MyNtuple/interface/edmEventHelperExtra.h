@@ -13,6 +13,8 @@
 #include <map>
 #include "PhysicsTools/TheNtupleMaker/interface/HelperFor.h"
 #include "FWCore/Framework/interface/Event.h"
+#include "DataFormats/HLTReco/interface/TriggerEvent.h"
+#include "DataFormats/HLTReco/interface/TriggerObject.h"
 //-----------------------------------------------------------------------------
 // Definitions:
 //   helper:        object of class EventHelperExtra
@@ -88,17 +90,19 @@ namespace edm
 	// ---------------------------------------------------------
 	// -- User access methods go here
 	// ---------------------------------------------------------
-
+	bool emulated_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95();
 	
   private:
     // -- User internals
 	bool isSignal;
+	bool _passTrigger;
 
 	std::vector<double> pdfWeights_cteq66;
 	std::vector<double> pdfWeights_NNPDF21;
 	std::vector<double> pdfWeights_MSTW2008;
 
   public:
+	
     // ---------------------------------------------------------
     // -- Access Methods
     // ---------------------------------------------------------
