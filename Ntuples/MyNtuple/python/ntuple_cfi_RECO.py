@@ -56,9 +56,8 @@ cms.EDAnalyzer("TheNtupleMaker",
                vstring(
     'edmEventHelperExtra             Event::edm                        1',
     #---------------------------------------------------------------------
+    'bool   emulated_HLT_MonoCentralPFJet80_PFMETnoMu105_NHEF0p95()'
     ),
-
-
                edmTriggerResultsHelper =
                cms.untracked.
                vstring(
