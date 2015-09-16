@@ -44868,7 +44868,7 @@ process.genParticlesReduced = cms.EDFilter("GenParticleSelector",
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
     filter = cms.bool(False),
     src = cms.InputTag("generalTracks"),
-    cut = cms.string('pt > 15')
+    cut = cms.string('pt > 10')
 )
 
 
