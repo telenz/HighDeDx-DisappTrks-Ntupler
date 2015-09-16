@@ -1773,7 +1773,7 @@ if(runOnRECO):
 
 process.generalTracksReduced = cms.EDFilter("TrackSelector",
                                             src = cms.InputTag("generalTracks"), 
-                                            cut = cms.string("pt > 15"),
+                                            cut = cms.string("pt > 10"),
                                             filter = cms.bool(False)
                                             )
 
